@@ -10,22 +10,61 @@
 
 class Tree::Node {
  public:
-  Node(int d = 0) : data(d){};
+  Node(Data entry = 0) : data(entry), left(nullptr), right(nullptr){};
   ~Node(){};
-  int data;
-  std::unique_ptr<Node> left;
-  std::unique_ptr<Node> right;
+  Data data;
+  NodeUPtr left, right;
 };
-typedef Tree::Node Node;
 
-// Node ---------------------------------------------------------
-std::unique_ptr<Node> Tree::AddNode_(int data) {
-  return std::make_unique<Node>(data);
+//#############################################################
+
+Tree::Tree(Data entry) { InitTree_(entry); }
+Tree::~Tree() {}
+void Tree::Add(Data entry) {  // To do
+  if (Exist(entry)) {         // To do
+  } else {
+    Add_(root, entry);
+  }
+}
+Tree::Node* Tree::Find(Data key) { return Find_(root, key); }  // To Do
+bool Tree::Exist(Data entry) { return true; }                  // To do
+void Tree::Remove(Data key) { Remove_(root, key); }
+
+//#############################################################
+
+void Tree::InitTree_(Data entry) { root = AddNode_(entry); }
+
+void Tree::Add_(NodeUPtr& current_root, Data entry) {
+  if (entry < current_root->data) {
+    if (!current_root->left) {
+      current_root->left = AddNode_(entry);
+    } else {
+      Add_(current_root->left, entry);
+    }
+  } else if (entry > current_root->data) {
+    if (!current_root->right) {
+      current_root->right = AddNode_(entry);
+    } else {
+      Add_(current_root->right, entry);
+    }
+  }
 }
 
-// Tree ---------------------------------------------------------
-Tree::Tree(int data) { InitTree_(data); }
-Tree::~Tree() {}
-void Tree::InitTree_(int data) { root = AddNode_(data); }
+Tree::NodeUPtr Tree::AddNode_(Data entry) {
+  return std::make_unique<Node>(entry);
+}
 
-//
+Tree::Node* Tree::Find_(NodeUPtr& current_root, Data key) {
+  if (key == current_root->data) {
+    return current_root.get();  // .release ?
+  } else if ((key < current_root->data) && current_root->left) {
+    return Find_(current_root->left, key);
+  } else if ((key > current_root->data) && current_root->right) {
+    return Find_(current_root->right, key);
+  } else {
+    return nullptr;
+  }
+}
+
+void Tree::Remove_(NodeUPtr& current_root, Data key) {  // Todo
+}

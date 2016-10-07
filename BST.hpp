@@ -12,20 +12,29 @@
 #include <iostream>
 #include <memory>
 
+typedef int Data;
+
 class Tree {
  public:
+  //#################################################################
   class Node;
-  Tree(int data = 0);
+  typedef std::unique_ptr<Node> NodeUPtr;
+  Tree(int entry = 0);
   ~Tree();
-  std::unique_ptr<Node> root;
+  NodeUPtr root;
+  void Add(Data entry);
+  Node* Find(Data key);  // What is the return type
+  bool Exist(Data key);
+  void Remove(Data key);
 
  private:
-  // Node ---------------------------------------------------------
-  std::unique_ptr<Node> AddNode_(int data);
+  //###############################################################
 
-  // Tree ---------------------------------------------------------
-  void InitTree_(int data);
+  void InitTree_(Data entry);
+  void Add_(NodeUPtr& current_root, Data entry);
+  NodeUPtr AddNode_(int data);
+  Node* Find_(NodeUPtr& current_root, Data key);
+  void Remove_(NodeUPtr& current_root, Data key);
 };
 
 #endif /* BST_hpp */
-       //
