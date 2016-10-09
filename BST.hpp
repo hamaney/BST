@@ -25,12 +25,12 @@ class Tree {
   ~Tree();
   NodeUPtr root;
   void Add(Data entry);
-  Node* Find(Data key);  // What is the return type
+  Node* Find(Data key);
   bool Exist(Data key);
-  void Remove(Data key);
-  void PrintPreOrder();
-  void PrintInOrder();
-  void PrintPostOrder();
+  // void Remove(Data key);
+  // void PrintPreOrder();
+  // void PrintInOrder();
+  // void PrintPostOrder();
 
  private:
   //###############################################################
@@ -38,10 +38,10 @@ class Tree {
   void Add_(NodeUPtr& current_root, Data entry);
   NodeUPtr AddNode_(int data);
   Node* Find_(NodeUPtr& current_root, Data key);
-  void Remove_(NodeUPtr& current_root, Data key);
-  void PrintPreOrder_(NodeUPtr& current_root);
-  void PrintInOrder_(NodeUPtr& current_root);
-  void PrintPostOrder_(NodeUPtr& current_root);
+  // void Remove_(NodeUPtr& current_root, Data key);
+  // void PrintPreOrder_(NodeUPtr& current_root);
+  // void PrintInOrder_(NodeUPtr& current_root);
+  // void PrintPostOrder_(NodeUPtr& current_root);
   void PrintErrorMSG_(ErrorType error);
 };
 
