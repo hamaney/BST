@@ -21,14 +21,18 @@ class Tree::Node {
 Tree::Tree(Data entry) { InitTree_(entry); }
 Tree::~Tree() {}
 void Tree::Add(Data entry) {  // To do
-  if (Exist(entry)) {         // To do
+  if (Exist(entry)) {
+    PrintErrorMSG_(KEntryExist);  // To do
   } else {
     Add_(root, entry);
   }
 }
 Tree::Node* Tree::Find(Data key) { return Find_(root, key); }  // To Do
-bool Tree::Exist(Data entry) { return true; }                  // To do
+bool Tree::Exist(Data entry) { return Find_(root, entry); }    // To do
 void Tree::Remove(Data key) { Remove_(root, key); }
+void Tree::PrintPreOrder() { PrintPreOrder_(root); }
+void Tree::PrintInOrder() { PrintInOrder_(root); }
+void Tree::PrintPostOrder() { PrintPostOrder_(root); }
 
 //#############################################################
 
@@ -67,4 +71,45 @@ Tree::Node* Tree::Find_(NodeUPtr& current_root, Data key) {
 }
 
 void Tree::Remove_(NodeUPtr& current_root, Data key) {  // Todo
+}
+
+void Tree::PrintPreOrder_(NodeUPtr& current_root) {
+  if (current_root) {
+    return;
+  }
+  std::cout << current_root->data << " " << std::endl;
+  PrintPreOrder_(current_root->left);
+  PrintPreOrder_(current_root->right);
+}
+void Tree::PrintInOrder_(NodeUPtr& current_root) {
+  if (current_root) {
+    return;
+  }
+  PrintInOrder_(current_root->left);
+  std::cout << current_root->data << std::endl;
+  PrintInOrder_(current_root->right);
+}
+void Tree::PrintPostOrder_(NodeUPtr& current_root) {
+  if (current_root) {
+    return;
+  }
+  PrintInOrder_(current_root->left);
+
+  PrintInOrder_(current_root->right);
+
+  std::cout << current_root->data << std::endl;
+}
+
+void Tree::PrintErrorMSG_(ErrorType error) {
+  switch (error) {
+    case KEntryExist:
+      std::cout << "The entry added already exists!" << std::endl;
+      break;
+
+    default:
+      std::cout << "This should be an error please add an error msg!"
+                << std::endl;
+
+      break;
+  }
 }

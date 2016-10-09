@@ -11,8 +11,10 @@
 
 class Node;
 int main(int argc, const char* argv[]) {
-  Tree tree;
-  std::cout << "tree" << std::endl;
+  Tree tree(1);
+
+  tree.Add(5);
+  tree.PrintPreOrder();
   return 0;
 }
 
