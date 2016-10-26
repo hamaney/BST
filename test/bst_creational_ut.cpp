@@ -207,7 +207,7 @@ TEST_F(BSTCreation, AddingExistingEntryToTheTree)
     
   ASSERT_FALSE(tree.Add(4));
   ASSERT_FALSE(tree.Add(6));
-    ASSERT_FALSE(tree.Add(1));
+  ASSERT_FALSE(tree.Add(1));
   ASSERT_FALSE(tree.Add(7));
 }
 

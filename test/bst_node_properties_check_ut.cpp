@@ -36,17 +36,17 @@ class BSTNodeProperties : public ::testing::Test
     virtual void TearDown(){};
     Tree tree;
 };
-TEST_F(BSTNodeProperties, CheckIfLeafNode)
+TEST_F(BSTNodeProperties, CheckIfNodeHasNoChildren)
 {
-    ASSERT_TRUE(tree.isLeaf(1));
-    ASSERT_TRUE(tree.isLeaf(5));
-    ASSERT_TRUE(tree.isLeaf(9));
-    ASSERT_TRUE(tree.isLeaf(13));
-    ASSERT_FALSE(tree.isLeaf(3));
-    ASSERT_FALSE(tree.isLeaf(11));
-    ASSERT_FALSE(tree.isLeaf(7));
-    ASSERT_FALSE(tree.isLeaf(99));
-    ASSERT_FALSE(tree.isLeaf(-99));
+    ASSERT_TRUE(tree.hasNoChildren(1));
+    ASSERT_TRUE(tree.hasNoChildren(5));
+    ASSERT_TRUE(tree.hasNoChildren(9));
+    ASSERT_TRUE(tree.hasNoChildren(13));
+    ASSERT_FALSE(tree.hasNoChildren(3));
+    ASSERT_FALSE(tree.hasNoChildren(11));
+    ASSERT_FALSE(tree.hasNoChildren(7));
+    ASSERT_FALSE(tree.hasNoChildren(99));
+    ASSERT_FALSE(tree.hasNoChildren(-99));
 }
 TEST_F(BSTNodeProperties, CheckIfNodeHasTwoChildren)
 {

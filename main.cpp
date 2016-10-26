@@ -12,7 +12,7 @@ int main(int argc, const char *argv[])
 {
     std::cout << "heloo world" << std::endl;
     
-    int i = 9;
+    int i = 9990000;
     
     while(i--){
     
@@ -24,7 +24,27 @@ int main(int argc, const char *argv[])
     tree.Add(5);
     tree.Add(7);
     
-    tree.Print();
+        //tree.Print();
+        tree.Remove(1);
+        //tree.Print();
+        tree.Remove(3);
+        //tree.Print();
+        tree.Remove(5);
+        //tree.Print();
+        tree.Remove(7);
+        //tree.Print();
+        tree.Remove(2);
+        //tree.Print();
+        tree.Remove(6);
+        //tree.Print();
+        //tree.Remove(4);
+        //tree.Print();
+        
+        
+        
+        
+        
+        
     }
     return 0;
 }

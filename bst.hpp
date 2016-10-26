@@ -24,12 +24,12 @@ public:
   NodeUPtr root;
   // Modify
   bool Add(const Data &entry);
-  void Remove(const Data &target);
+  bool Remove(const Data &target);
   // Other
   Node *Find(const Data &target) const;
   // Checks
   bool Exist(const Data &key) const;
-  bool isLeaf(const Data &key) const;
+  bool hasNoChildren(const Data &key) const;
   bool hasTwoChildren(const Data &key) const;
   bool hasOnlyLeftChild(const Data &key) const;
   bool hasOnlyRightChild(const Data &key) const;
@@ -42,11 +42,16 @@ private:
   // Modify
   NodeUPtr AddNode_(const Data &entry = 0) const;
   bool Add_(NodeUPtr &current_root, const Data &entry);
-  void Remove_(NodeUPtr &root, const Data &target);
+  bool Remove_(NodeUPtr &root, const Data &target);
+  bool RemoveNodeWithNoChildren_(Node *node);
+  bool RemoveNodeWithTwoChildren_(Node *node);
+  bool RemoveNodeWithOnlyLeftChild_(Node *node);
+  bool RemoveNodeWithOnlyRightChild_(Node *node);
+
   // Other
   Node *Find_(Node *const current_root, const Data &target) const;
   // Checks
-  bool isLeaf_(const Node *const) const;
+  bool hasNoChildren_(const Node *const) const;
   bool hasTwoChildren_(const Node *const) const;
   bool hasOnlyLeftChild_(const Node *const) const;
   bool hasOnlyRightChild_(const Node *const) const;

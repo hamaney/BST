@@ -25,9 +25,19 @@ bool Tree::Add(const Data &entry)
     return false;
   }
 }
-void Tree::Remove(const Data &target)
+bool Tree::Remove(const Data &target)
 {
-  Remove_(root, target);
+  const Node *const node_found = Find_(root.get(), target);
+  if (node_found)
+  {
+    return Remove_(root, target);
+  }
+  //nonexisting target will return false
+  //faling to remove a node will return flase
+  else
+  {
+    return false;
+  }
 }
 // Others ----------------------------------------------------------------------
 Node *
@@ -37,12 +47,12 @@ Tree::Find(const Data &target) const
 }
 // Checks ----------------------------------------------------------------------
 bool Tree::Exist(const Data &key) const { return Find_(root.get(), key); }
-bool Tree::isLeaf(const Data &key) const
+bool Tree::hasNoChildren(const Data &key) const
 {
-  const Node* const node_found = Find(key);
+  const Node *const node_found = Find_(root.get(), key);
   if (node_found)
   {
-    return isLeaf_(node_found);
+    return hasNoChildren_(node_found);
   }
   else
   {
@@ -51,7 +61,7 @@ bool Tree::isLeaf(const Data &key) const
 }
 bool Tree::hasTwoChildren(const Data &key) const
 {
-  const Node *const node_found = Find(key);
+  const Node *const node_found = Find_(root.get(), key);
   if (node_found)
   {
     return hasTwoChildren_(node_found);
@@ -134,12 +144,63 @@ bool Tree::Add_(NodeUPtr &current_root, const Data &entry)
     return false;
   } // implemnt an error
 }
-void Tree::Remove_(NodeUPtr &root, const Data &target)
+bool Tree::Remove_(NodeUPtr &root, const Data &target)
 {
+  auto found_node = Find_(root.get(), target);
+  if (found_node)
+  {
+    if (hasNoChildren_(found_node))
+    {
+      return RemoveNodeWithNoChildren_(found_node);
+    }
+    else if (hasTwoChildren_(found_node))
+    {
+      return RemoveNodeWithTwoChildren_(found_node);
+    }
+    else if (hasOnlyLeftChild_(found_node))
+    {
+      return RemoveNodeWithOnlyLeftChild_(found_node);
+    }
+    else if (hasOnlyRightChild_(found_node))
+    {
+      return RemoveNodeWithOnlyRightChild_(found_node);
+    }
+    else
+    {
+      assert(0);
+      return false;
+    } // TODO: implemint error msg
+  }
+  else
+  {
+    return false;
+  }
 }
-
 // Other -----------------------------------------------------------------------
-Node *Tree::Find_(Node *const current_root, const Data &target) const // if the node is not
+bool Tree::RemoveNodeWithNoChildren_(Node *node)
+{
+  auto node_parent = node->parent;
+  if (node->is_left_node)
+  {
+    node_parent->left.reset();
+    return true;
+  }
+  else
+  {
+    node_parent->right.reset();
+    return true;
+  }
+}
+bool Tree::RemoveNodeWithTwoChildren_(Node *node)
+{
+
+  return false;
+}
+bool Tree::RemoveNodeWithOnlyLeftChild_(Node *node) { return false; }
+bool Tree::RemoveNodeWithOnlyRightChild_(Node *node) { return false; }
+// Other -----------------------------------------------------------------------
+Node *
+Tree::Find_(Node *const current_root, const Data &target) const // if the node is not
 //found it returns a nullptr , no error massage
 {
 
@@ -167,7 +228,7 @@ Node *Tree::Find_(Node *const current_root, const Data &target) const // if the 
 }
 
 // Checks --------------------------------------------------------------------
-bool Tree::isLeaf_(const Node *const node) const //does not check if the key exist
+bool Tree::hasNoChildren_(const Node *const node) const //does not check if the key exist
 {
 
   if (!node->left and !node->right)
