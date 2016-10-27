@@ -146,6 +146,8 @@ bool Tree::Add_(NodeUPtr &current_root, const Data &entry)
 }
 bool Tree::Remove_(NodeUPtr &root, const Data &target)
 {
+  // root case
+
   auto found_node = Find_(root.get(), target);
   if (found_node)
   {
@@ -182,12 +184,12 @@ bool Tree::RemoveNodeWithNoChildren_(Node *node)
   auto node_parent = node->parent;
   if (node->is_left_node)
   {
-    node_parent->left.reset();
+    node_parent->left.release();
     return true;
   }
   else
   {
-    node_parent->right.reset();
+    node_parent->right.release();
     return true;
   }
 }
@@ -196,94 +198,123 @@ bool Tree::RemoveNodeWithTwoChildren_(Node *node)
 
   return false;
 }
-bool Tree::RemoveNodeWithOnlyLeftChild_(Node *node) { return false; }
-bool Tree::RemoveNodeWithOnlyRightChild_(Node *node) { return false; }
-// Other -----------------------------------------------------------------------
-Node *
-Tree::Find_(Node *const current_root, const Data &target) const // if the node is not
-//found it returns a nullptr , no error massage
+bool Tree::RemoveNodeWithOnlyLeftChild_(Node *node)
 {
+  Node *node_parent = node->parent;
 
-  if (!current_root)
+  if (node->is_left_node)
   {
-    return nullptr;
-  }
-  else if (target > current_root->data)
-  {
-    return Find_(current_root->right.get(), target);
-  }
-  else if (target < current_root->data)
-  {
-    return Find_(current_root->left.get(), target);
-  }
-  else if (target == current_root->data)
-  {
-    return current_root;
+    node_parent->left = std::move(node->left);
   }
   else
   {
-    assert(0);
-    return nullptr;
-  } // impliment
-}
+    node_parent->right = std::move(node->left);
 
-// Checks --------------------------------------------------------------------
-bool Tree::hasNoChildren_(const Node *const node) const //does not check if the key exist
-{
-
-  if (!node->left and !node->right)
-  {
     return true;
   }
-  else
+  bool Tree::RemoveNodeWithOnlyRightChild_(Node * node)
   {
+    Node *node_parent = node->parent;
+
+    if (node->is_left_node)
+    {
+      node_parent->left = std::move(node->right);
+      return true;
+    }
+    else
+    {
+      node_parent->right = std::move(node->right);
+      return true;
+    }
+
     return false;
   }
-}
-
-bool Tree::hasTwoChildren_(const Node *const node) const
-{
-
-  if (node->left and node->right)
+  // Other -----------------------------------------------------------------------
+  Node *
+  Tree::Find_(Node * const current_root, const Data &target) const // if the node is not
+  //found it returns a nullptr , no error massage
   {
-    return true;
-  }
-  else
-  {
-    return false;
-  }
-}
 
-bool Tree::hasOnlyLeftChild_(const Node *const node) const
-{
+    if (!current_root)
+    {
+      return nullptr;
+    }
+    else if (target > current_root->data)
+    {
+      return Find_(current_root->right.get(), target);
+    }
+    else if (target < current_root->data)
+    {
+      return Find_(current_root->left.get(), target);
+    }
+    else if (target == current_root->data)
+    {
+      return current_root;
+    }
+    else
+    {
+      assert(0);
+      return nullptr;
+    } // impliment
+  }
 
-  if (node->left and !node->right)
+  // Checks --------------------------------------------------------------------
+  bool Tree::hasNoChildren_(const Node *const node) const //does not check if the key exist
   {
-    return true;
-  }
-  else
-  {
-    return false;
-  }
-}
-bool Tree::hasOnlyRightChild_(const Node *const node) const
-{
 
-  if (!node->left and node->right)
-  {
-    return true;
+    if (!node->left and !node->right)
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
   }
-  else
-  {
-    return false;
-  }
-}
 
-// Prints ----------------------------------------------------------------------
-void Tree::Print_(NodeUPtr &root)
-{
-  printPretty(root.get(), 1, 0, std::cout);
-}
+  bool Tree::hasTwoChildren_(const Node *const node) const
+  {
+
+    if (node->left and node->right)
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  }
+
+  bool Tree::hasOnlyLeftChild_(const Node *const node) const
+  {
+
+    if (node->left and !node->right)
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  }
+  bool Tree::hasOnlyRightChild_(const Node *const node) const
+  {
+
+    if (!node->left and node->right)
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  }
+
+  // Prints ----------------------------------------------------------------------
+  void Tree::Print_(NodeUPtr & root)
+  {
+    printPretty(root.get(), 1, 0, std::cout);
+  }
 
 // Print Error Function
 //
