@@ -104,7 +104,7 @@ void Tree::Print()
 }
 //PIRVATE   ====================================================================
 // Creation --------------------------------------------------------------------
-void Tree::InitiateTree_(const Data &entry) { root = AddNode_(entry); }
+void Tree::InitiateTree_(const Data &entry) { Add_(root, entry); }
 NodeUPtr Tree::AddNode_(const Data &entry) const
 {
   return std::make_unique<Node>(entry);
@@ -150,7 +150,7 @@ bool Tree::Add_(NodeUPtr &current_root, const Data &entry)
     return false;
   } // implemnt an error
 }
-//Change protottpye of the function to take only a node *
+// Change protottpye of the function to take only a node *
 bool Tree::Remove_(NodeUPtr &root, const Data &target)
 {
   // root case
@@ -256,8 +256,8 @@ bool Tree::RemoveNodeWithOnlyRightChild_(Node *node)
   return false;
 }
 // Other -----------------------------------------------------------------------
-Node *Tree::Find_(Node *const current_root, const Data &target) const // if the node is not
-//found it returns a nullptr , no error massage
+Node *Tree::Find_(Node *const current_root, const Data &target) const
+// if the node is not found it returns a nullptr , no error massage
 {
 
   if (!current_root)
@@ -284,7 +284,8 @@ Node *Tree::Find_(Node *const current_root, const Data &target) const // if the 
 }
 
 // Checks --------------------------------------------------------------------
-bool Tree::hasNoChildren_(const Node *const node) const //does not check if the key exist
+//does not check if the key exist
+bool Tree::hasNoChildren_(const Node *const node) const
 {
 
   if (!node->left and !node->right)
@@ -323,6 +324,7 @@ bool Tree::hasOnlyLeftChild_(const Node *const node) const
     return false;
   }
 }
+
 bool Tree::hasOnlyRightChild_(const Node *const node) const
 {
 
@@ -343,5 +345,3 @@ void Tree::Print_(NodeUPtr &root)
 }
 
 // Print Error Function
-//
-

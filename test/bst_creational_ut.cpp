@@ -220,10 +220,6 @@ TEST_F(BSTCreation, AddingNewRootNodeAfterEmptyingTheTree)
     ASSERT_TRUE(tree.Remove(6));
     ASSERT_TRUE(tree.Remove(4));
     ASSERT_TRUE(tree.Add(7));
-// ASSERT_EQ(tree.root->data,7);
-    //ASSERT_FALSE(tree.root->parent);
+    ASSERT_EQ(tree.root->data,7);
+    ASSERT_FALSE(tree.root->parent);
 }
-
-
-
-
