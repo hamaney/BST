@@ -14,7 +14,7 @@
 void print(std::string msg) { std::cout << msg << std::endl; }
 
 Tree::Tree(const Data &entry) { InitiateTree_(entry); }
-Tree::~Tree(){}
+Tree::~Tree() {}
 // Modify   --------------------------------------------------------------------
 bool Tree::Add(const Data &entry)
 {
@@ -113,11 +113,12 @@ NodeUPtr Tree::AddNode_(const Data &entry) const
 bool Tree::Add_(NodeUPtr &current_root, const Data &entry)
 {
   ////TODO: add a test case
-  if (!root){
-        root = AddNode_(entry);
-        return true;
-    }
-    
+  if (!root)
+  {
+    root = AddNode_(entry);
+    return true;
+  }
+
   else if (entry > current_root->data)
   {
     if (!current_root->right)
