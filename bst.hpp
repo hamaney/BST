@@ -10,10 +10,14 @@
 #define bst_hpp
 
 #include <iostream>
+#include <cstdio> // jsut for the debug printing1
 #include <memory>
 #include <cassert>
 #include "node.hpp"
 #include "print_tree.hpp"
+
+using std::cout;
+using std::endl;
 
 class Tree
 {

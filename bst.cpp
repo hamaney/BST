@@ -10,8 +10,11 @@
 
 // PUBLIC   ====================================================================
 // Creation --------------------------------------------------------------------
+
+void print(std::string msg) { std::cout << msg << std::endl; }
+
 Tree::Tree(const Data &entry) { InitiateTree_(entry); }
-Tree::~Tree() {}
+Tree::~Tree(){}
 // Modify   --------------------------------------------------------------------
 bool Tree::Add(const Data &entry)
 {
@@ -40,8 +43,7 @@ bool Tree::Remove(const Data &target)
   }
 }
 // Others ----------------------------------------------------------------------
-Node *
-Tree::Find(const Data &target) const
+Node *Tree::Find(const Data &target) const
 {
   return Find_(root.get(), target);
 }
@@ -110,9 +112,13 @@ NodeUPtr Tree::AddNode_(const Data &entry) const
 // Modify ----------------------------------------------------------------------
 bool Tree::Add_(NodeUPtr &current_root, const Data &entry)
 {
-  assert(current_root);
-
-  if (entry > current_root->data)
+  ////TODO: add a test case
+  if (!root){
+        root = AddNode_(entry);
+        return true;
+    }
+    
+  else if (entry > current_root->data)
   {
     if (!current_root->right)
     {
@@ -144,6 +150,7 @@ bool Tree::Add_(NodeUPtr &current_root, const Data &entry)
     return false;
   } // implemnt an error
 }
+//Change protottpye of the function to take only a node *
 bool Tree::Remove_(NodeUPtr &root, const Data &target)
 {
   // root case
@@ -171,7 +178,7 @@ bool Tree::Remove_(NodeUPtr &root, const Data &target)
     {
       assert(0);
       return false;
-    } // TODO: implemint error msg
+    } //// TODO: implemint error msg
   }
   else
   {
@@ -182,15 +189,25 @@ bool Tree::Remove_(NodeUPtr &root, const Data &target)
 bool Tree::RemoveNodeWithNoChildren_(Node *node)
 {
   auto node_parent = node->parent;
+
   if (node->is_left_node)
   {
-    node_parent->left.release();
+    node_parent->left.reset();
     return true;
   }
   else
   {
-    node_parent->right.release();
-    return true;
+    if (!node_parent || (node->data == root->data))
+    {
+      root.reset();
+      return true;
+    }
+    else
+    {
+
+      node_parent->right.reset();
+      return true;
+    }
   }
 }
 bool Tree::RemoveNodeWithTwoChildren_(Node *node)
@@ -204,212 +221,127 @@ bool Tree::RemoveNodeWithOnlyLeftChild_(Node *node)
 
   if (node->is_left_node)
   {
-    node_parent->left = std::move(node->left);
+    //node_parent->left = std::move(node->left);
+    node_parent->left.reset(node->left.release());
+    node_parent->left->parent = node_parent;
+    return true;
   }
   else
   {
-    node_parent->right = std::move(node->left);
+    //node_parent->right = std::move(node->left);
+    node_parent->right.reset(node->left.release());
+    node_parent->right->parent = node_parent;
+    return true;
+  }
+  return false;
+}
+bool Tree::RemoveNodeWithOnlyRightChild_(Node *node)
+{
+  Node *node_parent = node->parent;
+
+  if (node->is_left_node)
+  {
+    node_parent->left = std::move(node->right);
+    node_parent->left->parent = node_parent;
 
     return true;
   }
-  bool Tree::RemoveNodeWithOnlyRightChild_(Node * node)
+  else
   {
-    Node *node_parent = node->parent;
+    node_parent->right = std::move(node->right);
+    node_parent->right->parent = node_parent;
+    return true;
+  }
 
-    if (node->is_left_node)
-    {
-      node_parent->left = std::move(node->right);
-      return true;
-    }
-    else
-    {
-      node_parent->right = std::move(node->right);
-      return true;
-    }
+  return false;
+}
+// Other -----------------------------------------------------------------------
+Node *Tree::Find_(Node *const current_root, const Data &target) const // if the node is not
+//found it returns a nullptr , no error massage
+{
 
+  if (!current_root)
+  {
+    return nullptr;
+  }
+  else if (target > current_root->data)
+  {
+    return Find_(current_root->right.get(), target);
+  }
+  else if (target < current_root->data)
+  {
+    return Find_(current_root->left.get(), target);
+  }
+  else if (target == current_root->data)
+  {
+    return current_root;
+  }
+  else
+  {
+    assert(0);
+    return nullptr;
+  } // impliment
+}
+
+// Checks --------------------------------------------------------------------
+bool Tree::hasNoChildren_(const Node *const node) const //does not check if the key exist
+{
+
+  if (!node->left and !node->right)
+  {
+
+    return true;
+  }
+  else
+  {
     return false;
   }
-  // Other -----------------------------------------------------------------------
-  Node *
-  Tree::Find_(Node * const current_root, const Data &target) const // if the node is not
-  //found it returns a nullptr , no error massage
+}
+
+bool Tree::hasTwoChildren_(const Node *const node) const
+{
+
+  if (node->left and node->right)
   {
-
-    if (!current_root)
-    {
-      return nullptr;
-    }
-    else if (target > current_root->data)
-    {
-      return Find_(current_root->right.get(), target);
-    }
-    else if (target < current_root->data)
-    {
-      return Find_(current_root->left.get(), target);
-    }
-    else if (target == current_root->data)
-    {
-      return current_root;
-    }
-    else
-    {
-      assert(0);
-      return nullptr;
-    } // impliment
+    return true;
   }
-
-  // Checks --------------------------------------------------------------------
-  bool Tree::hasNoChildren_(const Node *const node) const //does not check if the key exist
+  else
   {
-
-    if (!node->left and !node->right)
-    {
-      return true;
-    }
-    else
-    {
-      return false;
-    }
+    return false;
   }
+}
 
-  bool Tree::hasTwoChildren_(const Node *const node) const
+bool Tree::hasOnlyLeftChild_(const Node *const node) const
+{
+
+  if (node->left and !node->right)
   {
-
-    if (node->left and node->right)
-    {
-      return true;
-    }
-    else
-    {
-      return false;
-    }
+    return true;
   }
-
-  bool Tree::hasOnlyLeftChild_(const Node *const node) const
+  else
   {
-
-    if (node->left and !node->right)
-    {
-      return true;
-    }
-    else
-    {
-      return false;
-    }
+    return false;
   }
-  bool Tree::hasOnlyRightChild_(const Node *const node) const
+}
+bool Tree::hasOnlyRightChild_(const Node *const node) const
+{
+
+  if (!node->left and node->right)
   {
-
-    if (!node->left and node->right)
-    {
-      return true;
-    }
-    else
-    {
-      return false;
-    }
+    return true;
   }
-
-  // Prints ----------------------------------------------------------------------
-  void Tree::Print_(NodeUPtr & root)
+  else
   {
-    printPretty(root.get(), 1, 0, std::cout);
+    return false;
   }
+}
+
+// Prints ----------------------------------------------------------------------
+void Tree::Print_(NodeUPtr &root)
+{
+  printPretty(root.get(), 1, 0, std::cout);
+}
 
 // Print Error Function
 //
 
-/*
- //#############################################################
-
- void Tree::Add(Data entry) {  // To do
-   // if (Exist(entry)) {
-   //  PrintErrorMSG_(KEntryExist);
-   //} else {
-   Add_(root, entry);
-   //}
- }
- Tree::Node* Tree::Find(Data key) { return Find_(root, key); }  // To Do
- bool Tree::Exist(Data entry) { return Find_(root, entry); }    // To do
- // void Tree::Remove(Data key) { Remove_(root, key); }
- // void Tree::PrintPreOrder() { PrintPreOrder_(root); }
- // void Tree::PrintInOrder() { PrintInOrder_(root); }
- // void Tree::PrintPostOrder() { PrintPostOrder_(root); }
-
- //#############################################################
-
- void Tree::InitTree_(Data entry) { root = AddNode_(entry); }
- void Tree::Add_(NodeUPtr& current_root, Data entry) {
-   if (entry == current_root->data) {
-     PrintErrorMSG_(KEntryExist);
-   } else if (entry < current_root->data) {
-     if (!current_root->left) {
-       current_root->left = AddNode_(entry);
-     } else {
-       Add_(current_root->left, entry);
-     }
-   } else if (entry > current_root->data) {
-     if (!current_root->right) {
-       current_root->right = AddNode_(entry);
-     } else {
-       Add_(current_root->right, entry);
-     }
-   }
- }
- Tree::NodeUPtr Tree::AddNode_(Data entry) {
-   return std::make_unique<Node>(entry);
- }
- Tree::Node* Tree::Find_(NodeUPtr& current_root, Data key) {
-   if (key == current_root->data) {
-     return current_root.get();  // .release ?
-   } else if ((key < current_root->data) && current_root->left) {
-     return Find_(current_root->left, key);
-   } else if ((key > current_root->data) && current_root->right) {
-     return Find_(current_root->right, key);
-   } else {
-     return nullptr;
-   }
- }
- // void Tree::Remove_(NodeUPtr& current_root, Data key) {  // Todo
- //}
- // void Tree::PrintPreOrder_(NodeUPtr& current_root) {
- //  if (current_root) {
- //    return;
- //  }
- //  std::cout << current_root->data << " " << std::endl;
- //  PrintPreOrder_(current_root->left);
- //  PrintPreOrder_(current_root->right);
- //}
- // void Tree::PrintInOrder_(NodeUPtr& current_root) {
- //  if (current_root) {
- //    return;
- //  }
- //  PrintInOrder_(current_root->left);
- //  std::cout << current_root->data << std::endl;
- //  PrintInOrder_(current_root->right);
- //}
- // void Tree::PrintPostOrder_(NodeUPtr& current_root) {
- //  if (current_root) {
- //    return;
- //  }
- //  PrintInOrder_(current_root->left);
- //
- //  PrintInOrder_(current_root->right);
- //
- //  std::cout << current_root->data << std::endl;
- //}
- void Tree::PrintErrorMSG_(ErrorType error) {
-   switch (error) {
-     case KEntryExist:
-       std::cerr << "The entry added already exists!" << std::endl;
-       exit(KEntryExist + 1);  // 1 at this time
-       break;
-
-     default:
-       std::cerr << "This should be an error please add an error msg!"
-                 << std::endl;
-       exit(-1);
-       break;
-   }
- }
- */

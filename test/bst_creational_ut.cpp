@@ -34,9 +34,9 @@ TEST_F(BSTCreation, AddingUniqueEntriesToTheTree)
   //
   //        ________[4]_______
   //       /                  \
-    //     _[2]__            __[6]_
+  //     _[2]__            __[6]_
   //    /      \          /      \
-    //  [1]      [3]      [5]      [7]
+  //  [1]      [3]      [5]      [7]
 
   Tree tree(4);
 
@@ -210,4 +210,20 @@ TEST_F(BSTCreation, AddingExistingEntryToTheTree)
   ASSERT_FALSE(tree.Add(1));
   ASSERT_FALSE(tree.Add(7));
 }
+
+TEST_F(BSTCreation, AddingNewRootNodeAfterEmptyingTheTree)
+{
+    Tree tree(4);
+    tree.Add(2);
+    tree.Add(6);
+    ASSERT_TRUE(tree.Remove(2));
+    ASSERT_TRUE(tree.Remove(6));
+    ASSERT_TRUE(tree.Remove(4));
+    ASSERT_TRUE(tree.Add(7));
+// ASSERT_EQ(tree.root->data,7);
+    //ASSERT_FALSE(tree.root->parent);
+}
+
+
+
 

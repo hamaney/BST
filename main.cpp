@@ -10,13 +10,14 @@
 #include "bst.hpp"
 int main(int argc, const char *argv[])
 {
-    std::cout << "heloo world" << std::endl;
+    //std::cout << "heloo world" << std::endl;
     
-    int i = 1;
+    int i = 1000000000000000000;
     
-    while(i--){
     
+    int* x = new int(5);
     Tree tree(4);
+    while(i--){
     tree.Add(2);
     tree.Add(6);
     tree.Add(1);
@@ -24,25 +25,21 @@ int main(int argc, const char *argv[])
     tree.Add(5);
     tree.Add(7);
     
-        //tree.Print();
+        tree.Print();
         tree.Remove(3);
         tree.Print();
         tree.Remove(2);
         tree.Print();
-        tree.Remove(7);
+        tree.Remove(1);
+        tree.Print();
+        tree.Remove(5);
         tree.Print();
         tree.Remove(6);
         tree.Print();
+        tree.Remove(7);
+        tree.Print();
         tree.Remove(4);
         tree.Print();
-        //tree.Remove(6);
-        //tree.Print();
-        //tree.Remove(4);
-        //tree.Print();
-        
-        
-        
-        
         
         
     }
