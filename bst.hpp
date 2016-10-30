@@ -29,6 +29,8 @@ public:
   // Modify
   bool Add(const Data &entry);
   bool Remove(const Data &target);
+  Data Min(void) const;
+  Data Max(void) const;
   // Other
   Node *Find(const Data &target) const;
   // Checks
@@ -53,7 +55,9 @@ private:
   bool RemoveNodeWithOnlyRightChild_(Node *node);
 
   // Other
-  Node *Find_(Node *const current_root, const Data &target) const;
+  Node *Find_(Node *const current_root, const Data &target) const; // why mot const node * const ?
+  Node *FindMin_( Node *const current_root) const;
+  Node *FindMax_( Node *const current_root) const;
   // Checks
   bool hasNoChildren_(const Node *const) const;
   bool hasTwoChildren_(const Node *const) const;

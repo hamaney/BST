@@ -28,6 +28,7 @@ bool Tree::Add(const Data &entry)
     return false;
   }
 }
+
 bool Tree::Remove(const Data &target)
 {
   const Node *const node_found = Find_(root.get(), target);
@@ -42,6 +43,19 @@ bool Tree::Remove(const Data &target)
     return false;
   }
 }
+
+Data Tree::Min(void) const
+{
+  Node *min_node = FindMin_(root.get());
+  return min_node->data;
+}
+
+Data Tree::Max(void) const
+{
+  Node *max_node = FindMax_(root.get());
+  return max_node->data;
+}
+
 // Others ----------------------------------------------------------------------
 Node *Tree::Find(const Data &target) const
 {
@@ -190,22 +204,20 @@ bool Tree::RemoveNodeWithNoChildren_(Node *node)
 {
   auto node_parent = node->parent;
 
-  if (node->is_left_node)
+  if (!node_parent || (node->data == root->data))
   {
-    node_parent->left.reset();
+    root.reset();
     return true;
   }
   else
   {
-    //root node case
-    if (!node_parent || (node->data == root->data))
+    if (node->is_left_node)
     {
-      root.reset();
+      node_parent->left.reset();
       return true;
     }
     else
     {
-
       node_parent->right.reset();
       return true;
     }
@@ -228,15 +240,16 @@ bool Tree::RemoveNodeWithOnlyLeftChild_(Node *node)
   {
     if (node->is_left_node)
     {
-      //node_parent->left = std::move(node->left);
-      node_parent->left.reset(node->left.release());
+      node_parent->left = std::move(node->left);
+      //node_parent->left.reset(node->left.release());
       node_parent->left->parent = node_parent;
       return true;
     }
     else
     {
+
       //node_parent->right = std::move(node->left);
-      node_parent->right.reset(node->left.release());
+      node_parent->right = std::move(node->left);
       node_parent->right->parent = node_parent;
       return true;
     }
@@ -270,7 +283,6 @@ bool Tree::RemoveNodeWithOnlyRightChild_(Node *node)
 Node *Tree::Find_(Node *const current_root, const Data &target) const
 // if the node is not found it returns a nullptr , no error massage
 {
-
   if (!current_root)
   {
     return nullptr;
@@ -292,6 +304,30 @@ Node *Tree::Find_(Node *const current_root, const Data &target) const
     assert(0);
     return nullptr;
   } // impliment
+}
+
+Node *Tree::FindMin_(Node *const current_node) const
+{
+  if (!current_node->left)
+  {
+    return current_node;
+  }
+  else
+  {
+    return FindMin_(current_node->left.get());
+  }
+}
+
+Node *Tree::FindMax_(Node *const current_node) const
+{
+  if (!current_node->right)
+  {
+    return current_node;
+  }
+  else
+  {
+    return FindMax_(current_node->right.get());
+  }
 }
 
 // Checks --------------------------------------------------------------------
