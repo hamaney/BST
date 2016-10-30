@@ -10,10 +10,9 @@
 #include "bst.hpp"
 #include "gtest/gtest.h"
 
-
 class BSTSearching : public ::testing::Test
 {
-public:
+  public:
     virtual void SetUp()
     {
         tree.root->data = 4;
@@ -58,67 +57,28 @@ TEST_F(BSTSearching, CheckingIfValueExistsInTree)
 
 TEST_F(BSTSearching, FindingTheMinValueInTree)
 {
-    ASSERT_EQ(tree.Min(),1);
+    ASSERT_EQ(tree.Min(), 1);
     ASSERT_TRUE(tree.Remove(1));
-    ASSERT_EQ(tree.Min(),2);
+    ASSERT_EQ(tree.Min(), 2);
     ASSERT_TRUE(tree.Remove(3));
-    ASSERT_EQ(tree.Min(),2);
+    ASSERT_EQ(tree.Min(), 2);
     ASSERT_TRUE(tree.Remove(2));
-    ASSERT_EQ(tree.Min(),4);
+    ASSERT_EQ(tree.Min(), 4);
     ASSERT_TRUE(tree.Add(0));
     ASSERT_EQ(tree.Min(), 0);
 }
 
 TEST_F(BSTSearching, FindingTheMaxValueInTree)
 {
-    
-    cout << "######################################### DEBUG HERE ONLY" << endl;
-    ASSERT_EQ(tree.Max(),7);
+    ASSERT_EQ(tree.Max(), 7);
     ASSERT_TRUE(tree.Remove(7));
-    tree.Print();
-    ASSERT_EQ(tree.Max(),6);
-    
-    if(1){
+    ASSERT_EQ(tree.Max(), 6);
     ASSERT_TRUE(tree.Remove(6));
-        cout <<"tree.Remove(6)" <<endl;
-    tree.Print();
-    ASSERT_EQ(tree.Max(),5);
-        ASSERT_TRUE(tree.Remove(5));
-        cout <<"tree.Remove(5)" <<endl;
-        tree.Print();
-
-    
-    //ASSERT_EQ(tree.root, 4);
-    //ASSERT_EQ(tree.root->left->data, 2);
-    } else{
-    
-    
-    
-        ASSERT_TRUE(tree.Remove(5));
-        cout <<"tree.Remove(5)" <<endl;
-        tree.Print();
-        ASSERT_EQ(tree.Max(),6);
-        ASSERT_TRUE(tree.Remove(6));
-        cout <<"tree.Remove(6)" <<endl;
-        tree.Print();
-
-    
-    
-    }
-    
-    
-    
-    //ASSERT_TRUE(tree.Remove(5));
-    cout << endl;
-    cout << "Final" <<endl;
-    tree.Print();
-    
-    //ASSERT_EQ(tree.root->left->data, 2);
-    cout << "######################################### END OF DEBUGING" << endl;
-    
-    //ASSERT_EQ(tree.Max(),4);
-    //ASSERT_TRUE(tree.Add(99));
-    //ASSERT_EQ(tree.Max(), 99);
+    ASSERT_EQ(tree.Max(), 5);
+    ASSERT_TRUE(tree.Remove(5));
+    ASSERT_EQ(tree.Max(),4);
+    ASSERT_TRUE(tree.Add(99));
+    ASSERT_EQ(tree.Max(), 99);
 }
 
 //
@@ -128,5 +88,3 @@ TEST_F(BSTSearching, FindingTheMaxValueInTree)
 //    /      \          /      \
 //  [1]      [3]      [5]      [7]
 //
-
-

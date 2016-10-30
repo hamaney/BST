@@ -122,7 +122,8 @@ TEST_F(BSTNodeRemoval, RemoveNodeWithOnlyLeftChild)
     ASSERT_EQ(tree.Find(11)->parent->left->data, 1);
     // check the new node
     ASSERT_EQ(tree.Find(1)->parent->data, 7);
-
+    ASSERT_TRUE(tree.Find(1)->is_left_node);
+    
     //--------------------------------------------------------------------------
 
     //        ________[7]X
@@ -135,6 +136,9 @@ TEST_F(BSTNodeRemoval, RemoveNodeWithOnlyLeftChild)
     //        ________[1]
     //       /
     ASSERT_EQ(tree_with_root_that_has_only_left_child.root->data, 1);
+    
+    ASSERT_FALSE(tree_with_root_that_has_only_left_child.root->parent);
+    ASSERT_FALSE(tree_with_root_that_has_only_left_child.root->is_left_node);
 }
 
 TEST_F(BSTNodeRemoval, RemoveNodeWithOnlyRightChild)
@@ -172,7 +176,7 @@ TEST_F(BSTNodeRemoval, RemoveNodeWithOnlyRightChild)
     ASSERT_EQ(tree.Find(11)->parent->left->data, 5);
     // check the new node
     ASSERT_EQ(tree.Find(5)->parent->data, 7);
-
+    ASSERT_TRUE(tree.Find(5)->is_left_node);
     //--------------------------------------------------------------------------
 
     //        ________[7]X____
@@ -185,5 +189,6 @@ TEST_F(BSTNodeRemoval, RemoveNodeWithOnlyRightChild)
     //        ________[1]
     //       /
 
-    ASSERT_EQ(tree_with_root_that_has_only_right_child.root->data, 11);
-}
+    ASSERT_EQ   (tree_with_root_that_has_only_right_child.root->data, 11);
+    ASSERT_FALSE(tree_with_root_that_has_only_right_child.root->parent);
+    ASSERT_FALSE(tree_with_root_that_has_only_right_child.root->is_left_node);}
