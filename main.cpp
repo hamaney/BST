@@ -12,35 +12,13 @@ int main(int argc, const char *argv[])
 {
     //std::cout << "heloo world" << std::endl;
     
-    int i = 100000;
-    
-    
-    int* x = new int(5);
+    int i = 10000000;
     Tree tree(4);
-    while(i--){
-        int* x = new int(5);
     tree.Add(2);
-    tree.Add(6);
-    tree.Add(1);
-    tree.Add(3);
-    tree.Add(5);
-    tree.Add(7);
     
-        tree.Print();
-        tree.Remove(3);
-        tree.Print();
-        tree.Remove(2);
-        tree.Print();
-        tree.Remove(1);
-        tree.Print();
-        tree.Remove(5);
-        tree.Print();
-        tree.Remove(6);
-        tree.Print();
-        tree.Remove(7);
-        tree.Print();
+    while(i--){
+        
         tree.Remove(4);
-        tree.Print();
         
     }
     return 0;

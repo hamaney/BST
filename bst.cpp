@@ -151,10 +151,9 @@ bool Tree::Add_(NodeUPtr &current_root, const Data &entry)
     return false;
   } // implemnt an error
 }
-// Change protottpye of the function to take only a node *
+////TODO: Change protottpye of the function to take only a node *
 bool Tree::Remove_(NodeUPtr &root, const Data &target)
 {
-  // root case
 
   auto found_node = Find_(root.get(), target);
   if (found_node)
@@ -198,6 +197,7 @@ bool Tree::RemoveNodeWithNoChildren_(Node *node)
   }
   else
   {
+    //root node case
     if (!node_parent || (node->data == root->data))
     {
       root.reset();
@@ -219,42 +219,52 @@ bool Tree::RemoveNodeWithTwoChildren_(Node *node)
 bool Tree::RemoveNodeWithOnlyLeftChild_(Node *node)
 {
   Node *node_parent = node->parent;
-
-  if (node->is_left_node)
+  if (!node_parent)
   {
-    //node_parent->left = std::move(node->left);
-    node_parent->left.reset(node->left.release());
-    node_parent->left->parent = node_parent;
+    root = std::move(root->left);
     return true;
   }
   else
   {
-    //node_parent->right = std::move(node->left);
-    node_parent->right.reset(node->left.release());
-    node_parent->right->parent = node_parent;
-    return true;
+    if (node->is_left_node)
+    {
+      //node_parent->left = std::move(node->left);
+      node_parent->left.reset(node->left.release());
+      node_parent->left->parent = node_parent;
+      return true;
+    }
+    else
+    {
+      //node_parent->right = std::move(node->left);
+      node_parent->right.reset(node->left.release());
+      node_parent->right->parent = node_parent;
+      return true;
+    }
   }
-  return false;
 }
 bool Tree::RemoveNodeWithOnlyRightChild_(Node *node)
 {
   Node *node_parent = node->parent;
-
-  if (node->is_left_node)
+  if (!node_parent)
   {
-    node_parent->left = std::move(node->right);
-    node_parent->left->parent = node_parent;
-
+    root = std::move(root->right);
     return true;
   }
   else
   {
-    node_parent->right = std::move(node->right);
-    node_parent->right->parent = node_parent;
-    return true;
+    if (node->is_left_node)
+    {
+      node_parent->left = std::move(node->right);
+      node_parent->left->parent = node_parent;
+      return true;
+    }
+    else
+    {
+      node_parent->right = std::move(node->right);
+      node_parent->right->parent = node_parent;
+      return true;
+    }
   }
-
-  return false;
 }
 // Other -----------------------------------------------------------------------
 Node *Tree::Find_(Node *const current_root, const Data &target) const
@@ -288,55 +298,23 @@ Node *Tree::Find_(Node *const current_root, const Data &target) const
 //does not check if the key exist
 bool Tree::hasNoChildren_(const Node *const node) const
 {
-
-  if (!node->left and !node->right)
-  {
-
-    return true;
-  }
-  else
-  {
-    return false;
-  }
+  return (!node->left and !node->right);
 }
 
 bool Tree::hasTwoChildren_(const Node *const node) const
 {
-
-  if (node->left and node->right)
-  {
-    return true;
-  }
-  else
-  {
-    return false;
-  }
+  return (node->left and node->right);
 }
 
 bool Tree::hasOnlyLeftChild_(const Node *const node) const
 {
-
-  if (node->left and !node->right)
-  {
-    return true;
-  }
-  else
-  {
-    return false;
-  }
+  return (node->left and !node->right);
 }
 
 bool Tree::hasOnlyRightChild_(const Node *const node) const
 {
 
-  if (!node->left and node->right)
-  {
-    return true;
-  }
-  else
-  {
-    return false;
-  }
+  return (!node->left and node->right);
 }
 
 // Prints ----------------------------------------------------------------------
