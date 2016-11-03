@@ -123,7 +123,7 @@ TEST_F(BSTNodeRemoval, RemoveNodeWithOnlyLeftChild)
     // check the new node
     ASSERT_EQ(tree.Find(1)->parent->data, 7);
     ASSERT_TRUE(tree.Find(1)->is_left_node);
-    
+
     //--------------------------------------------------------------------------
 
     //        ________[7]X
@@ -136,7 +136,7 @@ TEST_F(BSTNodeRemoval, RemoveNodeWithOnlyLeftChild)
     //        ________[1]
     //       /
     ASSERT_EQ(tree_with_root_that_has_only_left_child.root->data, 1);
-    
+
     ASSERT_FALSE(tree_with_root_that_has_only_left_child.root->parent);
     ASSERT_FALSE(tree_with_root_that_has_only_left_child.root->is_left_node);
 }
@@ -189,6 +189,188 @@ TEST_F(BSTNodeRemoval, RemoveNodeWithOnlyRightChild)
     //        ________[1]
     //       /
 
-    ASSERT_EQ   (tree_with_root_that_has_only_right_child.root->data, 11);
+    ASSERT_EQ(tree_with_root_that_has_only_right_child.root->data, 11);
     ASSERT_FALSE(tree_with_root_that_has_only_right_child.root->parent);
-    ASSERT_FALSE(tree_with_root_that_has_only_right_child.root->is_left_node);}
+    ASSERT_FALSE(tree_with_root_that_has_only_right_child.root->is_left_node);
+}
+
+TEST_F(BSTNodeRemoval, RemoveNodeWithTwoChildrenNodeIsALeftChild)
+{
+    //        ________[7]_______
+    //       /                  \
+    //     _[3]X_            __[11]_
+    //    /      \          /       \
+    //  [1]      [5]      [9]       [13]
+
+    ASSERT_TRUE(tree.Remove(3));
+    ASSERT_FALSE(tree.Find(3));
+    //        ________[7]_______
+    //       /                  \
+    //     _[5]              __[11]_
+    //    /                 /       \
+    //   [1]             [9]       [13]
+    //Checks the tree status after removing the node
+    //parent status after removing
+    ASSERT_EQ(tree.Find(7)->left->data, 5);
+    ASSERT_FALSE(tree.Find(7)->parent);
+    ASSERT_FALSE(tree.Find(7)->is_left_node);
+    //Sibling status after removing
+    ASSERT_EQ(tree.Find(1)->parent->data, 5);
+    ASSERT_TRUE(tree.Find(1)->is_left_node);
+    // check the new node
+    ASSERT_EQ(tree.Find(5)->parent->data, 7);
+    ASSERT_TRUE(tree.Find(5)->is_left_node);
+    ASSERT_TRUE(tree.Find(5)->left);
+    ASSERT_FALSE(tree.Find(5)->right);
+}
+TEST_F(BSTNodeRemoval, RemoveNodeWithTwoChildrenNodeIsARighttChild)
+{
+
+    //        ________[7]_______
+    //       /                  \
+    //     _[3]__            __[11]X_
+    //    /      \          /       \
+    //  [1]      [5]      [9]       [13]
+    ASSERT_TRUE(tree.Remove(11));
+    ASSERT_FALSE(tree.Find(11));
+    //        ________[7]_______
+    //       /                  \
+    //     _[3]_               [13]
+    //    /     \             /
+    //  [1]      [5]        [9]
+    //Checks the tree status after removing the node
+    //parent status after removing
+    ASSERT_FALSE(tree.Find(7)->parent);
+    ASSERT_EQ(tree.Find(7)->right->data, 13);
+    ASSERT_EQ(tree.Find(7)->left->data, 3);
+    ASSERT_FALSE(tree.Find(7)->is_left_node);
+    //Sibling status after removing
+    ASSERT_EQ(tree.Find(3)->parent->data, 7);
+    ASSERT_TRUE(tree.Find(3)->is_left_node);
+    // check the new node
+    ASSERT_EQ(tree.Find(13)->parent->data, 7);
+    ASSERT_FALSE(tree.Find(13)->right);
+    ASSERT_EQ(tree.Find(13)->left->data, 9);
+    ASSERT_FALSE(tree.Find(13)->is_left_node);
+}
+
+
+
+TEST_F(BSTNodeRemoval, RemoveNodeWithTwoChildrenNodeIsTheRoot)
+{
+    
+    //        ________[7]X______
+    //       /                  \
+    //     _[3]__            __[11]_
+    //    /      \          /       \
+    //  [1]      [5]      [9]       [13]
+    
+    ASSERT_TRUE(tree.Remove(7));
+    ASSERT_FALSE(tree.Find(7));
+    //        ________[9]_______
+    //       /                  \
+    //     _[3]__              [11]_
+    //    /      \                  \
+    //  [1]      [5]                [13]
+    //Checks the tree status after removing the node
+    //parent status after removing
+    ASSERT_FALSE(tree.root->parent);
+    ASSERT_EQ(tree.root->data, 9);
+    ASSERT_EQ(tree.root->left->data, 3);
+    ASSERT_EQ(tree.root->right->data, 11);
+    ASSERT_FALSE(tree.root->is_left_node);
+    //Child status after removing
+    ASSERT_EQ(tree.Find(3)->parent->data, 9);
+    ASSERT_EQ(tree.Find(3)->left->data, 1);
+    ASSERT_EQ(tree.Find(3)->right->data, 5);
+    ASSERT_TRUE(tree.Find(3)->is_left_node);
+    ASSERT_EQ(tree.Find(11)->parent->data, 9);
+    ASSERT_EQ(tree.Find(11)->right->data, 13);
+    ASSERT_FALSE(tree.Find(11)->left);
+    ASSERT_FALSE(tree.Find(11)->is_left_node);
+    
+}
+
+TEST_F(BSTNodeRemoval, RemoveNodeWithTwoChildrenHasRecursaiveCallToRemove)
+{
+
+    //        ________[7]_______
+    //       /                  \
+    //     _[3]__            __[11]_
+    //    /      \          /       \
+    //  [1]      [5]      [9]       [13]
+    ASSERT_TRUE(tree.Add(2));
+    ASSERT_TRUE(tree.Find(2));
+    ASSERT_TRUE(tree.Add(4));
+    ASSERT_TRUE(tree.Find(4));
+    ASSERT_TRUE(tree.Add(6));
+    ASSERT_TRUE(tree.Find(6));
+    ASSERT_TRUE(tree.Add(8));
+    ASSERT_TRUE(tree.Find(8));
+    ASSERT_TRUE(tree.Add(10));
+    ASSERT_TRUE(tree.Find(10));
+    ASSERT_TRUE(tree.Add(14));
+    ASSERT_TRUE(tree.Find(14));
+    //        ________[7]_______
+    //       /                  \
+    //     _[3]X_            __[11]X
+    //    /      \          /       \
+    //  [1]     _[5]_     [9]       [13]
+    //    \    /     \    /  \         \
+    //    [2] [4]   [6]  [8] [10]     [14]
+    ASSERT_TRUE(tree.Remove(3));
+    ASSERT_FALSE(tree.Find(3));
+    /*        ________[7]_______
+    //       /                  \
+    //     _[4]_             _[11]_
+    //    /      \          /       \
+    //  [1]      [5]_     [9]       [13]
+    //    \          \    /  \         \ 
+    //    [2]       [6]  [8] [10]     [14]
+    */
+     //Checks the tree status after removing the node
+    //parent status after removing 3
+    ASSERT_FALSE(tree.Find(7)->parent);
+    ASSERT_EQ(tree.Find(7)->left->data, 4);
+    ASSERT_EQ(tree.Find(7)->right->data, 11);
+    ASSERT_FALSE(tree.Find(7)->is_left_node);
+    // Sibling status after removing 3
+    ASSERT_EQ(tree.Find(11)->parent->data, 7);
+    ASSERT_FALSE(tree.Find(11)->is_left_node);
+    // Check the new node instead of 3
+    ASSERT_EQ(tree.Find(4)->parent->data, 7);
+    ASSERT_EQ(tree.Find(4)->left->data, 1);
+    ASSERT_EQ(tree.Find(4)->right->data, 5);
+    ASSERT_TRUE(tree.Find(4)->is_left_node);
+
+    //        ________[7]_______
+    //       /                  \
+    //     _[4]_             _[11]X
+    //    /      \          /       \
+    //  [1]      [5]_     [9]       [13]
+    //    \          \    /  \         \
+    //    [2]       [6]  [8] [10]     [14]
+
+    ASSERT_TRUE(tree.Remove(11));
+    ASSERT_FALSE(tree.Find(11));
+    //        ________[7]_______
+    //       /                  \
+    //     _[4]_             _[13]_
+    //    /      \          /       \
+    //  [1]      [5]_     [9]       [14]
+    //    \          \    /  \          
+    //    [2]       [6]  [8] [10]
+    //parent status after removing 11
+    ASSERT_FALSE(tree.Find(7)->parent);
+    ASSERT_EQ(tree.Find(7)->left->data, 4);
+    ASSERT_EQ(tree.Find(7)->right->data, 13);
+    ASSERT_FALSE(tree.Find(7)->is_left_node);
+    //Sibling status after removing 11
+    ASSERT_EQ(tree.Find(4)->parent->data, 7);
+    ASSERT_TRUE(tree.Find(4)->is_left_node);
+    // check the new node instead of 11
+    ASSERT_EQ(tree.Find(13)->parent->data, 7);
+    ASSERT_EQ(tree.Find(13)->left->data, 9);
+    ASSERT_EQ(tree.Find(13)->right->data, 14);
+    ASSERT_FALSE(tree.Find(13)->is_left_node);
+}

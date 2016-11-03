@@ -76,15 +76,7 @@ TEST_F(BSTSearching, FindingTheMaxValueInTree)
     ASSERT_TRUE(tree.Remove(6));
     ASSERT_EQ(tree.Max(), 5);
     ASSERT_TRUE(tree.Remove(5));
-    ASSERT_EQ(tree.Max(),4);
+    ASSERT_EQ(tree.Max(), 4);
     ASSERT_TRUE(tree.Add(99));
     ASSERT_EQ(tree.Max(), 99);
 }
-
-//
-//        ________[4]_______
-//       /                  \
-//     _[2]__            __[6]_
-//    /      \          /      \
-//  [1]      [3]      [5]      [7]
-//

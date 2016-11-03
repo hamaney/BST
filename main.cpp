@@ -10,24 +10,25 @@
 #include "bst.hpp"
 int main(int argc, const char *argv[])
 {
-    //std::cout << "heloo world" << std::endl;
-    
-    int i = 10000000;
-    Tree tree(4);
-    tree.Add(2);
-    
-    while(i--){
-        
-        tree.Remove(4);
-        
-    }
+    Tree tree(7);
+    tree.Add(3);
+    tree.Add(11);
+    tree.Add(1);
+    tree.Add(5);
+    tree.Add(9);
+    tree.Add(13);
+    tree.Print();
+    tree.Remove(7);
+    cout << " DONE " << endl;
+    tree.Print();
+    //
+    //        ________[7]_______
+    //       /                  \
+        //     _[3]__            __[11]_
+    //    /      \          /       \
+        //  [1]      [5]      [9]       [13]
+    //
+
+    cout << " DONE " << endl;
     return 0;
 }
-
-// will test this tree (final shape)
-//
-//        ________[4]_______
-//       /                  \
-//     _[2]__            __[6]_
-//    /      \          /      \
-//  [1]      [3]      [5]      [7]

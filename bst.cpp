@@ -1,5 +1,5 @@
 //
-//  BST.cpp
+//  bst.cpp
 //  BST
 //
 //  Created by Abdulrhman Mohamed on 2016-09-28.
@@ -31,10 +31,10 @@ bool Tree::Add(const Data &entry)
 
 bool Tree::Remove(const Data &target)
 {
-  const Node *const node_found = Find_(root.get(), target);
+  Node *node_found = Find_(root.get(), target);
   if (node_found)
   {
-    return Remove_(root, target);
+    return Remove_(node_found);
   }
   //nonexisting target will return false
   //faling to remove a node will return flase
@@ -165,29 +165,29 @@ bool Tree::Add_(NodeUPtr &current_root, const Data &entry)
     return false;
   } // implemnt an error
 }
-////TODO: Change protottpye of the function to take only a node *
-bool Tree::Remove_(NodeUPtr &root, const Data &target)
+
+bool Tree::Remove_(Node *node_to_remove)
 {
 
-  auto found_node = Find_(root.get(), target);
-  if (found_node)
+  if (node_to_remove)
   {
-    if (hasNoChildren_(found_node))
-        
+    if (hasNoChildren_(node_to_remove))
+
     {
-      return RemoveNodeWithNoChildren_(found_node);
+
+      return RemoveNodeWithNoChildren_(node_to_remove);
     }
-    else if (hasTwoChildren_(found_node))
+    else if (hasTwoChildren_(node_to_remove))
     {
-      return RemoveNodeWithTwoChildren_(found_node);
+      return RemoveNodeWithTwoChildren_(node_to_remove);
     }
-    else if (hasOnlyLeftChild_(found_node))
+    else if (hasOnlyLeftChild_(node_to_remove))
     {
-      return RemoveNodeWithOnlyLeftChild_(found_node);
+      return RemoveNodeWithOnlyLeftChild_(node_to_remove);
     }
-    else if (hasOnlyRightChild_(found_node))
+    else if (hasOnlyRightChild_(node_to_remove))
     {
-      return RemoveNodeWithOnlyRightChild_(found_node);
+      return RemoveNodeWithOnlyRightChild_(node_to_remove);
     }
     else
     {
@@ -201,18 +201,18 @@ bool Tree::Remove_(NodeUPtr &root, const Data &target)
   }
 }
 // Other -----------------------------------------------------------------------
-bool Tree::RemoveNodeWithNoChildren_(Node *node)
+bool Tree::RemoveNodeWithNoChildren_(Node *node_to_remove)
 {
-  auto parent = node->parent;
+  auto parent = node_to_remove->parent;
 
-  if (!parent || (node->data == root->data))
+  if (!parent)
   {
     root.reset();
     return true;
   }
   else
   {
-    if (node->is_left_node)
+    if (node_to_remove->is_left_node)
     {
       parent->left.reset();
       return true;
@@ -224,33 +224,36 @@ bool Tree::RemoveNodeWithNoChildren_(Node *node)
     }
   }
 }
-bool Tree::RemoveNodeWithTwoChildren_(Node *node)
-{
 
-  return false;
-}
-bool Tree::RemoveNodeWithOnlyLeftChild_(Node *node)
+bool Tree::RemoveNodeWithTwoChildren_(Node *node_to_remove)
 {
-  Node *parent = node->parent;
-  
-    if (!parent)
+  Node *right_branch_min_value_node = FindMin_(node_to_remove->right.get());
+  node_to_remove->data = right_branch_min_value_node->data;
+  return Remove_(right_branch_min_value_node);
+}
+
+bool Tree::RemoveNodeWithOnlyLeftChild_(Node *node_to_remove)
+{
+  Node *parent = node_to_remove->parent;
+
+  if (!parent)
   {
     root = std::move(root->left);
-      root->parent = nullptr;
-      root->is_left_node = false;
-      return true;
+    root->parent = nullptr;
+    root->is_left_node = false;
+    return true;
   }
   else
   {
-    if (node->is_left_node)
+    if (node_to_remove->is_left_node)
     {
-      parent->left = std::move(node->left);
+      parent->left = std::move(node_to_remove->left);
       parent->left->parent = parent;
       return true;
     }
     else
     {
-      parent->right = std::move(node->left);
+      parent->right = std::move(node_to_remove->left);
       parent->right->parent = parent;
       parent->right->is_left_node = false;
       return true;
@@ -258,28 +261,28 @@ bool Tree::RemoveNodeWithOnlyLeftChild_(Node *node)
   }
 }
 
-bool Tree::RemoveNodeWithOnlyRightChild_(Node *node)
+bool Tree::RemoveNodeWithOnlyRightChild_(Node *node_to_remove)
 {
-  Node *parent = node->parent;
+  Node *parent = node_to_remove->parent;
   if (!parent)
   {
     root = std::move(root->right);
-      root->parent = nullptr;
-      root->is_left_node = false;
-      return true;
+    root->parent = nullptr;
+    root->is_left_node = false;
+    return true;
   }
   else
   {
-    if (node->is_left_node)
+    if (node_to_remove->is_left_node)
     {
-      parent->left = std::move(node->right);
+      parent->left = std::move(node_to_remove->right);
       parent->left->parent = parent;
       parent->left->is_left_node = true;
       return true;
     }
     else
     {
-      parent->right = std::move(node->right);
+      parent->right = std::move(node_to_remove->right);
       parent->right->parent = parent;
       return true;
     }
