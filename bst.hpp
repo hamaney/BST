@@ -6,22 +6,28 @@
 //  Copyright © 2016 Abdulrhman Mohamed. All rights reserved.
 //
 
+/*
+ 
+ ////TODO
+- prevent acceing root members when root is deleted
+-
+ */
+
 #ifndef bst_hpp
 #define bst_hpp
 
-#include <iostream>
-#include <cstdio> // jsut for the debug printing1
-#include <memory>
 #include <cassert>
+#include <cstdio>  // jsut for the debug printing1
+#include <iostream>
+#include <memory>
 #include "node.hpp"
 #include "print_tree.hpp"
 
 using std::cout;
 using std::endl;
 
-class Tree
-{
-public:
+class Tree {
+ public:
   // Creation
   Tree(const Data &entry = 0);
   ~Tree();
@@ -42,7 +48,7 @@ public:
   // Prints
   void Print();
 
-private:
+ private:
   // Creation
   void InitiateTree_(const Data &entry = 0);
   // Modify
@@ -53,7 +59,6 @@ private:
   bool RemoveNodeWithTwoChildren_(Node *node_to_remove);
   bool RemoveNodeWithOnlyLeftChild_(Node *node_to_remove);
   bool RemoveNodeWithOnlyRightChild_(Node *node_to_remove);
-
   // Other
   Node *Find_(Node *const current_root, const Data &target) const;
   Node *FindMin_(Node *const current_root) const;
@@ -63,6 +68,15 @@ private:
   bool hasTwoChildren_(const Node *const) const;
   bool hasOnlyLeftChild_(const Node *const) const;
   bool hasOnlyRightChild_(const Node *const) const;
+  // Helpers
+  // Node Height Updater
+  Height UpdateHeightOf_(Node *node);
+  
+    //Future
+    //Height UpdateHeightWhenLeftTreeIsModified_(Node *node);
+  //Height UpdateHeightWhenRightTreeIsModified_(Node *node);
+  void IncreaseParentHeightOf_(Node *node);
+  void DecreaseParentHeightOf_(Node *node);
   // Prints
   void Print_(NodeUPtr &root);
 };

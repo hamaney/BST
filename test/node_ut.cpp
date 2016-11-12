@@ -26,6 +26,7 @@ TEST_F(NodeCreation, NodeConstructionDefaultValue)
     ASSERT_FALSE(node.left);
     ASSERT_FALSE(node.right);
     ASSERT_FALSE(node.is_left_node);
+    ASSERT_EQ(node.height, 0 );
     Node node_with_initial_value(1);
     ASSERT_EQ(node_with_initial_value.data, 1);
 }

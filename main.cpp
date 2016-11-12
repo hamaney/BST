@@ -8,27 +8,36 @@
 
 #include <iostream>
 #include "bst.hpp"
-int main(int argc, const char *argv[])
-{
-    Tree tree(7);
-    tree.Add(3);
-    tree.Add(11);
-    tree.Add(1);
-    tree.Add(5);
-    tree.Add(9);
-    tree.Add(13);
-    tree.Print();
-    tree.Remove(7);
-    cout << " DONE " << endl;
-    tree.Print();
-    //
-    //        ________[7]_______
-    //       /                  \
-        //     _[3]__            __[11]_
-    //    /      \          /       \
-        //  [1]      [5]      [9]       [13]
-    //
 
-    cout << " DONE " << endl;
-    return 0;
+using std::cout;
+using std::endl;
+
+int main(int argc, const char* argv[]) {
+  Tree tree(7);
+  tree.Print();
+  tree.Add(3);
+  tree.Print();
+  tree.Add(11);
+  tree.Print();
+  tree.Add(1);
+  tree.Print();
+  tree.Add(5);
+  tree.Print();
+  tree.Add(9);
+  tree.Print();
+  tree.Add(13);
+  tree.Print();
+  tree.Add(15);
+  tree.Print();
+  tree.Add(14);
+  tree.Print();
+  cout << " DONE " << endl;
+  //
+  //        ________[7]_______
+  //       /                  \
+    //     _[3]__            __[11]_
+  //    /      \          /       \
+        //  [1]      [5]      [9]       [13]
+  //
+  return 0;
 }

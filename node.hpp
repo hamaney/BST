@@ -14,21 +14,23 @@
 class Node;
 typedef std::unique_ptr<Node> NodeUPtr;
 typedef int Data;
+typedef int Height;
 
-class Node
-{
-public:
+class Node {
+ public:
   Node(Data entry = 0)
       : data(entry),
         left(nullptr),
         right(nullptr),
         parent(nullptr),
-        is_left_node(false){};
+        is_left_node(false),
+        height(0){};
   ~Node(){};
   Data data;
   NodeUPtr left, right;
   Node *parent;
   bool is_left_node;
+  Height height;
 };
 
 #endif /* node_hpp */
