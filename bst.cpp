@@ -168,7 +168,8 @@ bool Tree::RemoveNodeWithNoChildren_(Node *node_to_remove) {
 bool Tree::RemoveNodeWithTwoChildren_(Node *node_to_remove) {
   Node *right_branch_min_value_node = FindMin_(node_to_remove->right.get());
   node_to_remove->data = right_branch_min_value_node->data;
-  return Remove_(right_branch_min_value_node);
+  return Remove_(right_branch_min_value_node); // calling a remove on a leaf node will update the height of the branch where the leaf is
+    
 }
 
 bool Tree::RemoveNodeWithOnlyLeftChild_(Node *node_to_remove) {
