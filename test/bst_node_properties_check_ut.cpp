@@ -36,45 +36,15 @@ class BSTNodeProperties : public ::testing::Test
     virtual void TearDown(){};
     Tree tree;
 };
-TEST_F(BSTNodeProperties, CheckIfNodeHasNoChildren)
+TEST_F(BSTNodeProperties, CheckIfNodeIsLeaf)
 {
-    ASSERT_TRUE(tree.hasNoChildren(1));
-    ASSERT_TRUE(tree.hasNoChildren(5));
-    ASSERT_TRUE(tree.hasNoChildren(9));
-    ASSERT_TRUE(tree.hasNoChildren(13));
-    ASSERT_FALSE(tree.hasNoChildren(3));
-    ASSERT_FALSE(tree.hasNoChildren(11));
-    ASSERT_FALSE(tree.hasNoChildren(7));
-    ASSERT_FALSE(tree.hasNoChildren(99));
-    ASSERT_FALSE(tree.hasNoChildren(-99));
-}
-TEST_F(BSTNodeProperties, CheckIfNodeHasTwoChildren)
-{
-    ASSERT_TRUE(tree.hasTwoChildren(7));
-    ASSERT_TRUE(tree.hasTwoChildren(3));
-    ASSERT_FALSE(tree.hasTwoChildren(1));
-    ASSERT_FALSE(tree.hasTwoChildren(99));
-    ASSERT_FALSE(tree.hasTwoChildren(-99));
-}
-TEST_F(BSTNodeProperties, CheckIfNodeHasOnlyLeftChild)
-{
-    ASSERT_TRUE(tree.Add(0));
-    ASSERT_TRUE(tree.Add(6));
-    ASSERT_TRUE(tree.hasOnlyLeftChild(1));
-    ASSERT_FALSE(tree.hasOnlyLeftChild(5));
-    ASSERT_FALSE(tree.hasOnlyLeftChild(9));
-    ASSERT_FALSE(tree.hasOnlyLeftChild(11));
-    ASSERT_FALSE(tree.hasOnlyLeftChild(99));
-    ASSERT_FALSE(tree.hasOnlyLeftChild(-99));
-}
-TEST_F(BSTNodeProperties, CheckIfNodeHasOnlyRightChild)
-{
-    ASSERT_TRUE(tree.Add(2));
-    ASSERT_TRUE(tree.Add(4));
-    ASSERT_TRUE(tree.hasOnlyRightChild(1));
-    ASSERT_FALSE(tree.hasOnlyRightChild(5));
-    ASSERT_FALSE(tree.hasOnlyRightChild(9));
-    ASSERT_FALSE(tree.hasOnlyRightChild(11));
-    ASSERT_FALSE(tree.hasOnlyRightChild(99));
-    ASSERT_FALSE(tree.hasOnlyRightChild(-99));
+    ASSERT_TRUE(tree.IsLeaf(1));
+    ASSERT_TRUE(tree.IsLeaf(5));
+    ASSERT_TRUE(tree.IsLeaf(9));
+    ASSERT_TRUE(tree.IsLeaf(13));
+    ASSERT_FALSE(tree.IsLeaf(3));
+    ASSERT_FALSE(tree.IsLeaf(11));
+    ASSERT_FALSE(tree.IsLeaf(7));
+    ASSERT_FALSE(tree.IsLeaf(99));
+    ASSERT_FALSE(tree.IsLeaf(-99));
 }
