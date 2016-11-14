@@ -11,11 +11,12 @@
 // PUBLIC   ====================================================================
 // Creation --------------------------------------------------------------------
 
-void print(std::string msg) { std::cout << msg << std::endl; }
+
 
 Tree::Tree(const Data &entry) { InitiateTree_(entry); }
 Tree::~Tree() {}
 // Modify   --------------------------------------------------------------------
+//bool Tree::AddAtRoot(const Data &entry); // TODO
 bool Tree::Add(const Data &entry) {
   if (!Exist(entry)) {
     return Add_(root, entry);
@@ -65,7 +66,10 @@ bool Tree::IsLeaf(const Data &key) const {
   }
 }
 // Prints ----------------------------------------------------------------------
-void Tree::Print() { Print_(root); }
+void Tree::Print() {
+    tree_printer_.PrintHeights(root.get(), 1, 0, std::cout);
+
+}
 // PIRVATE ====================================================================
 // Creation --------------------------------------------------------------------
 void Tree::InitiateTree_(const Data &entry) { Add_(root, entry); }
@@ -105,103 +109,4 @@ bool Tree::Add_(NodeUPtr &current_root, const Data &entry) {
     return false;
   }  // implemnt an error
 }
-
-// Other -----------------------------------------------------------------------
-
-// Checks --------------------------------------------------------------------
-
-/*bool Tree::isLeftHeavy(const Node *const node) const {
-  if (node) {
-    Height node_weight;
-    Height node_left_weight = -1;
-    Height node_right_weight = -1;
-    if (node->left) {
-      node_left_weight = node->left->height;
-    }
-    if (node->right) {
-      node_right_weight = node->right->height;
-    }
-    node_weight = node_left_weight - node_right_weight;
-
-    if ()
-  }
-}
-}*/
-// Helpers
-
-// Rotation
-
-bool Tree::RotateLeftAround_(NodeUPtr &pivot_node) {
-  /*        __[x]__
-  //       /       \
-  //   [xLeft]    _[y]_
-  //             /     \
-  //         [yLeft]  [yRight]
-  */
-
-  /*        __[y]__
-  //       /       \
-  //    _[x]_    [yRight]
-  //   /     \
-  //[xLeft]  [yLeft]
-   */
-
-  if (pivot_node) {
-    Node *pivot_node_parent = pivot_node->parent;
-
-    // Get all tree info before moving things around
-    NodeUPtr x;
-    // TODO : change to lamda
-    if (pivot_node->is_left_node) {
-      x = std::move(pivot_node_parent->left);
-    } else {
-      x = std::move(pivot_node_parent->right);
-    }
-    Height x_old_height = x->height;
-    auto y = std::move(x->right);
-    auto y_left = std::move(y->left);
-    // y_left
-    x->right = std::move(y_left);
-    y_left->parent = x.get();
-    y_left->is_left_node = false;
-    // x
-    y->left = std::move(x);
-    x->parent = y.get();
-    // height_updater_.UpdateHeightOfNodeNonRecursively(x.get());
-    x->is_left_node = true;
-    // y
-    if (pivot_node->is_left_node) {
-      pivot_node_parent->left = std::move(y);
-      y->is_left_node = true;
-
-    } else {
-      pivot_node_parent->right = std::move(y);
-    }
-    // height_updater_.UpdateHeightOfNodeNonRecursively(y.get());
-    if (y->height > x_old_height) {
-      // TODO : add a wrapper so it is easiar to t that there is no added node
-      // but just mear parents updating
-      // height_updater_.UpdateParentsHeightAfterAddingANode(y.get());
-      return true;
-    } else if (y->height < x_old_height) {
-      // TODO : add a wrapper so it is easiar to t that there is no added node
-      // but just mear parents updating
-
-      // height_updater_.UpdateParentsHeightAfterRemovingANode(y.get());
-      return true;
-
-    } else {  // no update required
-      return false;
-    }
-  } else {
-    return false;
-  }
-}
-
 // bool Tree::RotateRightAround_(NodeUPtr &pivot_node) { return 1; }
-
-// Prints
-// ----------------------------------------------------------------------
-void Tree::Print_(NodeUPtr &root) { printPretty(root.get(), 1, 0, std::cout); }
-
-// Print Error Function

@@ -135,30 +135,3 @@ void printPretty(const Node *const root, int level, int indentSpace,
                 out);
   printLeaves(indentSpace, level, nodesInThisLevel, nodesQueue, out);
 }
-/*
-int main() {
-  Node *root = new Node(30);
-  root->left = new Node(20);
-  root->right = new Node(40);
-  root->left->left = new Node(10);
-  root->left->right = new Node(25);
-  root->right->left = new Node(35);
-  root->right->right = new Node(50);
-  root->left->left->left = new Node(5);
-  root->left->left->right = new Node(15);
-  root->left->right->right = new Node(28);
-  root->right->right->left = new Node(41);
-
-  cout << "Tree pretty print with level=1 and indentSpace=0\n\n";
-  // Output to console
-  printPretty(root, 1, 0, cout);
-
-  cout << "\n\nTree pretty print with level=5 and indentSpace=3,\noutput to file
-\"tree_pretty.txt\".\n\n";
-  // Create a file and output to that file
-  ofstream fout("tree_pretty.txt");
-  // Now print a tree that's more spread out to the file
-  printPretty(root, 5, 0, fout);
-
-  return 0;
-}*/
