@@ -20,33 +20,46 @@
 
 #include "node.hpp"
 
+/*
+namespace BSTNS
+{
+namespace TreePrinter
+{
+namespace PrivateHelper
+{
+}
+}
+}
+*/
+namespace BSTNS
+{
+namespace TreePrinter
+{
 
-
-class TreePrinter {
-
- public:
-    
-    void Print(const Node *const root, int level = 1, int indentSpace = 0,
-               std::ostream &out = std::cout);
-    void PrintHeights(const Node *const root, int level = 1, int indentSpace = 0,
-                      std::ostream &out = std::cout);
- private:
-  bool print_hights_instead_of_data;
-    int maxHeight_(const Node *const p);
-  std::string intToString_(int val);
-  void printBranches_(int branchLen, int nodeSpaceLen, int startLen,
-                      int nodesInThisLevel,
-                      const std::deque<const Node *const> &nodesQueue,
-                      std::ostream &out);
-    void printNodes_(int branchLen, int nodeSpaceLen, int startLen,
-                     int nodesInThisLevel,
-                     const std::deque<const Node *const> &nodesQueue,
-                     std::ostream &out);
-    void printLeaves_(int indentSpace, int level, int nodesInThisLevel,
-                      const std::deque<const Node *const> &nodesQueue,
-                      std::ostream &out);
-  void printPretty_(const Node *const root, int level, int indentSpace,
+void Print(const Node *const root, int level = 1, int indentSpace = 0,
+           std::ostream &out = std::cout);
+void PrintHeights(const Node *const root, int level = 1, int indentSpace = 0,
+                  std::ostream &out = std::cout);
+namespace PrivateHelper
+{
+bool print_hights_instead_of_data;
+int maxHeight_(const Node *const p);
+std::string intToString_(int val);
+void printBranches_(int branchLen, int nodeSpaceLen, int startLen,
+                    int nodesInThisLevel,
+                    const std::deque<const Node *const> &nodesQueue,
                     std::ostream &out);
-};
+void printNodes_(int branchLen, int nodeSpaceLen, int startLen,
+                 int nodesInThisLevel,
+                 const std::deque<const Node *const> &nodesQueue,
+                 std::ostream &out);
+void printLeaves_(int indentSpace, int level, int nodesInThisLevel,
+                  const std::deque<const Node *const> &nodesQueue,
+                  std::ostream &out);
+void printPretty_(const Node *const root, int level, int indentSpace,
+                  std::ostream &out);
+} // End of PrivateHelper::
+} // End of TreePrinter::
+} // End of BSTNS::
 
 #endif /* tree_printer_hpp */

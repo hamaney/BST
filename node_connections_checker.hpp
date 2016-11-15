@@ -8,17 +8,28 @@
 
 #ifndef node_connections_checker_hpp
 #define node_connections_checker_hpp
-/*TODO :
+/*
+TODO :
  cleaner synatx
 
  */
+/*
+namespace BSTNS
+{
+namespace NodeConnectionsChecker
+{
+}
+}
+*/
 #include "node.hpp"
-class NodeConnectionsChecker {
- public:
-  bool HasNoChildren(const Node *const) const;
-  bool HasTwoChildren(const Node *const) const;
-  bool HasOnlyLeftChild(const Node *const) const;
-  bool HasOnlyRightChild(const Node *const) const;
-};
-
+namespace BSTNS
+{
+namespace NodeConnectionsChecker
+{
+bool HasNoChildren(const Node *const);
+bool HasTwoChildren(const Node *const);
+bool HasOnlyLeftChild(const Node *const);
+bool HasOnlyRightChild(const Node *const);
+} //End NodeConnectionsChecker::
+} // End BSTNS::
 #endif /* node_connections_checker_hpp */

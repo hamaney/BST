@@ -11,12 +11,21 @@
 
 #include "node.hpp"
 #include "height_updater.hpp"
-class Rotator{
-
-    HeightUpdater  height_updater_;
-public:
-    bool RotateLeftAround(NodeUPtr &pivot_node);
-
-};
+/*
+namespace BSTNS
+{
+namespace Rotator
+{
+}
+}
+*/
+namespace BSTNS
+{
+namespace Rotator
+{
+bool RotateLeftAround(NodeUPtr &pivot_node);
+bool RotateRightAround(NodeUPtr &pivot_node);
+} // End of Rotator::
+} // End of BSTNS::
 
 #endif /* rotator_hpp */

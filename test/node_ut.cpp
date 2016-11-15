@@ -10,20 +10,24 @@
 #include "gtest/gtest.h"
 #include "node.hpp"
 
-class NodeCreation : public ::testing::Test {
- public:
-  virtual void SetUp() {}
+class NodeCreation : public ::testing::Test
+{
+public:
+  virtual void SetUp() {
+      }
   virtual void TearDown(){};
 };
 
-TEST_F(NodeCreation, NodeConstructionDefaultValue) {
-  Node node;
+TEST_F(NodeCreation, NodeConstructionDefaultValue)
+{
+  
+    BSTNS::Node node;
   ASSERT_EQ(node.data, 0);
   ASSERT_FALSE(node.parent);
   ASSERT_FALSE(node.left);
   ASSERT_FALSE(node.right);
   ASSERT_FALSE(node.is_left_node);
   ASSERT_EQ(node.height, 0);
-  Node node_with_initial_value(1);
+  BSTNS::Node node_with_initial_value(1);
   ASSERT_EQ(node_with_initial_value.data, 1);
 }

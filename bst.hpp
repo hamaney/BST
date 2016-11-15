@@ -14,10 +14,8 @@
   // Balance()
   // Balance_(root)
   // IsBalanced()
-- Classes to be added
-  // TreeBalancer
-  //TreePrinter
-
+  // Leftheavey or right heavy
+  //Rotation functions
  */
 
 #ifndef bst_hpp
@@ -36,41 +34,28 @@
 
 using std::cout;
 using std::endl;
-
-class Tree {
- public:
+namespace BSTNS
+{
+class Tree
+{
+public:
   // Creation
   Tree(const Data &entry = 0);
   ~Tree();
   NodeUPtr root;
-
   bool Add(const Data &entry);
   bool Remove(const Data &target);
   Node *Find(const Data &target) const;
-    
-    bool Exist(const Data &key) const;
-    bool IsLeaf(const Data &key) const;
-    Data Min(void) const;
-    Data Max(void) const;
+  bool Exist(const Data &key) const;
+  bool IsLeaf(const Data &key) const;
+  Data Min(void) const;
+  Data Max(void) const;
   void Print();
 
- private:
-  NodeFinder node_finder_;
-    NodeConnectionsChecker connection_checker_;
-    NodeRemover node_remover_;
-    HeightUpdater height_updater_;
-    TreePrinter tree_printer_;
-    Rotator rotator_;
-
-    //TreeRotator
-    void InitiateTree_(const Data &entry = 0);
-  // Modify
+private:
+  void InitiateTree_(const Data &entry = 0);
   NodeUPtr AddNode_(const Data &entry = 0) const;
   bool Add_(NodeUPtr &current_root, const Data &entry);
-  // Helpers
-  // bool RotateRightAround_(NodeUPtr &pivot_node);
-  // Prints
-  //void Print_(NodeUPtr &root);
 };
-
+} // of BSTNamespace
 #endif /* BST_hpp */

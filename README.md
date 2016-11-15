@@ -1,2 +1,1 @@
-A simple Binary Search Tree.
-Red-Black Tree is coming soon
+Binary Search Tree : Non-Generic but Self-balancing using AVL tree techniques.

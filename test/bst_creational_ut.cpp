@@ -10,13 +10,17 @@
 #include "bst.hpp"
 #include "gtest/gtest.h"
 
-class BSTCreation : public ::testing::Test {
- public:
+using namespace BSTNS;
+
+class BSTCreation : public ::testing::Test
+{
+public:
   virtual void SetUp() {}
   virtual void TearDown(){};
 };
 
-TEST_F(BSTCreation, TreeInitilization) {
+TEST_F(BSTCreation, TreeInitilization)
+{
   Tree tree;
   ASSERT_EQ(tree.root->data, 0);
   ASSERT_EQ(tree.root->height, 0);
@@ -25,7 +29,8 @@ TEST_F(BSTCreation, TreeInitilization) {
   ASSERT_EQ(tree_with_initial_value.root->data, 1);
 }
 
-TEST_F(BSTCreation, AddingUniqueEntriesToTheTree) {
+TEST_F(BSTCreation, AddingUniqueEntriesToTheTree)
+{
   // will test this tree (final shape)
   //
   //        ________[4]_______
@@ -38,13 +43,13 @@ TEST_F(BSTCreation, AddingUniqueEntriesToTheTree) {
 
   ASSERT_TRUE(tree.Add(2));
 
-  ASSERT_EQ(tree.root->data, 4);  //------------- 4
+  ASSERT_EQ(tree.root->data, 4); //------------- 4
   ASSERT_FALSE(tree.root->parent);
   ASSERT_TRUE(tree.root->left);
   ASSERT_FALSE(tree.root->right);
   ASSERT_FALSE(tree.root->is_left_node);
   ASSERT_EQ(tree.root->height, 1);
-  ASSERT_EQ(tree.root->left->data, 2);  //------------- 2
+  ASSERT_EQ(tree.root->left->data, 2); //------------- 2
   ASSERT_EQ(tree.root->left->parent, tree.root.get());
   ASSERT_FALSE(tree.root->left->left);
   ASSERT_FALSE(tree.root->left->right);
@@ -53,19 +58,19 @@ TEST_F(BSTCreation, AddingUniqueEntriesToTheTree) {
 
   ASSERT_TRUE(tree.Add(6));
 
-  ASSERT_EQ(tree.root->data, 4);  //------------- 4
+  ASSERT_EQ(tree.root->data, 4); //------------- 4
   ASSERT_FALSE(tree.root->parent);
   ASSERT_TRUE(tree.root->left);
   ASSERT_TRUE(tree.root->right);
   ASSERT_FALSE(tree.root->is_left_node);
   ASSERT_EQ(tree.root->height, 1);
-  ASSERT_EQ(tree.root->left->data, 2);  //------------- 2
+  ASSERT_EQ(tree.root->left->data, 2); //------------- 2
   ASSERT_EQ(tree.root->left->parent, tree.root.get());
   ASSERT_FALSE(tree.root->left->left);
   ASSERT_FALSE(tree.root->left->right);
   ASSERT_TRUE(tree.root->left->is_left_node);
   ASSERT_EQ(tree.root->left->height, 0);
-  ASSERT_EQ(tree.root->right->data, 6);  //------------- 6
+  ASSERT_EQ(tree.root->right->data, 6); //------------- 6
   ASSERT_EQ(tree.root->right->parent, tree.root.get());
   ASSERT_FALSE(tree.root->right->left);
   ASSERT_FALSE(tree.root->right->right);
@@ -74,25 +79,25 @@ TEST_F(BSTCreation, AddingUniqueEntriesToTheTree) {
 
   ASSERT_TRUE(tree.Add(1));
 
-  ASSERT_EQ(tree.root->data, 4);  //------------- 4
+  ASSERT_EQ(tree.root->data, 4); //------------- 4
   ASSERT_FALSE(tree.root->parent);
   ASSERT_TRUE(tree.root->left);
   ASSERT_TRUE(tree.root->right);
   ASSERT_FALSE(tree.root->is_left_node);
   ASSERT_EQ(tree.root->height, 2);
-  ASSERT_EQ(tree.root->left->data, 2);  //------------- 2
+  ASSERT_EQ(tree.root->left->data, 2); //------------- 2
   ASSERT_EQ(tree.root->left->parent, tree.root.get());
   ASSERT_TRUE(tree.root->left->left);
   ASSERT_FALSE(tree.root->left->right);
   ASSERT_TRUE(tree.root->left->is_left_node);
   ASSERT_EQ(tree.root->left->height, 1);
-  ASSERT_EQ(tree.root->right->data, 6);  //------------- 6
+  ASSERT_EQ(tree.root->right->data, 6); //------------- 6
   ASSERT_EQ(tree.root->right->parent, tree.root.get());
   ASSERT_FALSE(tree.root->right->left);
   ASSERT_FALSE(tree.root->right->right);
   ASSERT_FALSE(tree.root->right->is_left_node);
   ASSERT_EQ(tree.root->right->height, 0);
-  ASSERT_EQ(tree.root->left->left->data, 1);  //------------- 1
+  ASSERT_EQ(tree.root->left->left->data, 1); //------------- 1
   ASSERT_EQ(tree.root->left->left->parent, tree.root->left.get());
   ASSERT_FALSE(tree.root->left->left->left);
   ASSERT_FALSE(tree.root->left->left->right);
@@ -101,31 +106,31 @@ TEST_F(BSTCreation, AddingUniqueEntriesToTheTree) {
 
   ASSERT_TRUE(tree.Add(3));
 
-  ASSERT_EQ(tree.root->data, 4);  //------------- 4
+  ASSERT_EQ(tree.root->data, 4); //------------- 4
   ASSERT_FALSE(tree.root->parent);
   ASSERT_TRUE(tree.root->left);
   ASSERT_TRUE(tree.root->right);
   ASSERT_FALSE(tree.root->is_left_node);
   ASSERT_EQ(tree.root->height, 2);
-  ASSERT_EQ(tree.root->left->data, 2);  //------------- 2
+  ASSERT_EQ(tree.root->left->data, 2); //------------- 2
   ASSERT_EQ(tree.root->left->parent, tree.root.get());
   ASSERT_TRUE(tree.root->left->left);
   ASSERT_TRUE(tree.root->left->right);
   ASSERT_TRUE(tree.root->left->is_left_node);
   ASSERT_EQ(tree.root->left->height, 1);
-  ASSERT_EQ(tree.root->right->data, 6);  //------------- 6
+  ASSERT_EQ(tree.root->right->data, 6); //------------- 6
   ASSERT_EQ(tree.root->right->parent, tree.root.get());
   ASSERT_FALSE(tree.root->right->left);
   ASSERT_FALSE(tree.root->right->right);
   ASSERT_FALSE(tree.root->right->is_left_node);
   ASSERT_EQ(tree.root->right->height, 0);
-  ASSERT_EQ(tree.root->left->left->data, 1);  //------------- 1
+  ASSERT_EQ(tree.root->left->left->data, 1); //------------- 1
   ASSERT_EQ(tree.root->left->left->parent, tree.root->left.get());
   ASSERT_FALSE(tree.root->left->left->left);
   ASSERT_FALSE(tree.root->left->left->right);
   ASSERT_TRUE(tree.root->left->left->is_left_node);
   ASSERT_EQ(tree.root->left->left->height, 0);
-  ASSERT_EQ(tree.root->left->right->data, 3);  //------------- 3
+  ASSERT_EQ(tree.root->left->right->data, 3); //------------- 3
   ASSERT_EQ(tree.root->left->right->parent, tree.root->left.get());
   ASSERT_FALSE(tree.root->left->right->left);
   ASSERT_FALSE(tree.root->left->right->right);
@@ -134,37 +139,37 @@ TEST_F(BSTCreation, AddingUniqueEntriesToTheTree) {
 
   ASSERT_TRUE(tree.Add(5));
 
-  ASSERT_EQ(tree.root->data, 4);  //------------- 4
+  ASSERT_EQ(tree.root->data, 4); //------------- 4
   ASSERT_FALSE(tree.root->parent);
   ASSERT_TRUE(tree.root->left);
   ASSERT_TRUE(tree.root->right);
   ASSERT_FALSE(tree.root->is_left_node);
   ASSERT_EQ(tree.root->height, 2);
-  ASSERT_EQ(tree.root->left->data, 2);  //------------- 2
+  ASSERT_EQ(tree.root->left->data, 2); //------------- 2
   ASSERT_EQ(tree.root->left->parent, tree.root.get());
   ASSERT_TRUE(tree.root->left->left);
   ASSERT_TRUE(tree.root->left->right);
   ASSERT_TRUE(tree.root->left->is_left_node);
   ASSERT_EQ(tree.root->left->height, 1);
-  ASSERT_EQ(tree.root->right->data, 6);  //------------- 6
+  ASSERT_EQ(tree.root->right->data, 6); //------------- 6
   ASSERT_EQ(tree.root->right->parent, tree.root.get());
   ASSERT_TRUE(tree.root->right->left);
   ASSERT_FALSE(tree.root->right->right);
   ASSERT_FALSE(tree.root->right->is_left_node);
   ASSERT_EQ(tree.root->right->height, 1);
-  ASSERT_EQ(tree.root->left->left->data, 1);  //------------- 1
+  ASSERT_EQ(tree.root->left->left->data, 1); //------------- 1
   ASSERT_EQ(tree.root->left->left->parent, tree.root->left.get());
   ASSERT_FALSE(tree.root->left->left->left);
   ASSERT_FALSE(tree.root->left->left->right);
   ASSERT_TRUE(tree.root->left->left->is_left_node);
   ASSERT_EQ(tree.root->left->left->height, 0);
-  ASSERT_EQ(tree.root->left->right->data, 3);  //------------- 3
+  ASSERT_EQ(tree.root->left->right->data, 3); //------------- 3
   ASSERT_EQ(tree.root->left->right->parent, tree.root->left.get());
   ASSERT_FALSE(tree.root->left->right->left);
   ASSERT_FALSE(tree.root->left->right->right);
   ASSERT_FALSE(tree.root->left->right->is_left_node);
   ASSERT_EQ(tree.root->left->right->height, 0);
-  ASSERT_EQ(tree.root->right->left->data, 5);  //------------- 5
+  ASSERT_EQ(tree.root->right->left->data, 5); //------------- 5
   ASSERT_EQ(tree.root->right->left->parent, tree.root->right.get());
   ASSERT_FALSE(tree.root->right->left->left);
   ASSERT_FALSE(tree.root->right->left->right);
@@ -173,43 +178,43 @@ TEST_F(BSTCreation, AddingUniqueEntriesToTheTree) {
 
   ASSERT_TRUE(tree.Add(7));
 
-  ASSERT_EQ(tree.root->data, 4);  //------------- 4
+  ASSERT_EQ(tree.root->data, 4); //------------- 4
   ASSERT_FALSE(tree.root->parent);
   ASSERT_TRUE(tree.root->left);
   ASSERT_TRUE(tree.root->right);
   ASSERT_FALSE(tree.root->is_left_node);
   ASSERT_EQ(tree.root->height, 2);
-  ASSERT_EQ(tree.root->left->data, 2);  //------------- 2
+  ASSERT_EQ(tree.root->left->data, 2); //------------- 2
   ASSERT_EQ(tree.root->left->parent, tree.root.get());
   ASSERT_TRUE(tree.root->left->left);
   ASSERT_TRUE(tree.root->left->right);
   ASSERT_TRUE(tree.root->left->is_left_node);
   ASSERT_EQ(tree.root->left->height, 1);
-  ASSERT_EQ(tree.root->right->data, 6);  //------------- 6
+  ASSERT_EQ(tree.root->right->data, 6); //------------- 6
   ASSERT_EQ(tree.root->right->parent, tree.root.get());
   ASSERT_TRUE(tree.root->right->left);
   ASSERT_TRUE(tree.root->right->right);
   ASSERT_FALSE(tree.root->right->is_left_node);
   ASSERT_EQ(tree.root->right->height, 1);
-  ASSERT_EQ(tree.root->left->left->data, 1);  //------------- 1
+  ASSERT_EQ(tree.root->left->left->data, 1); //------------- 1
   ASSERT_EQ(tree.root->left->left->parent, tree.root->left.get());
   ASSERT_FALSE(tree.root->left->left->left);
   ASSERT_FALSE(tree.root->left->left->right);
   ASSERT_TRUE(tree.root->left->left->is_left_node);
   ASSERT_EQ(tree.root->left->left->height, 0);
-  ASSERT_EQ(tree.root->left->right->data, 3);  //------------- 3
+  ASSERT_EQ(tree.root->left->right->data, 3); //------------- 3
   ASSERT_EQ(tree.root->left->right->parent, tree.root->left.get());
   ASSERT_FALSE(tree.root->left->right->left);
   ASSERT_FALSE(tree.root->left->right->right);
   ASSERT_FALSE(tree.root->left->right->is_left_node);
   ASSERT_EQ(tree.root->left->right->height, 0);
-  ASSERT_EQ(tree.root->right->left->data, 5);  //------------- 5
+  ASSERT_EQ(tree.root->right->left->data, 5); //------------- 5
   ASSERT_EQ(tree.root->right->left->parent, tree.root->right.get());
   ASSERT_FALSE(tree.root->right->left->left);
   ASSERT_FALSE(tree.root->right->left->right);
   ASSERT_TRUE(tree.root->right->left->is_left_node);
   ASSERT_EQ(tree.root->right->left->height, 0);
-  ASSERT_EQ(tree.root->right->right->data, 7);  //------------- 7
+  ASSERT_EQ(tree.root->right->right->data, 7); //------------- 7
   ASSERT_EQ(tree.root->right->right->parent, tree.root->right.get());
   ASSERT_FALSE(tree.root->right->right->left);
   ASSERT_FALSE(tree.root->right->right->right);
@@ -224,7 +229,8 @@ TEST_F(BSTCreation, AddingUniqueEntriesToTheTree) {
   //  [1]      [3]      [5]      [7]
 }
 
-TEST_F(BSTCreation, AddingExistingEntryToTheTree) {
+TEST_F(BSTCreation, AddingExistingEntryToTheTree)
+{
   Tree tree(4);
   tree.Add(2);
   tree.Add(6);
@@ -239,7 +245,8 @@ TEST_F(BSTCreation, AddingExistingEntryToTheTree) {
   ASSERT_FALSE(tree.Add(7));
 }
 
-TEST_F(BSTCreation, AddingNewRootNodeAfterEmptyingTheTree) {
+TEST_F(BSTCreation, AddingNewRootNodeAfterEmptyingTheTree)
+{
   Tree tree(4);
   tree.Add(2);
   tree.Add(6);

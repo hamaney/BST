@@ -10,9 +10,11 @@
 #include "bst.hpp"
 #include "gtest/gtest.h"
 
-class BSTNodeProperties : public ::testing::Test {
- public:
-  virtual void SetUp() {
+class BSTNodeProperties : public ::testing::Test
+{
+public:
+  virtual void SetUp()
+  {
     tree.root->data = 7;
     tree.Add(3);
     tree.Add(11);
@@ -32,9 +34,10 @@ class BSTNodeProperties : public ::testing::Test {
     //*/
   }
   virtual void TearDown(){};
-  Tree tree;
+  BSTNS::Tree tree;
 };
-TEST_F(BSTNodeProperties, CheckIfNodeIsLeaf) {
+TEST_F(BSTNodeProperties, CheckIfNodeIsLeaf)
+{
   ASSERT_TRUE(tree.IsLeaf(1));
   ASSERT_TRUE(tree.IsLeaf(5));
   ASSERT_TRUE(tree.IsLeaf(9));

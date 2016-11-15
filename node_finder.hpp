@@ -11,11 +11,21 @@
 
 #include <cassert>
 #include "node.hpp"
-class NodeFinder {
- public:
-  Node *Find(Node *const current_root, const Data &target) const;
-  Node *FindMin(Node *const current_root) const;
-  Node *FindMax(Node *const current_root) const;
-};
+/*
+namespace BSTNS
+{
+namespace NodeFinder
+{
+}
+}*/
+namespace BSTNS
+{
+namespace NodeFinder
+{
+Node *Find(Node *const current_root, const Data &target);
+Node *FindMin(Node *const current_root) ;
+Node *FindMax(Node *const current_root) ;
+} // End NodeFinder::
+} // End BSTNS::
 
 #endif /* node_finder_hpp */

@@ -11,6 +11,8 @@
 
 #include <memory>
 
+namespace BSTNS{
+
 class Node;
 typedef std::unique_ptr<Node> NodeUPtr;
 typedef int Data;
@@ -32,5 +34,5 @@ class Node {
   bool is_left_node;
   Height height;
 };
-
+}
 #endif /* node_hpp */
