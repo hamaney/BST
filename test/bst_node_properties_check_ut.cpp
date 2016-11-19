@@ -10,6 +10,7 @@
 #include "bst.hpp"
 #include "gtest/gtest.h"
 
+using namespace BSTNS;
 class BSTNodeProperties : public ::testing::Test
 {
 public:

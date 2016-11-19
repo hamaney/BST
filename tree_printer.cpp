@@ -7,26 +7,28 @@
 //
 
 #include "tree_printer.hpp"
+
 namespace BSTNS
 {
 namespace TreePrinter
 {
-bool print_hights_instead_of_data; // Remove later
+    bool print_hights_instead_of_data; // Why givs an erorr in put in header
 void Print(const Node *const root, int level, int indentSpace,
            std::ostream &out)
 {
-  print_hights_instead_of_data = false;
+    print_hights_instead_of_data = false;
   PrivateHelper::printPretty_(root, level, indentSpace, out);
 }
 void PrintHeights(const Node *const root, int level,
                   int indentSpace, std::ostream &out)
 {
-  print_hights_instead_of_data = true;
+    print_hights_instead_of_data = true;
   PrivateHelper::printPretty_(root, level, indentSpace, out);
 }
 namespace PrivateHelper
 {
-// Find the maximum height of the binary tree
+
+    // Find the maximum height of the binary tree
 int maxHeight_(const Node *const p)
 {
   if (!p)
@@ -72,6 +74,7 @@ void printNodes_(int branchLen, int nodeSpaceLen, int startLen,
         << ((*iter && (*iter)->left) ? std::setfill('_') : std::setfill(' '));
     // -------------------------- TEST -----------------------------------------
     if (print_hights_instead_of_data)
+    //    if ((1))
     {
       out << std::setw(branchLen + 2)
           << ((*iter) ? intToString_((*iter)->height) : "");
@@ -98,6 +101,7 @@ void printLeaves_(int indentSpace, int level, int nodesInThisLevel,
   {
     // ------------------------- TEST ------------------------------------------
     if (print_hights_instead_of_data)
+    //    if (1)
     {
       out << ((i == 0) ? std::setw(indentSpace + 2) : std::setw(2 * level + 2))
           << ((*iter) ? intToString_((*iter)->height) : "");
@@ -111,7 +115,6 @@ void printLeaves_(int indentSpace, int level, int nodesInThisLevel,
   // -------------------------------------------------------------------------
   out << std::endl;
 }
-
 // Pretty formatting of a binary tree to the output stream
 // @ param
 // level  Control how wide you want the tree to sparse (eg, level 1 has the
@@ -119,7 +122,8 @@ void printLeaves_(int indentSpace, int level, int nodesInThisLevel,
 // indentSpace  Change this to add some indent space to the left (eg,
 // indentSpace of 0 means the lowest level of the left node will stick to the
 // left margin)
-void printPretty_(const Node *const root, int level,
+
+ void printPretty_(const Node *const root, int level,
                   int indentSpace, std::ostream &out)
 {
   int h = maxHeight_(root);
@@ -149,8 +153,7 @@ void printPretty_(const Node *const root, int level,
     branchLen = branchLen / 2 - 1;
     nodeSpaceLen = nodeSpaceLen / 2 + 1;
     startLen = branchLen + (3 - level) + indentSpace;
-    printNodes_(branchLen, nodeSpaceLen, startLen, nodesInThisLevel, nodesQueue,
-                out);
+    printNodes_(branchLen, nodeSpaceLen, startLen, nodesInThisLevel, nodesQueue, out);
 
     for (int i = 0; i < nodesInThisLevel; i++)
     {
@@ -175,4 +178,4 @@ void printPretty_(const Node *const root, int level,
 }
 } // End of PrivateHelper::
 } // End of TreePrinter::
-}  // End of BSTNS::
+} // End of BSTNS::

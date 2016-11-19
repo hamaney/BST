@@ -10,24 +10,27 @@
 #include "gtest/gtest.h"
 #include "node.hpp"
 
+using namespace BSTNS;
+
 class NodeCreation : public ::testing::Test
 {
 public:
-  virtual void SetUp() {
-      }
+  virtual void SetUp()
+  {
+  }
   virtual void TearDown(){};
 };
 
 TEST_F(NodeCreation, NodeConstructionDefaultValue)
 {
-  
-    BSTNS::Node node;
+
+  Node node;
   ASSERT_EQ(node.data, 0);
   ASSERT_FALSE(node.parent);
   ASSERT_FALSE(node.left);
   ASSERT_FALSE(node.right);
   ASSERT_FALSE(node.is_left_node);
   ASSERT_EQ(node.height, 0);
-  BSTNS::Node node_with_initial_value(1);
+  Node node_with_initial_value(1);
   ASSERT_EQ(node_with_initial_value.data, 1);
 }

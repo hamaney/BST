@@ -7,6 +7,7 @@
 //
 
 #include "rotator.hpp"
+using namespace BSTNS::HeightUpdater;
 namespace BSTNS
 {
 namespace Rotator
@@ -57,12 +58,12 @@ bool RotateLeftAround(NodeUPtr &pivot_node)
         // x
         y->left = std::move(x);
         y->left->parent = y.get();
-        HeightUpdater::UpdateHeightOfNodeNonRecursively(y->left.get());
+        UpdateHeightOfNodeNonRecursively(y->left.get());
         y->left->is_left_node = true;
 
         // y
         y->is_left_node = old_pivot_is_left_node_status;
-        HeightUpdater::UpdateHeightOfNodeNonRecursively(y.get());
+        UpdateHeightOfNodeNonRecursively(y.get());
         y->parent = pivot_node_parent;
 
         pivot_node = std::move(y);
@@ -120,12 +121,12 @@ bool RotateRightAround(NodeUPtr &pivot_node)
         // x
         y->left = std::move(x);
         y->left->parent = y.get();
-        HeightUpdater::UpdateHeightOfNodeNonRecursively(y->left.get());
+        UpdateHeightOfNodeNonRecursively(y->left.get());
         y->left->is_left_node = true;
 
         // y
         y->is_left_node = old_pivot_is_left_node_status;
-        HeightUpdater::UpdateHeightOfNodeNonRecursively(y.get());
+        UpdateHeightOfNodeNonRecursively(y.get());
         y->parent = pivot_node_parent;
 
         pivot_node = std::move(y);

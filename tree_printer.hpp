@@ -42,7 +42,7 @@ void PrintHeights(const Node *const root, int level = 1, int indentSpace = 0,
                   std::ostream &out = std::cout);
 namespace PrivateHelper
 {
-bool print_hights_instead_of_data;
+
 int maxHeight_(const Node *const p);
 std::string intToString_(int val);
 void printBranches_(int branchLen, int nodeSpaceLen, int startLen,

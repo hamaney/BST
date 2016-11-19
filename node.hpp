@@ -11,15 +11,17 @@
 
 #include <memory>
 
-namespace BSTNS{
+namespace BSTNS
+{
 
 class Node;
 typedef std::unique_ptr<Node> NodeUPtr;
 typedef int Data;
 typedef int Height;
 
-class Node {
- public:
+class Node
+{
+public:
   Node(Data entry = 0)
       : data(entry),
         left(nullptr),

@@ -14,9 +14,7 @@
 /*
 namespace BSTNS
 {
-namespace Rotator
-{
-}
+ namespace Rotator{}
 }
 */
 namespace BSTNS

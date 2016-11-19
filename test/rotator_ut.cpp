@@ -6,10 +6,11 @@
 //  Copyright © 2016 Abdulrhman Mohamed. All rights reserved.
 //
 
-#include "bst.hpp"
 #include "gtest/gtest.h"
+
+#include "bst.hpp"
 #include "rotator.hpp"
-#include "tree_printer.hpp"
+//#include "tree_printer.hpp"
 
 using namespace BSTNS;
 using namespace BSTNS::Rotator;
@@ -17,7 +18,7 @@ using namespace BSTNS::Rotator;
 class RotatorClass : public ::testing::Test
 {
 public:
-    virtual void SetUp() {}
+  virtual void SetUp() {}
   virtual void TearDown(){};
   Data x;
   Data y;

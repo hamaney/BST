@@ -7,10 +7,31 @@
 //
 
 #include "height_updater.hpp"
+#include <iostream>
+
+using namespace BSTNS::NodeConnectionsChecker;
+
 namespace BSTNS
 {
 namespace HeightUpdater
 {
+
+void UpdateHeight(Node *node_parent)
+{
+  Node *node = node_parent; // jsut for clearfication
+
+  if (node)
+  {
+    // read the update from down up
+    UpdateHeightOfNodeNonRecursively(node);
+    //push updates upwared to parents
+    UpdateTheParentsStartingFromParent(node->parent);
+  }
+}
+
+//TODO : change name to updateHeightOfNodeAndItsChildernRecursiveCall
+//OR Update ChildTreesHeights
+//OR UpdateNodeAndChildrenHieghtsRecussive
 Height UpdateHeightOfNodeRecursively(Node *node)
 {
   if (!node)
@@ -28,34 +49,21 @@ Height UpdateHeightOfNodeRecursively(Node *node)
     return node->height;
   }
 }
-Height UpdateHeightOfNodeNonRecursively(Node *node)
+void UpdateHeightOfNodeNonRecursively(Node *node)
 {
-  if (!node)
+  if (node)
   {
-    assert(0);
-  }
-  else
-  {
-    Height left_child_node_height, right_child_node_height;
-    if (!node->left)
-    {
-      left_child_node_height = -1;
-    }
-    else
+    Height left_child_node_height(-1), right_child_node_height(-1);
+    if (node->left)
     {
       left_child_node_height = node->left->height;
     }
-    if (!node->right)
-    {
-      right_child_node_height = -1;
-    }
-    else
+    if (node->right)
     {
       right_child_node_height = node->right->height;
     }
     node->height =
         std::max(left_child_node_height, right_child_node_height) + 1;
-    return node->height;
   }
 }
 // Upper Parents Hight Updateder
@@ -87,8 +95,8 @@ void UpdateParentsHeightAfterRemovingANode(Node *node)
     {
       // sibling cases
       Height node_sibling_height;
-      if (NodeConnectionsChecker::HasOnlyLeftChild(parent) or
-          NodeConnectionsChecker::HasOnlyRightChild(parent))
+      if (HasOnlyLeftChild(parent) or
+          HasOnlyRightChild(parent))
       {
         node_sibling_height = -1;
       }
@@ -120,5 +128,43 @@ void UpdateParentsHeightAfterRemovingANode(Node *node)
     }
   }
 }
+void UpdateTheParentsStartingFromParent(Node *unupdated_parent_to_start_with)
+{
+    auto node = unupdated_parent_to_start_with; // for clearity
+  if (node)
+  {
+    Height correct_height =
+        ReadNodeHeightFromitsChildrenNonRecursively(node);
+//      std::cout << "[ " << node->data << "] (" << node->height <<") -> (" << correct_height <<")" << std::endl;
+    if (node->height != correct_height)
+    {
+        node->height = correct_height;
+      UpdateTheParentsStartingFromParent(unupdated_parent_to_start_with->parent);
+    }
+  }
+}
+
+
+Height ReadNodeHeightFromitsChildrenNonRecursively(const Node *const node)
+{
+  if (!node)
+  {
+    assert(0);
+  }
+  else
+  {
+    Height left_child_node_height = -1, right_child_node_height = -1;
+    if (node->left)
+    {
+      left_child_node_height = node->left->height;
+    }
+    if (node->right)
+    {
+      right_child_node_height = node->right->height;
+    }
+    return std::max(left_child_node_height, right_child_node_height) + 1;
+  }
+}
+
 } // End HeightUpdater::
 } // End of BSTNS::

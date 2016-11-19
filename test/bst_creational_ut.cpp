@@ -6,9 +6,9 @@
 //  Copyright © 2016 Abdulrhman Mohamed. All rights reserved.
 //
 
-#include "bst.cpp"
-#include "bst.hpp"
 #include "gtest/gtest.h"
+#include "bst.hpp"
+//#include "bst.cpp"
 
 using namespace BSTNS;
 
@@ -19,15 +19,17 @@ public:
   virtual void TearDown(){};
 };
 
-TEST_F(BSTCreation, TreeInitilization)
+ TEST_F(BSTCreation, TreeInitilization)
 {
-  Tree tree;
+
+  Tree tree(0);
   ASSERT_EQ(tree.root->data, 0);
   ASSERT_EQ(tree.root->height, 0);
 
   Tree tree_with_initial_value(1);
   ASSERT_EQ(tree_with_initial_value.root->data, 1);
 }
+
 
 TEST_F(BSTCreation, AddingUniqueEntriesToTheTree)
 {

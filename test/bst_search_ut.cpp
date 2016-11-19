@@ -6,7 +6,6 @@
 //  Copyright © 2016 Abdulrhman Mohamed. All rights reserved.
 //
 
-//#include "bst.cpp"
 #include "bst.hpp"
 #include "gtest/gtest.h"
 

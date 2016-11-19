@@ -23,8 +23,8 @@ namespace BSTNS
 namespace NodeFinder
 {
 Node *Find(Node *const current_root, const Data &target);
-Node *FindMin(Node *const current_root) ;
-Node *FindMax(Node *const current_root) ;
+Node *FindMin(Node *const current_root);
+Node *FindMax(Node *const current_root);
 } // End NodeFinder::
 } // End BSTNS::
 

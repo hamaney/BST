@@ -21,19 +21,19 @@
 #ifndef bst_hpp
 #define bst_hpp
 
-#include <cassert>
-#include <iostream>
 #include <memory>
-#include "height_updater.hpp"
+#include <vector>
+#include <algorithm>
+
+#include <iostream>
 #include "node.hpp"
+#include "height_updater.hpp"
 #include "node_connections_checker.hpp"
 #include "node_finder.hpp"
-#include "node_remover.hpp"
 #include "tree_printer.hpp"
-#include "rotator.hpp"
+//#include "rotator.hpp"
+#include "node_remover.hpp"
 
-using std::cout;
-using std::endl;
 namespace BSTNS
 {
 class Tree
@@ -41,16 +41,19 @@ class Tree
 public:
   // Creation
   Tree(const Data &entry = 0);
+Tree(const std::vector<Data> &entries_container);
   ~Tree();
   NodeUPtr root;
   bool Add(const Data &entry);
+    bool Add(const std::vector<Data>& entries_container);
   bool Remove(const Data &target);
   Node *Find(const Data &target) const;
   bool Exist(const Data &key) const;
-  bool IsLeaf(const Data &key) const;
-  Data Min(void) const;
+bool IsLeaf(const Data &key) const;
+ Data Min(void) const;
   Data Max(void) const;
-  void Print();
+void Print();
+    void PrintHeights(); // rendring heightd for testing
 
 private:
   void InitiateTree_(const Data &entry = 0);

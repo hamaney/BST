@@ -9,11 +9,9 @@
 #include <iostream>
 #include "bst.hpp"
 
-using std::cout;
-using std::endl;
-
-int main(int argc, const char* argv[]) {
-  Tree tree(7);
+int main(int argc, const char *argv[])
+{
+    BSTNS::Tree tree(7);
   tree.Print();
   tree.Add(3);
   tree.Print();
@@ -31,7 +29,7 @@ int main(int argc, const char* argv[]) {
   tree.Print();
   tree.Add(14);
   tree.Print();
-  cout << " DONE " << endl;
+    std::cout << " DONE " << std::endl;
   //
   //        ________[7]_______
   //       /                  \

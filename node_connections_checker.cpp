@@ -13,7 +13,7 @@ namespace BSTNS
 namespace NodeConnectionsChecker
 {
 // does not check if the key exist
-bool HasNoChildren(const Node *const node) 
+bool HasNoChildren(const Node *const node)
 {
   if (node)
   {
@@ -25,7 +25,7 @@ bool HasNoChildren(const Node *const node)
   }
 }
 
-bool HasTwoChildren(const Node *const node) 
+bool HasTwoChildren(const Node *const node)
 {
   if (node)
   {

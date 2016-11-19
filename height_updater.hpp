@@ -23,12 +23,17 @@ namespace BSTNS
 {
 namespace HeightUpdater
 {
+    void UpdateHeight(Node *node_parent);
 Height UpdateHeightOfNodeRecursively(Node *node);    // O(n)
-Height UpdateHeightOfNodeNonRecursively(Node *node); // O(1)
+void UpdateHeightOfNodeNonRecursively(Node *node); // O(1)
 void UpdateParentsHeightAfterAddingANode(
     Node *node); // O(log(n))input must have an updated height
 void UpdateParentsHeightAfterRemovingANode(
     Node *node); // O(log(n))input must have an updated height
+
+void UpdateTheParentsStartingFromParent(Node *unupdated_parent_to_start_with);
+    Height ReadNodeHeightFromitsChildrenNonRecursively(const Node* const node);
+
 } //End HeightUpdater::
 } // End BSTNS::
 
