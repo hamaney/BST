@@ -8,57 +8,38 @@
 
 #include "node_connections_checker.hpp"
 
-namespace BSTNS
-{
-namespace NodeConnectionsChecker
-{
-// does not check if the key exist
-bool HasNoChildren(const Node *const node)
-{
-  if (node)
-  {
+namespace BSTNS {
+namespace NodeConnectionsChecker {
+bool HasNoChildren(const Node *const node) {
+  if (node) {
     return (!node->left and !node->right);
-  }
-  else
-  {
+  } else {
     return false;
   }
 }
 
-bool HasTwoChildren(const Node *const node)
-{
-  if (node)
-  {
+bool HasTwoChildren(const Node *const node) {
+  if (node) {
     return (node->left and node->right);
-  }
-  else
-  {
+  } else {
     return false;
   }
 }
 
-bool HasOnlyLeftChild(const Node *const node)
-{
-  if (node)
-  {
+bool HasOnlyLeftChild(const Node *const node) {
+  if (node) {
     return (node->left and !node->right);
-  }
-  else
-  {
+  } else {
     return false;
   }
 }
 
-bool HasOnlyRightChild(const Node *const node)
-{
-  if (node)
-  {
+bool HasOnlyRightChild(const Node *const node) {
+  if (node) {
     return (!node->left and node->right);
-  }
-  else
-  {
+  } else {
     return false;
   }
 }
-} //End NodeConnectionsChecker::
-} // End BSTNS::
+}  // End NodeConnectionsChecker::
+}  // End BSTNS::

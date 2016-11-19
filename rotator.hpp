@@ -9,21 +9,19 @@
 #ifndef rotator_hpp
 #define rotator_hpp
 
-#include "node.hpp"
 #include "height_updater.hpp"
+#include "node.hpp"
 /*
 namespace BSTNS
 {
  namespace Rotator{}
 }
 */
-namespace BSTNS
-{
-namespace Rotator
-{
+namespace BSTNS {
+namespace Rotator {
 bool RotateLeftAround(NodeUPtr &pivot_node);
 bool RotateRightAround(NodeUPtr &pivot_node);
-} // End of Rotator::
-} // End of BSTNS::
+}  // End of Rotator::
+}  // End of BSTNS::
 
 #endif /* rotator_hpp */

@@ -9,32 +9,32 @@
 #ifndef height_updater_class_hpp
 #define height_updater_class_hpp
 
-#include <algorithm> //std::max
-#include <cassert>   // assert()
+#include <algorithm>  //std::max
+#include <cassert>    // assert()
 #include "node.hpp"
 #include "node_connections_checker.hpp"
 /*
 namespace BSTNS{
-    namespace HeightUpdater{
-    }
+ namespace HeightUpdater{
+  namespace PrivateHelper{
+  }
+ }
 }
 */
-namespace BSTNS
-{
-namespace HeightUpdater
-{
-    void UpdateHeight(Node *node_parent);
-Height UpdateHeightOfNodeRecursively(Node *node);    // O(n)
-void UpdateHeightOfNodeNonRecursively(Node *node); // O(1)
-void UpdateParentsHeightAfterAddingANode(
-    Node *node); // O(log(n))input must have an updated height
-void UpdateParentsHeightAfterRemovingANode(
-    Node *node); // O(log(n))input must have an updated height
+namespace BSTNS {
+namespace HeightUpdater {
+void UpdateHeight(Node *node_parent);              // O(log(n))
+Height UpdateHeightOfNodeRecursively(Node *node);  // O(nlog(n))
 
-void UpdateTheParentsStartingFromParent(Node *unupdated_parent_to_start_with);
-    Height ReadNodeHeightFromitsChildrenNonRecursively(const Node* const node);
+namespace PrivateHelper {
+void UpdateHeightOfNodeNonRecursively_(Node *node);  // O(1)
+void UpdateTheParentsStartingFromParent_(
+    Node *unupdated_parent_to_start_with);  // O(log(n))
+Height CalculateNodeHeightNonRecursivelyAndWithoutUpdatingTheNode_(
+    const Node *const node);
 
-} //End HeightUpdater::
-} // End BSTNS::
+}  // End PrivateHelper::
+}  // End HeightUpdater::
+}  // End BSTNS::
 
 #endif /* tree_nodes_height_updater_hpp */

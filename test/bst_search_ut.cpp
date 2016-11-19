@@ -11,11 +11,9 @@
 
 using namespace BSTNS;
 
-class BSTSearching : public ::testing::Test
-{
-public:
-  virtual void SetUp()
-  {
+class BSTSearching : public ::testing::Test {
+ public:
+  virtual void SetUp() {
     tree.root->data = 4;
     tree.Add(2);
     tree.Add(6);
@@ -34,8 +32,7 @@ public:
   Tree tree;
 };
 
-TEST_F(BSTSearching, FindingAValueInTree)
-{
+TEST_F(BSTSearching, FindingAValueInTree) {
   ASSERT_EQ(tree.Find(4), tree.root.get());
   ASSERT_EQ(tree.Find(2), tree.root->left.get());
   ASSERT_EQ(tree.Find(6), tree.root->right.get());
@@ -45,8 +42,7 @@ TEST_F(BSTSearching, FindingAValueInTree)
   ASSERT_EQ(tree.Find(7), tree.root->right->right.get());
 }
 
-TEST_F(BSTSearching, CheckingIfValueExistsInTree)
-{
+TEST_F(BSTSearching, CheckingIfValueExistsInTree) {
   ASSERT_TRUE(tree.Find(1));
   ASSERT_TRUE(tree.Find(4));
   ASSERT_TRUE(tree.Find(5));
@@ -56,8 +52,7 @@ TEST_F(BSTSearching, CheckingIfValueExistsInTree)
   ASSERT_FALSE(tree.Find(100));
 }
 
-TEST_F(BSTSearching, FindingTheMinValueInTree)
-{
+TEST_F(BSTSearching, FindingTheMinValueInTree) {
   ASSERT_EQ(tree.Min(), 1);
   ASSERT_TRUE(tree.Remove(1));
   ASSERT_EQ(tree.Min(), 2);
@@ -69,8 +64,7 @@ TEST_F(BSTSearching, FindingTheMinValueInTree)
   ASSERT_EQ(tree.Min(), 0);
 }
 
-TEST_F(BSTSearching, FindingTheMaxValueInTree)
-{
+TEST_F(BSTSearching, FindingTheMaxValueInTree) {
   ASSERT_EQ(tree.Max(), 7);
   ASSERT_TRUE(tree.Remove(7));
   ASSERT_EQ(tree.Max(), 6);

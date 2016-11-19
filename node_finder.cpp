@@ -8,58 +8,39 @@
 
 #include "node_finder.hpp"
 
-namespace BSTNS
-{
-namespace NodeFinder
-{
-BSTNS::Node *Find(Node *const current_root, const Data &target)
+namespace BSTNS {
+namespace NodeFinder {
+Node *Find(Node *const current_root, const Data &target)
 // if the node is not found it returns a nullptr , no error massage
 {
-  if (!current_root)
-  {
+  if (!current_root) {
     return nullptr;
-  }
-  else if (target > current_root->data)
-  {
+  } else if (target > current_root->data) {
     return Find(current_root->right.get(), target);
-  }
-  else if (target < current_root->data)
-  {
+  } else if (target < current_root->data) {
     return Find(current_root->left.get(), target);
-  }
-  else if (target == current_root->data)
-  {
+  } else if (target == current_root->data) {
     return current_root;
-  }
-  else
-  {
+  } else {
     // TODO :  impliment an error MSG
     assert(0);
   }
 }
 
-BSTNS::Node *FindMin(Node *const current_node)
-{
-  if (!current_node->left)
-  {
+Node *FindMin(Node *const current_node) {
+  if (!current_node->left) {
     return current_node;
-  }
-  else
-  {
+  } else {
     return FindMin(current_node->left.get());
   }
 }
 
-BSTNS::Node *FindMax(Node *const current_node)
-{
-  if (!current_node->right)
-  {
+Node *FindMax(Node *const current_node) {
+  if (!current_node->right) {
     return current_node;
-  }
-  else
-  {
+  } else {
     return FindMax(current_node->right.get());
   }
 }
-} // End NodeFinder::
-} // End BSTNS::
+}  // End NodeFinder::
+}  // End BSTNS::

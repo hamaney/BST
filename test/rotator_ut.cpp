@@ -15,9 +15,8 @@
 using namespace BSTNS;
 using namespace BSTNS::Rotator;
 
-class RotatorClass : public ::testing::Test
-{
-public:
+class RotatorClass : public ::testing::Test {
+ public:
   virtual void SetUp() {}
   virtual void TearDown(){};
   Data x;
@@ -28,8 +27,7 @@ public:
   Data y_right;
 };
 
-TEST_F(RotatorClass, RotateLeftAboutTheTreeRoot)
-{
+TEST_F(RotatorClass, RotateLeftAboutTheTreeRoot) {
   x = 2;
   x_left = 1;
   y = 4;
@@ -81,8 +79,7 @@ TEST_F(RotatorClass, RotateLeftAboutTheTreeRoot)
   ASSERT_EQ(tree.Find(y_left)->height, 0);
 }
 
-TEST_F(RotatorClass, RotateLeftAboutLeftChild)
-{
+TEST_F(RotatorClass, RotateLeftAboutLeftChild) {
   x = 2;
   x_left = 1;
   y = 4;
@@ -150,9 +147,7 @@ TEST_F(RotatorClass, RotateLeftAboutLeftChild)
   ASSERT_EQ(tree.Find(y_left)->height, 0);
 }
 
-TEST_F(RotatorClass, RotateLeftAboutTheRightChild)
-{
-
+TEST_F(RotatorClass, RotateLeftAboutTheRightChild) {
   x = 2;
   x_left = 1;
   y = 4;

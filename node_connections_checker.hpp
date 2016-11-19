@@ -22,14 +22,12 @@ namespace NodeConnectionsChecker
 }
 */
 #include "node.hpp"
-namespace BSTNS
-{
-namespace NodeConnectionsChecker
-{
+namespace BSTNS {
+namespace NodeConnectionsChecker {
 bool HasNoChildren(const Node *const);
 bool HasTwoChildren(const Node *const);
 bool HasOnlyLeftChild(const Node *const);
 bool HasOnlyRightChild(const Node *const);
-} //End NodeConnectionsChecker::
-} // End BSTNS::
+}  // End NodeConnectionsChecker::
+}  // End BSTNS::
 #endif /* node_connections_checker_hpp */

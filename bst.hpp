@@ -21,44 +21,42 @@
 #ifndef bst_hpp
 #define bst_hpp
 
+#include <algorithm>
 #include <memory>
 #include <vector>
-#include <algorithm>
 
 #include <iostream>
-#include "node.hpp"
 #include "height_updater.hpp"
+#include "node.hpp"
 #include "node_connections_checker.hpp"
 #include "node_finder.hpp"
 #include "tree_printer.hpp"
 //#include "rotator.hpp"
 #include "node_remover.hpp"
 
-namespace BSTNS
-{
-class Tree
-{
-public:
+namespace BSTNS {
+class Tree {
+ public:
   // Creation
   Tree(const Data &entry = 0);
-Tree(const std::vector<Data> &entries_container);
+  Tree(const std::vector<Data> &entries_container);
   ~Tree();
   NodeUPtr root;
   bool Add(const Data &entry);
-    bool Add(const std::vector<Data>& entries_container);
+  bool Add(const std::vector<Data> &entries_container);
   bool Remove(const Data &target);
   Node *Find(const Data &target) const;
   bool Exist(const Data &key) const;
-bool IsLeaf(const Data &key) const;
- Data Min(void) const;
+  bool IsLeaf(const Data &key) const;
+  Data Min(void) const;
   Data Max(void) const;
-void Print();
-    void PrintHeights(); // rendring heightd for testing
+  void Print();
+  void PrintHeights();  // rendring heightd for testing
 
-private:
+ private:
   void InitiateTree_(const Data &entry = 0);
   NodeUPtr AddNode_(const Data &entry = 0) const;
   bool Add_(NodeUPtr &current_root, const Data &entry);
 };
-} // of BSTNamespace
+}  // of BSTNamespace
 #endif /* BST_hpp */
