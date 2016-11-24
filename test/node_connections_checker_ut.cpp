@@ -12,7 +12,7 @@
 using namespace BSTNS;
 using namespace BSTNS::NodeConnectionsChecker;
 
-class NodeConnectionsCheckerClass : public ::testing::Test {
+class NodeConnectionsCheckerFunctionCollection : public ::testing::Test {
  public:
   virtual void SetUp() {
     node_with_no_children = std::make_unique<Node>();
@@ -34,7 +34,7 @@ class NodeConnectionsCheckerClass : public ::testing::Test {
   NodeUPtr node_with_only_right_child;
 };
 
-TEST_F(NodeConnectionsCheckerClass, CheckIfNodeHasNoChildren) {
+TEST_F(NodeConnectionsCheckerFunctionCollection, CheckIfNodeHasNoChildren) {
   ASSERT_FALSE(HasNoChildren(nullptr));
   ASSERT_TRUE(HasNoChildren(node_with_no_children.get()));
   ASSERT_FALSE(HasNoChildren(node_with_two_children.get()));
@@ -42,21 +42,21 @@ TEST_F(NodeConnectionsCheckerClass, CheckIfNodeHasNoChildren) {
   ASSERT_FALSE(HasNoChildren(node_with_only_right_child.get()));
 }
 
-TEST_F(NodeConnectionsCheckerClass, CheckIfNodeHasTwoChildren) {
+TEST_F(NodeConnectionsCheckerFunctionCollection, CheckIfNodeHasTwoChildren) {
   ASSERT_FALSE(HasTwoChildren(nullptr));
   ASSERT_FALSE(HasTwoChildren(node_with_no_children.get()));
   ASSERT_TRUE(HasTwoChildren(node_with_two_children.get()));
   ASSERT_FALSE(HasTwoChildren(node_with_only_left_child.get()));
   ASSERT_FALSE(HasTwoChildren(node_with_only_right_child.get()));
 }
-TEST_F(NodeConnectionsCheckerClass, CheckIfNodeHasOnlyLeftChild) {
+TEST_F(NodeConnectionsCheckerFunctionCollection, CheckIfNodeHasOnlyLeftChild) {
   ASSERT_FALSE(HasOnlyLeftChild(node_with_no_children.get()));
   ASSERT_FALSE(HasOnlyLeftChild(nullptr));
   ASSERT_FALSE(HasOnlyLeftChild(node_with_two_children.get()));
   ASSERT_TRUE(HasOnlyLeftChild(node_with_only_left_child.get()));
   ASSERT_FALSE(HasOnlyLeftChild(node_with_only_right_child.get()));
 }
-TEST_F(NodeConnectionsCheckerClass, CheckIfNodeHasOnlyRightChild) {
+TEST_F(NodeConnectionsCheckerFunctionCollection, CheckIfNodeHasOnlyRightChild) {
   ASSERT_FALSE(HasOnlyRightChild(nullptr));
   ASSERT_FALSE(HasOnlyRightChild(node_with_no_children.get()));
   ASSERT_FALSE(HasOnlyRightChild(node_with_two_children.get()));

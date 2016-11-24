@@ -10,14 +10,14 @@
 
 // Full path fo clearty
 using namespace BSTNS::NodeConnectionsChecker;
-using namespace BSTNS::HeightUpdater;
 using namespace BSTNS::NodeFinder;
 using namespace BSTNS::NodeRemover::PrivateHelper;
 
 namespace BSTNS {
 namespace NodeRemover {
-bool Remove(NodeUPtr &tree_root, Node *node_to_remove) {
-  if (node_to_remove) {
+
+Node *RemoveNode(NodeUPtr &tree_root, Node *node_to_remove) {
+  if (node_to_remove && tree_root) {
     if (HasNoChildren(node_to_remove)) {
       return RemoveNodeWithNoChildren_(tree_root, node_to_remove);
     } else if (HasTwoChildren(node_to_remove)) {
@@ -30,11 +30,13 @@ bool Remove(NodeUPtr &tree_root, Node *node_to_remove) {
       assert(0);
     }
   } else {
-    return false;
+    return nullptr;
   }
 }
+
 namespace PrivateHelper {
-bool RemoveNodeWithNoChildren_(NodeUPtr &tree_root, Node *node_to_remove) {
+
+Node *RemoveNodeWithNoChildren_(NodeUPtr &tree_root, Node *node_to_remove) {
   auto parent = node_to_remove->parent;
   if (!parent) {
     tree_root.reset();
@@ -45,20 +47,22 @@ bool RemoveNodeWithNoChildren_(NodeUPtr &tree_root, Node *node_to_remove) {
       parent->right.reset();
     }
   }
-  UpdateHeight(parent);
-  return true;
+  return parent;
 }
 // TODO: make a choise based on leftheavey or right heavy node
-bool RemoveNodeWithTwoChildren_(NodeUPtr &tree_root, Node *node_to_remove) {
-  Node *right_branch_min_value_node = FindMin(node_to_remove->right.get());
+Node *RemoveNodeWithTwoChildren_(NodeUPtr &tree_root, Node *node_to_remove) {
+  auto node_to_remove_parent = node_to_remove->parent;
+  auto right_branch_min_value_node = FindMin(node_to_remove->right.get());
   node_to_remove->data = right_branch_min_value_node->data;
   // calling a remove on a leaf or one with no left node
   // might call recursivly until it remove a leaf
   // height will be updated when the node leaf is removed
-  return Remove(tree_root, right_branch_min_value_node);
+  RemoveNode(tree_root, right_branch_min_value_node);
+  return node_to_remove_parent;  // only for the fist node this function is
+                                 // called with
 }
-bool RemoveNodeWithOnlyLeftChild_(NodeUPtr &tree_root, Node *node_to_remove) {
-  Node *parent = node_to_remove->parent;
+Node *RemoveNodeWithOnlyLeftChild_(NodeUPtr &tree_root, Node *node_to_remove) {
+  auto parent = node_to_remove->parent;
 
   if (!parent) {
     tree_root = std::move(tree_root->left);
@@ -75,13 +79,12 @@ bool RemoveNodeWithOnlyLeftChild_(NodeUPtr &tree_root, Node *node_to_remove) {
       parent->right->parent = parent;
       parent->right->is_left_node = false;
     }
-    UpdateHeight(parent);
   }
 
-  return true;
+  return parent;
 }
-bool RemoveNodeWithOnlyRightChild_(NodeUPtr &tree_root, Node *node_to_remove) {
-  Node *parent = node_to_remove->parent;
+Node *RemoveNodeWithOnlyRightChild_(NodeUPtr &tree_root, Node *node_to_remove) {
+  auto parent = node_to_remove->parent;
   if (!parent) {
     tree_root = std::move(tree_root->right);
     tree_root->parent = nullptr;
@@ -96,10 +99,9 @@ bool RemoveNodeWithOnlyRightChild_(NodeUPtr &tree_root, Node *node_to_remove) {
       parent->right = std::move(node_to_remove->right);
       parent->right->parent = parent;
     }
-    UpdateHeight(parent);
   }
 
-  return true;
+  return parent;
 }
 }  // End of PrivateHelper::
 }  // End of NodeRemover::

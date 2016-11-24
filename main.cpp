@@ -11,25 +11,10 @@
 
 int main(int argc, const char *argv[]) {
   BSTNS::Tree tree(7);
-  tree.Print();
-  tree.Add(3);
-  tree.Print();
-  tree.Add(11);
-  tree.Print();
-  tree.Add(1);
-  tree.Print();
-  tree.Add(5);
-  tree.Print();
-  tree.Add(9);
-  tree.Print();
-  tree.Add(13);
-  tree.Print();
-  tree.Add(15);
-  tree.Print();
-  tree.Add(14);
-  tree.Print();
-  std::cout << " DONE " << std::endl;
-  //
+    tree.Insert(3);
+    if(tree.Insert(3)){
+  std::cout << " Repeated " << std::endl;
+    }//
   //        ________[7]_______
   //       /                  \
     //     _[3]__            __[11]_

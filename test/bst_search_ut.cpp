@@ -6,6 +6,7 @@
 //  Copyright © 2016 Abdulrhman Mohamed. All rights reserved.
 //
 
+#include <vector>
 #include "bst.hpp"
 #include "gtest/gtest.h"
 
@@ -14,19 +15,19 @@ using namespace BSTNS;
 class BSTSearching : public ::testing::Test {
  public:
   virtual void SetUp() {
-    tree.root->data = 4;
-    tree.Add(2);
-    tree.Add(6);
-    tree.Add(1);
-    tree.Add(3);
-    tree.Add(5);
-    tree.Add(7);
-    //        ________[4]_______
+    tree.Insert(4);
+    tree.Insert(2);
+    tree.Insert(6);
+    tree.Insert(1);
+    tree.Insert(3);
+    tree.Insert(5);
+    tree.Insert(7);
+    /*        ________[4]_______
     //       /                  \
-        //     _[2]__            __[6]_
+    //     _[2]__            __[6]_
     //    /      \          /      \
-        //  [1]      [3]      [5]      [7]
-    //
+    //  [1]      [3]      [5]      [7]
+    */
   }
   virtual void TearDown(){};
   Tree tree;
@@ -60,7 +61,7 @@ TEST_F(BSTSearching, FindingTheMinValueInTree) {
   ASSERT_EQ(tree.Min(), 2);
   ASSERT_TRUE(tree.Remove(2));
   ASSERT_EQ(tree.Min(), 4);
-  ASSERT_TRUE(tree.Add(0));
+  ASSERT_TRUE(tree.Insert(0));
   ASSERT_EQ(tree.Min(), 0);
 }
 
@@ -72,6 +73,6 @@ TEST_F(BSTSearching, FindingTheMaxValueInTree) {
   ASSERT_EQ(tree.Max(), 5);
   ASSERT_TRUE(tree.Remove(5));
   ASSERT_EQ(tree.Max(), 4);
-  ASSERT_TRUE(tree.Add(99));
+  ASSERT_TRUE(tree.Insert(99));
   ASSERT_EQ(tree.Max(), 99);
 }

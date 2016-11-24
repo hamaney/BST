@@ -7,23 +7,23 @@
 //
 
 #include "rotator.hpp"
-using namespace BSTNS::HeightUpdater;
+
 namespace BSTNS {
 namespace Rotator {
-bool RotateLeftAround(NodeUPtr &pivot_node) {
+Node* RotateLeftAround(NodeUPtr &pivot_node) {
   /*        __[x]__
-   //       /       \
-   //   [xLeft]    _[y]_
-   //             /     \
-   //         [yLeft]  [yRight]
-   */
+  //       /       \
+  //   [xLeft]    _[y]_
+  //             /     \
+  //         [yLeft]  [yRight]
+  */
 
   /*        __[y]__
-   //       /       \
-   //    _[x]_    [yRight]
-   //   /     \
-   //[xLeft]  [yLeft]
-   */
+  //       /       \
+  //    _[x]_    [yRight]
+  //   /     \
+  //[xLeft]  [yLeft]
+  */
 
   if (pivot_node) {
     Node *pivot_node_parent = pivot_node->parent;
@@ -39,84 +39,94 @@ bool RotateLeftAround(NodeUPtr &pivot_node) {
     } else {
       x = std::move(pivot_node);
     }
+    
+    //Rotating
+    //y
     auto y = std::move(x->right);
-
+    y->parent= pivot_node_parent;
+    y->is_left_node = old_pivot_is_left_node_status;
     // y_left
     x->right = std::move(y->left);
-    x->right->parent = x.get();
+    x->right->parent = x.get(); //potintial Error if x_right null
     x->right->is_left_node = false;
-
     // x
     y->left = std::move(x);
     y->left->parent = y.get();
-    UpdateHeight(y->left.get());
     y->left->is_left_node = true;
 
-    // y
-    y->is_left_node = old_pivot_is_left_node_status;
-    UpdateHeight(y.get());
-    y->parent = pivot_node_parent;
-
+    
     pivot_node = std::move(y);
-    return true;
+      return pivot_node->left.get();// retrun the old pivot node since it is the lower node to that require a height update
+
   } else {
-    return false;
+    return nullptr;
   }
 }
 
-bool RotateRightAround(NodeUPtr &pivot_node) {
-  /*        __[x]__
-   //       /       \
-   //   [xLeft]    _[y]_
-   //             /     \
-   //         [yLeft]  [yRight]
-   */
-
-  /*        __[y]__
+Node* RotateRightAround(NodeUPtr &pivot_node) {
+   /*        __[y]__
    //       /       \
    //    _[x]_    [yRight]
    //   /     \
-   //[xLeft]  [yLeft]
+   //[xLeft]  [xRight]
+   */
+   
+   //After Right Rotation
+  
+   /*        __[x]__
+   //       /       \
+   //   [xLeft]    _[y]_
+   //             /     \
+   //         [xRight]  [yRight]
    */
 
   if (pivot_node) {
     Node *pivot_node_parent = pivot_node->parent;
 
     // Get all tree info before moving things around
-    NodeUPtr x;
+    NodeUPtr y;
     bool old_pivot_is_left_node_status = pivot_node->is_left_node;
     // TODO : change to lamda
     if (pivot_node->is_left_node) {
-      x = std::move(pivot_node_parent->left);
+      y = std::move(pivot_node_parent->left);
     } else if (!pivot_node->is_left_node && pivot_node_parent) {
-      x = std::move(pivot_node_parent->right);
+      y = std::move(pivot_node_parent->right);
     } else {
-      x = std::move(pivot_node);
+      y = std::move(pivot_node);
     }
-    auto y = std::move(x->right);
-
-    // y_left
-    x->right = std::move(y->left);
+    
+    //Rotating
+    //x
+    auto x = std::move(y->left);
+    x->parent = pivot_node_parent;
+    x->is_left_node = old_pivot_is_left_node_status;
+    //xRight
+    y->left = std::move(x->right);
+    y->left->parent = y.get();
+    y->left->is_left_node = true;
+    //y
+    x->right = std::move(y);
     x->right->parent = x.get();
     x->right->is_left_node = false;
-
-    // x
-    y->left = std::move(x);
-    y->left->parent = y.get();
-    // TODO : Change to UpdateHeight
-    // PrivateHelper::UpdateHeightOfNodeNonRecursively_(y->left.get());
-    y->left->is_left_node = true;
-
-    // y
-    y->is_left_node = old_pivot_is_left_node_status;
-    y->parent = pivot_node_parent;
-    UpdateHeight(y.get());
-
-    pivot_node = std::move(y);
-    return true;
+    
+    pivot_node = std::move(x);
+    
+    return pivot_node->right.get(); // retrun the old pivot node since it is the lower node to that require a height update
   } else {
-    return false;
+    return nullptr;
   }
 }
 }  // End of Rotator::
 }  // End of Rotator::
+
+
+
+
+
+
+
+
+
+
+
+

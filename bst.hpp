@@ -33,30 +33,34 @@
 #include "tree_printer.hpp"
 //#include "rotator.hpp"
 #include "node_remover.hpp"
+#include "node_inserter.hpp"
 
 namespace BSTNS {
 class Tree {
  public:
   // Creation
-  Tree(const Data &entry = 0);
+  Tree(void);  // Empty tree with no nodes
+  Tree(const Data &entry);
   Tree(const std::vector<Data> &entries_container);
   ~Tree();
   NodeUPtr root;
-  bool Add(const Data &entry);
-  bool Add(const std::vector<Data> &entries_container);
+
+  // bool Tree::InsertAtRoot(const Data &entry){}; // TODO
+  bool Insert(const Data &entry);
+  bool Insert(const std::vector<Data> &entries_container);
+
   bool Remove(const Data &target);
+  bool Remove(const std::vector<Data> &entries_container); // TODO
+  
+    bool IsBalace();
+    bool Balance();
+    
   Node *Find(const Data &target) const;
-  bool Exist(const Data &key) const;
-  bool IsLeaf(const Data &key) const;
   Data Min(void) const;
   Data Max(void) const;
+
   void Print();
   void PrintHeights();  // rendring heightd for testing
-
- private:
-  void InitiateTree_(const Data &entry = 0);
-  NodeUPtr AddNode_(const Data &entry = 0) const;
-  bool Add_(NodeUPtr &current_root, const Data &entry);
 };
 }  // of BSTNamespace
 #endif /* BST_hpp */

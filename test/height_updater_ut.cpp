@@ -16,18 +16,18 @@ using namespace BSTNS;
 using namespace BSTNS::HeightUpdater;
 using namespace BSTNS::HeightUpdater::PrivateHelper;
 
-class TreeHeightUpdater : public ::testing::Test {
+class TreeHeightUpdaterFunctionCollection : public ::testing::Test {
  public:
-  virtual void SetUp() {}
+  virtual void SetUp() {
+    entries = {4, 2, 1, 3, 6, 5};
+    tree.Insert(entries);
+  }
   virtual void TearDown(){};
-
   Tree tree;
   std::vector<Data> entries;
 };
 
-TEST_F(TreeHeightUpdater, NodeHeightUpdatingNonRecursively) {
-  entries = {4, 2, 1, 3, 6, 5};
-  Tree tree(entries);
+TEST_F(TreeHeightUpdaterFunctionCollection, NodeHeightUpdatingNonRecursively) {
   Data six_original_parent_height = tree.Find(6)->parent->height;
   Data two_original_parent_height = tree.Find(2)->parent->height;
 
@@ -104,9 +104,7 @@ TEST_F(TreeHeightUpdater, NodeHeightUpdatingNonRecursively) {
    */
   ASSERT_EQ(tree.Find(4)->height, 101);
 }
-TEST_F(TreeHeightUpdater, ReadNodeHeightNonRecursively) {
-  entries = {4, 2, 1, 3, 6, 5};
-  Tree tree(entries);
+TEST_F(TreeHeightUpdaterFunctionCollection, ReadNodeHeightNonRecursively) {
   /*        ____[4(2)]____
   //       /              \
   //     _[2(1)]_      _[6(1)]
@@ -144,9 +142,8 @@ TEST_F(TreeHeightUpdater, ReadNodeHeightNonRecursively) {
       CalculateNodeHeightNonRecursivelyAndWithoutUpdatingTheNode_(tree.Find(4)),
       112);
 }
-TEST_F(TreeHeightUpdater, NodeHeightUpdatingRecursivelyForAllChildrens) {
-  entries = {4, 2, 1, 3, 6, 5};
-  Tree tree(entries);
+TEST_F(TreeHeightUpdaterFunctionCollection,
+       NodeHeightUpdatingRecursivelyForAllChildrens) {
   /*        ____[4(2)]____
   //       /              \
   //     _[2(1)]_      _[6(1)]
@@ -178,7 +175,7 @@ TEST_F(TreeHeightUpdater, NodeHeightUpdatingRecursivelyForAllChildrens) {
 
   ASSERT_EQ(tree.Find(4)->height, 2);
 }
-TEST_F(TreeHeightUpdater, NodeParentHeightUpdating) {
+TEST_F(TreeHeightUpdaterFunctionCollection, NodeParentHeightUpdating) {
   entries = {4, 2, 1, 3, 7, 5, 6};
   Tree tree(entries);
 

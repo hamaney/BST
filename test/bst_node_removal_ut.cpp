@@ -5,7 +5,7 @@
 //  Created by Abdulrhman Mohamed on 2016-10-26.
 //  Copyright © 2016 Abdulrhman Mohamed. All rights reserved.
 //
-
+#include <vector>
 #include "bst.hpp"
 #include "gtest/gtest.h"
 
@@ -14,13 +14,8 @@ using namespace BSTNS;
 class BSTNodeRemoval : public ::testing::Test {
  public:
   virtual void SetUp() {
-    tree.root->data = 7;
-    tree.Add(3);
-    tree.Add(11);
-    tree.Add(1);
-    tree.Add(5);
-    tree.Add(9);
-    tree.Add(13);
+    entries = {7, 3, 11, 1, 5, 9, 13};
+    tree.Insert(entries);
     /*        ________[7]_______
     //       /                  \
     //     _[3]__            __[11]_
@@ -29,23 +24,24 @@ class BSTNodeRemoval : public ::testing::Test {
     */
   }
   virtual void TearDown(){};
+  std::vector<Data> entries;
   Tree tree;
 };
 
 TEST_F(BSTNodeRemoval, RemoveNodeWithNoChildren) {
-  //        ________[7]_______
+  /*________[7]_______
   //       /                  \
-    //     _[3]__            __[11]_
+  //     _[3]__            __[11]_
   //    /      \          /       \
-    //  [1]X     [5]      [9]        [13]
-  ASSERT_TRUE(tree.Find(1));
-  ASSERT_TRUE(tree.Remove(1));
-  ASSERT_FALSE(tree.Find(1));
-  //        ________[7]_______
+  //  [1]X     [5]      [9]        [13]
+  */
+  tree.Remove(1);
+  /*        ________[7]_______
   //       /                  \
-    //      [3]_             __[11]_
+  //      [3]_             __[11]_
   //          \           /       \
-    //           [5]      [9]       [13]
+  //           [5]      [9]       [13]
+  */
   // parent status after removing
   ASSERT_FALSE(tree.Find(3)->left.get());
   ASSERT_EQ(tree.Find(3)->right->data, 5);
@@ -55,19 +51,19 @@ TEST_F(BSTNodeRemoval, RemoveNodeWithNoChildren) {
 
   //--------------------------------------------------------------------------
 
-  //        ________[7]_______
+  /*        ________[7]_______
   //       /                  \
-    //      [3]__            __[11]_
+  //      [3]__            __[11]_
   //           \          /       \
-    //          [5]      [9]       [13]X
-  ASSERT_TRUE(tree.Find(13));
-  ASSERT_TRUE(tree.Remove(13));
-  ASSERT_FALSE(tree.Find(13));
-  //        ________[7]_______
+  //          [5]      [9]       [13]X
+  */
+  tree.Remove(13);
+  /*        ________[7]_______
   //       /                  \
-    //      [3]__            __[11]
+  //      [3]__            __[11]
   //           \          /
   //           [5]      [9]
+  */
   // parent status after removing
   ASSERT_FALSE(tree.Find(11)->right.get());
   ASSERT_EQ(tree.Find(11)->left->data, 9);
@@ -77,11 +73,11 @@ TEST_F(BSTNodeRemoval, RemoveNodeWithNoChildren) {
 
   //--------------------------------------------------------------------------
 
-  //        ________[7]_______
+  /*        ________[7]_______
   //       /                  \
-    //
+  */
   Tree tree_with_root_node_only(7);
-  ASSERT_TRUE(tree_with_root_node_only.Remove(7));
+  tree_with_root_node_only.Remove(7);
   ASSERT_FALSE(tree_with_root_node_only.Find(7));
   ASSERT_FALSE(tree_with_root_node_only.root);
 }
@@ -92,8 +88,8 @@ TEST_F(BSTNodeRemoval, CheckNodeHightAfterRemovingANodeWithNoChildren) {
   //    /      \          /       \
   //  [1]      [5]      [9]        [13]
   */
-  tree.Add(-1);
-  tree.Add(-2);
+  tree.Insert(-1);
+  tree.Insert(-2);
   ASSERT_EQ(tree.root->height, 4);
   /*             ________[7]_______
   //            /                  \
@@ -245,6 +241,7 @@ TEST_F(BSTNodeRemoval, CheckNodeHightAfterRemovingANodeWithNoChildren) {
   ASSERT_EQ(tree.root->height, 0);
   tree.Remove(7);
 }
+
 TEST_F(BSTNodeRemoval, RemoveNodeWithOnlyLeftChild) {
   /*        ________[7]_______
   //       /                  \
@@ -290,7 +287,7 @@ TEST_F(BSTNodeRemoval, RemoveNodeWithOnlyLeftChild) {
   //      [1]
   */
   Tree tree_with_root_that_has_only_left_child(7);
-  ASSERT_TRUE(tree_with_root_that_has_only_left_child.Add(1));
+  ASSERT_TRUE(tree_with_root_that_has_only_left_child.Insert(1));
   ASSERT_TRUE(tree_with_root_that_has_only_left_child.Remove(7));
   ASSERT_FALSE(tree_with_root_that_has_only_left_child.Find(7));
   //        ________[1]
@@ -335,7 +332,7 @@ TEST_F(BSTNodeRemoval, CheckNodeHightAfterRemovingANodeWithOnlyLeftChild) {
   //                   [9]       [13]
   */
 
-  tree.Add(12);
+  tree.Insert(12);
   /*        ________[7]______
   //       /                 \
   //      [1]             __[11]_
@@ -387,12 +384,13 @@ TEST_F(BSTNodeRemoval, CheckNodeHightAfterRemovingANodeWithOnlyLeftChild) {
   //       /
   //      [1]
   Tree tree_with_root_that_has_only_left_child(7);
-  tree_with_root_that_has_only_left_child.Add(1);
+  tree_with_root_that_has_only_left_child.Insert(1);
   tree_with_root_that_has_only_left_child.Remove(7);
   //        ________[1]
   //       /
   ASSERT_EQ(tree_with_root_that_has_only_left_child.root->height, 0);
 }
+
 TEST_F(BSTNodeRemoval, RemoveNodeWithOnlyRightChild) {
   //        ________[7]_______
   //       /                  \
@@ -435,7 +433,7 @@ TEST_F(BSTNodeRemoval, RemoveNodeWithOnlyRightChild) {
   //                        [11]
   */
   Tree tree_with_root_that_has_only_right_child(7);
-  ASSERT_TRUE(tree_with_root_that_has_only_right_child.Add(11));
+  ASSERT_TRUE(tree_with_root_that_has_only_right_child.Insert(11));
   ASSERT_TRUE(tree_with_root_that_has_only_right_child.Remove(7));
   ASSERT_FALSE(tree_with_root_that_has_only_right_child.Find(7));
   /*        ________[1]
@@ -480,12 +478,13 @@ TEST_F(BSTNodeRemoval, CheckNodeHightAfterRemovingANodeWithOnlyRightChild) {
   //                        [11]
   */
   Tree tree_with_root_that_has_only_right_child(7);
-  tree_with_root_that_has_only_right_child.Add(11);
+  tree_with_root_that_has_only_right_child.Insert(11);
   tree_with_root_that_has_only_right_child.Remove(7);
   /*        ________[11]
   */
   ASSERT_EQ(tree_with_root_that_has_only_right_child.root->height, 0);
 }
+
 TEST_F(BSTNodeRemoval, RemoveNodeWithTwoChildrenNodeIsALeftChild) {
   /*        ________[7]_______
   //       /                  \
@@ -537,6 +536,7 @@ TEST_F(BSTNodeRemoval,
   ASSERT_EQ(tree.Find(9)->height, 0);
   ASSERT_EQ(tree.Find(13)->height, 0);
 }
+
 TEST_F(BSTNodeRemoval, RemoveNodeWithTwoChildrenNodeIsARighttChild) {
   //        ________[7]_______
   //       /                  \
@@ -587,6 +587,7 @@ TEST_F(BSTNodeRemoval,
   ASSERT_EQ(tree.Find(5)->height, 0);
   ASSERT_EQ(tree.Find(9)->height, 0);
 }
+
 TEST_F(BSTNodeRemoval, RemoveNodeWithTwoChildrenNodeIsTheRoot) {
   //        ________[7]X______
   //       /                  \
@@ -640,23 +641,24 @@ TEST_F(BSTNodeRemoval,
   ASSERT_EQ(tree.Find(5)->height, 0);
   ASSERT_EQ(tree.Find(13)->height, 0);
 }
+
 TEST_F(BSTNodeRemoval, RemoveNodeWithTwoChildrenHasRecursaiveCallToRemove) {
   //        ________[7]_______
   //       /                  \
     //     _[3]__            __[11]_
   //    /      \          /       \
     //  [1]      [5]      [9]       [13]
-  ASSERT_TRUE(tree.Add(2));
+  ASSERT_TRUE(tree.Insert(2));
   ASSERT_TRUE(tree.Find(2));
-  ASSERT_TRUE(tree.Add(4));
+  ASSERT_TRUE(tree.Insert(4));
   ASSERT_TRUE(tree.Find(4));
-  ASSERT_TRUE(tree.Add(6));
+  ASSERT_TRUE(tree.Insert(6));
   ASSERT_TRUE(tree.Find(6));
-  ASSERT_TRUE(tree.Add(8));
+  ASSERT_TRUE(tree.Insert(8));
   ASSERT_TRUE(tree.Find(8));
-  ASSERT_TRUE(tree.Add(10));
+  ASSERT_TRUE(tree.Insert(10));
   ASSERT_TRUE(tree.Find(10));
-  ASSERT_TRUE(tree.Add(14));
+  ASSERT_TRUE(tree.Insert(14));
   ASSERT_TRUE(tree.Find(14));
   //        ________[7]_______
   //       /                  \
@@ -731,12 +733,12 @@ TEST_F(
   //    /      \          /       \
   //  [1]      [5]      [9]       [13]
   */
-  tree.Add(2);
-  tree.Add(4);
-  tree.Add(6);
-  tree.Add(8);
-  tree.Add(10);
-  tree.Add(14);
+  tree.Insert(2);
+  tree.Insert(4);
+  tree.Insert(6);
+  tree.Insert(8);
+  tree.Insert(10);
+  tree.Insert(14);
   /*        ________[7]_______
   //       /                  \
   //     _[3]X_            __[11]X

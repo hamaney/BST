@@ -12,13 +12,13 @@
 
 using namespace BSTNS;
 
-class NodeCreation : public ::testing::Test {
+class NodeClass : public ::testing::Test {
  public:
   virtual void SetUp() {}
   virtual void TearDown(){};
 };
 
-TEST_F(NodeCreation, NodeConstructionDefaultValue) {
+TEST_F(NodeClass, NodeConstructionDefaultValue) {
   Node node;
   ASSERT_EQ(node.data, 0);
   ASSERT_FALSE(node.parent);
