@@ -60,7 +60,10 @@ bool Tree::Remove(const std::vector<Data> &entries_container) {
   }
   return true;
 }
-
+bool Tree::EmptyTheTree() {
+  root.reset();
+  return !root.get();
+}
 Node *Tree::Find(const Data &target) const {
   return NodeFinder::Find(root.get(), target);
 }

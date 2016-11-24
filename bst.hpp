@@ -32,8 +32,8 @@
 #include "node_finder.hpp"
 #include "tree_printer.hpp"
 //#include "rotator.hpp"
-#include "node_remover.hpp"
 #include "node_inserter.hpp"
+#include "node_remover.hpp"
 
 namespace BSTNS {
 class Tree {
@@ -50,11 +50,12 @@ class Tree {
   bool Insert(const std::vector<Data> &entries_container);
 
   bool Remove(const Data &target);
-  bool Remove(const std::vector<Data> &entries_container); // TODO
-  
-    bool IsBalace();
-    bool Balance();
-    
+  bool Remove(const std::vector<Data> &entries_container);
+  bool EmptyTheTree();
+
+  bool IsBalace();
+  bool Balance();
+
   Node *Find(const Data &target) const;
   Data Min(void) const;
   Data Max(void) const;
