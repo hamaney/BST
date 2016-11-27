@@ -10,15 +10,15 @@
 
 namespace BSTNS {
 namespace NodeFinder {
-Node *Find(Node *const current_root, const Data &target)
+Node *FindNode(Node *const current_root, const Data &target)
 // if the node is not found it returns a nullptr , no error massage
 {
   if (!current_root) {
     return nullptr;
   } else if (target > current_root->data) {
-    return Find(current_root->right.get(), target);
+    return FindNode(current_root->right.get(), target);
   } else if (target < current_root->data) {
-    return Find(current_root->left.get(), target);
+    return FindNode(current_root->left.get(), target);
   } else if (target == current_root->data) {
     return current_root;
   } else {
@@ -27,19 +27,19 @@ Node *Find(Node *const current_root, const Data &target)
   }
 }
 
-Node *FindMin(Node *const current_node) {
+Node *FindMinNode(Node *const current_node) {
   if (!current_node->left) {
     return current_node;
   } else {
-    return FindMin(current_node->left.get());
+    return FindMinNode(current_node->left.get());
   }
 }
 
-Node *FindMax(Node *const current_node) {
+Node *FindMaxNode(Node *const current_node) {
   if (!current_node->right) {
     return current_node;
   } else {
-    return FindMax(current_node->right.get());
+    return FindMaxNode(current_node->right.get());
   }
 }
 }  // End NodeFinder::

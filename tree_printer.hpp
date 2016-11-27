@@ -34,9 +34,9 @@ namespace PrivateHelper
 namespace BSTNS {
 namespace TreePrinter {
 
-void Print(const Node *const root, int level = 1, int indentSpace = 0,
+void PrintTree(const Node *const root, int level = 1, int indentSpace = 0,
            std::ostream &out = std::cout);
-void PrintHeights(const Node *const root, int level = 1, int indentSpace = 0,
+void PrintTreeHeights(const Node *const root, int level = 1, int indentSpace = 0,
                   std::ostream &out = std::cout);
 namespace PrivateHelper {
 

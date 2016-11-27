@@ -52,7 +52,7 @@ Node *RemoveNodeWithNoChildren_(NodeUPtr &tree_root, Node *node_to_remove) {
 // TODO: make a choise based on leftheavey or right heavy node
 Node *RemoveNodeWithTwoChildren_(NodeUPtr &tree_root, Node *node_to_remove) {
   auto node_to_remove_parent = node_to_remove->parent;
-  auto right_branch_min_value_node = FindMin(node_to_remove->right.get());
+  auto right_branch_min_value_node = FindMinNode(node_to_remove->right.get());
   node_to_remove->data = right_branch_min_value_node->data;
   // calling a remove on a leaf or one with no left node
   // might call recursivly until it remove a leaf

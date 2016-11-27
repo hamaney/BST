@@ -43,7 +43,9 @@ TEST_F(RotatorFunctionsCollections, RotateLeftAboutTheTreeRoot) {
     //             /       \
     //       [yLeft=3]  [yRight=5]
     */
-    ASSERT_TRUE(RotateLeftAround(tree.root));
+    auto latest_updated_node =RotateLeftAround(tree.root);
+    ASSERT_EQ(latest_updated_node , tree.root->left.get());
+    
     /*             __[y=4]__
     //            /         \
     //        __[x=2]__  [yRight=5]
@@ -88,7 +90,7 @@ TEST_F(RotatorFunctionsCollections, RotateLeftAboutLeftChild) {
      //             /       \
      //       [yLeft=3]  [yRight=5]
      */
-    ASSERT_TRUE(RotateLeftAround(tree.root->left));
+    auto pointer_to_highest_node_with_updated_height = RotateLeftAround(tree.root->left);
     /*
      //                  __[6]__
      //                 /       \
@@ -99,6 +101,7 @@ TEST_F(RotatorFunctionsCollections, RotateLeftAboutLeftChild) {
      //   [xLeft=1]  [yLeft=3]
      */
     
+    ASSERT_EQ(pointer_to_highest_node_with_updated_height, tree.root->left->left.get());
     // tree connections after
     // |-Data
     ASSERT_EQ(tree.root->data, 6);
@@ -143,7 +146,8 @@ TEST_F(RotatorFunctionsCollections, RotateLeftAboutTheRightChild) {
      //             /       \
      //       [yLeft=3]  [yRight=5]
      */
-    ASSERT_TRUE(RotateLeftAround(tree.root->right));
+    auto latest_updated_node =RotateLeftAround(tree.root->right);
+    ASSERT_EQ(latest_updated_node , tree.root->right->left.get());
     /*
      //      ____[-1]__
      //     /          \
@@ -178,6 +182,34 @@ TEST_F(RotatorFunctionsCollections, RotateLeftAboutTheRightChild) {
     ASSERT_TRUE(tree.Find(x_left)->is_left_node);
 }
 
+TEST_F(RotatorFunctionsCollections, RotateLeftAboutTheRootWithTreeHasTwoNodesOnly) {
+    x = 2;
+    y = 4;
+    Tree tree({x,y});
+    /*
+    //      [x]__
+    //           \
+    //           [y]
+    */
+    auto latest_updated_node = RotateLeftAround(tree.root);
+    /*
+    //      __[y]
+    //     /
+    //   [x]
+    */
+    ASSERT_EQ(latest_updated_node , tree.root->left.get());
+    // tree connections after
+    // |-Data
+    ASSERT_EQ(tree.root->data, y);
+    ASSERT_EQ(tree.root->left->data,x);
+    // |-Parents
+    ASSERT_FALSE(tree.Find(y)->parent);
+    ASSERT_EQ(tree.Find(x)->parent->data, y);
+    // |-Left flag testing
+    ASSERT_FALSE(tree.Find(y)->is_left_node);
+    ASSERT_TRUE(tree.Find(x)->is_left_node);
+    
+}
 
 TEST_F(RotatorFunctionsCollections, RotateRightAboutTheTreeRoot) {
     y = 4;
@@ -193,14 +225,14 @@ TEST_F(RotatorFunctionsCollections, RotateRightAboutTheTreeRoot) {
     //       /         \
     //   [xLeft=1]  [xRight=3]
     */
-    ASSERT_TRUE(RotateRightAround(tree.root));
+    auto latest_updated_node = RotateRightAround(tree.root);
     /*        __[x=2]__
     //       /         \
     //   [xLeft=1]   _[y=4]_
     //              /       \
     //         [xRight=3] [yRight=5]
     */
-    
+    ASSERT_EQ(latest_updated_node , tree.root->right.get());
     // tree connections after
     // |-Data
     ASSERT_EQ(tree.root->data, x);
@@ -241,7 +273,7 @@ TEST_F(RotatorFunctionsCollections, RotateRightAboutLeftChild)
     //       /         \
     //   [xLeft=1]  [xRight=3]
     */
-    ASSERT_TRUE(RotateRightAround(tree.root->left));
+    auto latest_updated_node = RotateRightAround(tree.root->left);
     /*
     //              __[6]__
     //             /       \
@@ -251,7 +283,7 @@ TEST_F(RotatorFunctionsCollections, RotateRightAboutLeftChild)
     //              /       \
     //          [xRight=3] [yRight=5]
     */
-    
+    ASSERT_EQ(latest_updated_node,tree.root->left->right.get());
     // tree connections after
     // |-Data
     ASSERT_EQ(tree.root->data, 6);
@@ -295,7 +327,7 @@ TEST_F(RotatorFunctionsCollections, RotateRightAboutTheRightChild){
     //     /         \
     // [xLeft=1]  [xRight=3]
     */
-    ASSERT_TRUE(RotateRightAround(tree.root->right));
+    auto latest_updated_node = RotateRightAround(tree.root->right);
     /*
     //       __[-1]__
     //      /        \
@@ -305,7 +337,7 @@ TEST_F(RotatorFunctionsCollections, RotateRightAboutTheRightChild){
     //                 /       \
     //            [xRight=3] [yRight=5]
     */
-
+    ASSERT_EQ(latest_updated_node,tree.root->right->right.get());
     // tree connections after
     // |-Data
     ASSERT_EQ(tree.root->data, -1);
@@ -331,4 +363,34 @@ TEST_F(RotatorFunctionsCollections, RotateRightAboutTheRightChild){
     ASSERT_FALSE(tree.Find(y_right)->is_left_node);
     ASSERT_TRUE(tree.Find(x_left)->is_left_node);
     ASSERT_TRUE(tree.Find(x_right)->is_left_node);
+}
+TEST_F(RotatorFunctionsCollections, RotateRightAboutTheRootWithTreeHasTwoNodesOnly) {
+    
+    y = 4;
+    x = 2;
+    Tree tree({y,x});
+    /*
+    //      __[y]
+    //     /
+    //   [x]
+    */
+    tree.Print();tree.PrintHeights();
+    auto latest_updated_node = RotateRightAround(tree.root);
+    tree.Print();tree.PrintHeights();
+    /*
+    //      [x]__
+    //           \
+    //           [y]
+    */
+    ASSERT_EQ(latest_updated_node, tree.root->right.get());
+    // tree connections after
+    // |-Data
+    ASSERT_EQ(tree.root->data, x);
+    ASSERT_EQ(tree.root->right->data,y);
+    // |-Parents
+    ASSERT_FALSE(tree.Find(x)->parent);
+    ASSERT_EQ(tree.Find(y)->parent->data, x);
+    // |-Left flag testing
+    ASSERT_FALSE(tree.Find(x)->is_left_node);
+    ASSERT_FALSE(tree.Find(y)->is_left_node);
 }

@@ -10,16 +10,34 @@
 #include "bst.hpp"
 
 int main(int argc, const char *argv[]) {
-  BSTNS::Tree tree(7);
+    BSTNS::Tree tree;
+    //while(1){
+    
+    
+    std::cout << "===============================insert ========================" << std::endl;
     tree.Insert(3);
-    if(tree.Insert(3)){
-  std::cout << " Repeated " << std::endl;
-    }//
-  //        ________[7]_______
-  //       /                  \
-    //     _[3]__            __[11]_
-  //    /      \          /       \
-        //  [1]      [5]      [9]       [13]
-  //
+    tree.Print();tree.Balance();tree.Print();
+    std::cout << "===============================insert ========================" << std::endl;
+    tree.Insert(4);
+    tree.Print();tree.Balance();tree.Print();
+    std::cout << "===============================insert ========================" << std::endl;
+    tree.Insert(8);
+    tree.Print();tree.Balance();tree.Print();
+    std::cout << "===============================insert ========================" << std::endl;
+  tree.Insert(6);
+  tree.Print();tree.Balance();tree.Print();
+    std::cout << "===============================insert ========================" << std::endl;
+  tree.Insert(7);
+  tree.Print();tree.Balance();tree.Print();
+    std::cout << "===============================insert ========================" << std::endl;
+  tree.Insert(5);
+  tree.Print();tree.Balance();tree.Print();
+    std::cout << "===============================insert ========================" << std::endl;
+  tree.Insert(2);
+  tree.Print();tree.Balance();tree.Print();
+    std::cout << "===============================insert ========================" << std::endl;
+  tree.Insert(1);
+    tree.Print();tree.Balance();tree.Print();tree.PrintHeights();
+        //tree.EmptyTheTree();}
   return 0;
 }

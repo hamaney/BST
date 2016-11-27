@@ -33,11 +33,11 @@ TEST_F(NodeFinderFunctionCollections, FindAValueInTree) {
   //                [9]    [21]
   //
   */
-  ASSERT_EQ(Find(tree.root.get(), 4), tree.root->right.get());
-  ASSERT_EQ(Find(tree.root.get(), 3), tree.root->right->left.get());
-  ASSERT_EQ(Find(tree.root.get(), 1), tree.root.get());
-  ASSERT_EQ(Find(tree.root.get(), 0), tree.root->left.get());
-  ASSERT_FALSE(Find(tree.root.get(), -1));
+  ASSERT_EQ(FindNode(tree.root.get(), 4), tree.root->right.get());
+  ASSERT_EQ(FindNode(tree.root.get(), 3), tree.root->right->left.get());
+  ASSERT_EQ(FindNode(tree.root.get(), 1), tree.root.get());
+  ASSERT_EQ(FindNode(tree.root.get(), 0), tree.root->left.get());
+  ASSERT_FALSE(FindNode(tree.root.get(), -1));
 }
 TEST_F(NodeFinderFunctionCollections, FindMinValue) {
   entries = {1, 4, 7, 3, 2, 21, 6, 0};
@@ -50,7 +50,7 @@ TEST_F(NodeFinderFunctionCollections, FindMinValue) {
   //         /       /     \
   //        [2]    [6]    [21]
   */
-  ASSERT_EQ(FindMin(tree.root.get())->data, 0);
+  ASSERT_EQ(FindMinNode(tree.root.get())->data, 0);
 
   tree.Remove(0);
   tree.Remove(1);
@@ -60,7 +60,7 @@ TEST_F(NodeFinderFunctionCollections, FindMinValue) {
   //   /       /     \
   //  [2]    [6]    [21]
   */
-  ASSERT_EQ(FindMin(tree.root.get())->data, 2);
+  ASSERT_EQ(FindMinNode(tree.root.get())->data, 2);
 
   tree.Insert(-1);
   /*          _[4]_
@@ -71,10 +71,10 @@ TEST_F(NodeFinderFunctionCollections, FindMinValue) {
   //  /
   // [-1]
   */
-  ASSERT_EQ(FindMin(tree.root.get())->data, -1);
+  ASSERT_EQ(FindMinNode(tree.root.get())->data, -1);
 
   // Find a min in a branch
-  ASSERT_EQ(FindMin(tree.Find(7))->data, 6);
+  ASSERT_EQ(FindMinNode(tree.Find(7))->data, 6);
 
   // TODO : delte the line
   // empty_tree.root->data =1;
@@ -82,7 +82,7 @@ TEST_F(NodeFinderFunctionCollections, FindMinValue) {
   /*
   Tree empty_tree;
   empty_tree.root->data =1;
-  ASSERT_FALSE(FindMin(empty_tree.root.get()));
+  ASSERT_FALSE(FindMinNode(empty_tree.root.get()));
   */
 }
 TEST_F(NodeFinderFunctionCollections, FindMaxValue) {
@@ -96,8 +96,8 @@ TEST_F(NodeFinderFunctionCollections, FindMaxValue) {
   //                 /     \
   //                [9]    [21]
   */
-  ASSERT_EQ(FindMax(tree.root.get())->data, 21);
-  ASSERT_EQ(FindMax(tree.Find(7))->data, 21);
+  ASSERT_EQ(FindMaxNode(tree.root.get())->data, 21);
+  ASSERT_EQ(FindMaxNode(tree.Find(7))->data, 21);
 
   tree.Remove(21);
   tree.Remove(9);
@@ -107,7 +107,7 @@ TEST_F(NodeFinderFunctionCollections, FindMaxValue) {
   //             /     \
   //           [3]    [7]
   */
-  ASSERT_EQ(FindMax(tree.root.get())->data, 7);
+  ASSERT_EQ(FindMaxNode(tree.root.get())->data, 7);
 
   tree.Insert(100);
   /*        __[1]__
@@ -118,14 +118,14 @@ TEST_F(NodeFinderFunctionCollections, FindMaxValue) {
   //                      \
   //                     [100]
   */
-  ASSERT_EQ(FindMax(tree.root.get())->data, 100);
+  ASSERT_EQ(FindMaxNode(tree.root.get())->data, 100);
 
   // TODO : delte the line
   // empty_tree.root->data =1;
   // from the test after changing the tree initilization step
   // Tree empty_tree(1);
   // empty_tree.root->data =1;
-  // ASSERT_FALSE(FindMax(empty_tree.root.get()));
+  // ASSERT_FALSE(FindMaxNode(empty_tree.root.get()));
 }
 
 TEST_F(NodeFinderFunctionCollections, WhenMaxValueIsTheSameAsMinValue) {
@@ -133,6 +133,6 @@ TEST_F(NodeFinderFunctionCollections, WhenMaxValueIsTheSameAsMinValue) {
   Tree tree(entries);
   /*     [1]
   */
-  ASSERT_EQ(FindMax(tree.root.get())->data, 1);
-  ASSERT_EQ(FindMin(tree.root.get())->data, 1);
+  ASSERT_EQ(FindMaxNode(tree.root.get())->data, 1);
+  ASSERT_EQ(FindMinNode(tree.root.get())->data, 1);
 }

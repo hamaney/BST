@@ -733,12 +733,7 @@ TEST_F(
   //    /      \          /       \
   //  [1]      [5]      [9]       [13]
   */
-  tree.Insert(2);
-  tree.Insert(4);
-  tree.Insert(6);
-  tree.Insert(8);
-  tree.Insert(10);
-  tree.Insert(14);
+  tree.Insert({2, 4, 6, 8, 10, 14});
   /*        ________[7]_______
   //       /                  \
   //     _[3]X_            __[11]X
@@ -797,4 +792,93 @@ TEST_F(
   ASSERT_EQ(tree.Find(6)->height, 0);
   ASSERT_EQ(tree.Find(8)->height, 0);
   ASSERT_EQ(tree.Find(10)->height, 0);
+}
+TEST_F(BSTNodeRemoval, RemovingASequenceOfNodes) {
+  /*        ________[7]_______
+  //       /                  \
+  //     _[3]__            __[11]_
+  //    /      \          /       \
+  //  [1]      [5]      [9]       [13]
+  */
+  tree.Insert({2, 4, 6, 8, 10, 14});
+  /*        ________[7]_______
+  //       /                  \
+  //     _[3]X_            __[11]X
+  //    /      \          /       \
+  //  [1]     _[5]_     [9]       [13]
+  //    \    /     \    /  \         \
+  //    [2] [4]   [6]  [8] [10]     [14]
+  */
+  ASSERT_TRUE(tree.Remove({3, 11}));
+  ASSERT_FALSE(tree.Find(3));
+  ASSERT_FALSE(tree.Find(11));
+  /*        ________[7]_______
+  //       /                  \
+  //     _[4]_             _[13]_
+  //    /      \          /       \
+  //  [1]      [5]_     [9]       [14]
+  //    \          \    /  \
+  //    [2]       [6]  [8] [10]
+  */
+  // parent status after removing 11
+  ASSERT_FALSE(tree.Find(7)->parent);
+  ASSERT_EQ(tree.Find(7)->left->data, 4);
+  ASSERT_EQ(tree.Find(7)->right->data, 13);
+  ASSERT_FALSE(tree.Find(7)->is_left_node);
+  // Sibling status after removing 11
+  ASSERT_EQ(tree.Find(4)->parent->data, 7);
+  ASSERT_TRUE(tree.Find(4)->is_left_node);
+  // check the new node instead of 11
+  ASSERT_EQ(tree.Find(13)->parent->data, 7);
+  ASSERT_EQ(tree.Find(13)->left->data, 9);
+  ASSERT_EQ(tree.Find(13)->right->data, 14);
+  ASSERT_FALSE(tree.Find(13)->is_left_node);
+}
+TEST_F(BSTNodeRemoval, CheckNodeHeightAfterRemovingASequenceOfNodes) {
+  /*        ________[7]_______
+   //       /                  \
+   //     _[3]__            __[11]_
+   //    /      \          /       \
+   //  [1]      [5]      [9]       [13]
+   */
+  tree.Insert({2, 4, 6, 8, 10, 14});
+  /*        ________[7]_______
+   //       /                  \
+   //     _[3]X_            __[11]X
+   //    /      \          /       \
+   //  [1]     _[5]_     [9]       [13]
+   //    \    /     \    /  \         \
+   //    [2] [4]   [6]  [8] [10]     [14]
+   */
+  tree.Remove({3, 11});
+  /*        ________[7]_______
+   //       /                  \
+   //     _[4]_             _[13]_
+   //    /      \          /       \
+   //  [1]      [5]_     [9]       [14]
+   //    \          \    /  \
+   //    [2]       [6]  [8] [10]
+   */
+  ASSERT_EQ(tree.root->height, 3);
+  ASSERT_EQ(tree.Find(4)->height, 2);
+  ASSERT_EQ(tree.Find(13)->height, 2);
+  ASSERT_EQ(tree.Find(1)->height, 1);
+  ASSERT_EQ(tree.Find(5)->height, 1);
+  ASSERT_EQ(tree.Find(9)->height, 1);
+  ASSERT_EQ(tree.Find(14)->height, 0);
+  ASSERT_EQ(tree.Find(2)->height, 0);
+  ASSERT_EQ(tree.Find(6)->height, 0);
+  ASSERT_EQ(tree.Find(8)->height, 0);
+  ASSERT_EQ(tree.Find(10)->height, 0);
+}
+
+TEST_F(BSTNodeRemoval, EmptyTheTree) {
+  /*        ________[7]_______
+          /                  \
+        _[3]__            __[11]_
+       /      \          /       \
+     [1]      [5]      [9]       [13]
+   */
+  ASSERT_TRUE(tree.EmptyTheTree());
+  ASSERT_FALSE(tree.root);
 }

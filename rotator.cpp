@@ -25,7 +25,7 @@ Node* RotateLeftAround(NodeUPtr &pivot_node) {
   //[xLeft]  [yLeft]
   */
 
-  if (pivot_node) {
+  if (pivot_node and pivot_node->right) {
     Node *pivot_node_parent = pivot_node->parent;
 
     // Get all tree info before moving things around
@@ -46,9 +46,11 @@ Node* RotateLeftAround(NodeUPtr &pivot_node) {
     y->parent= pivot_node_parent;
     y->is_left_node = old_pivot_is_left_node_status;
     // y_left
-    x->right = std::move(y->left);
-    x->right->parent = x.get(); //potintial Error if x_right null
-    x->right->is_left_node = false;
+    if(y->left){
+        x->right = std::move(y->left);
+        x->right->parent = x.get(); //potintial Error if x_right null
+        x->right->is_left_node = false;
+    }
     // x
     y->left = std::move(x);
     y->left->parent = y.get();
@@ -80,7 +82,7 @@ Node* RotateRightAround(NodeUPtr &pivot_node) {
    //         [xRight]  [yRight]
    */
 
-  if (pivot_node) {
+  if (pivot_node and pivot_node->left) {
     Node *pivot_node_parent = pivot_node->parent;
 
     // Get all tree info before moving things around
@@ -101,16 +103,17 @@ Node* RotateRightAround(NodeUPtr &pivot_node) {
     x->parent = pivot_node_parent;
     x->is_left_node = old_pivot_is_left_node_status;
     //xRight
+     if(x->right){
     y->left = std::move(x->right);
     y->left->parent = y.get();
     y->left->is_left_node = true;
-    //y
+    }
+      //y
     x->right = std::move(y);
     x->right->parent = x.get();
     x->right->is_left_node = false;
     
-    pivot_node = std::move(x);
-    
+      pivot_node = std::move(x);
     return pivot_node->right.get(); // retrun the old pivot node since it is the lower node to that require a height update
   } else {
     return nullptr;
