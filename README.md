@@ -1,1 +1,1 @@
-Binary Search Tree : Non-Generic but Self-balancing using AVL tree techniques.
+Binary Search Tree : Non-Generic, has a tree balancing function to make the tree a manual updating AVl Tree.
