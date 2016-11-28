@@ -15,13 +15,8 @@ using namespace BSTNS;
 class BSTSearching : public ::testing::Test {
  public:
   virtual void SetUp() {
-    tree.Insert(4);
-    tree.Insert(2);
-    tree.Insert(6);
-    tree.Insert(1);
-    tree.Insert(3);
-    tree.Insert(5);
-    tree.Insert(7);
+      
+      tree.Insert({4,2,6,1,3,5,7});
     /*        ________[4]_______
     //       /                  \
     //     _[2]__            __[6]_

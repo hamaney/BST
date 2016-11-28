@@ -8,18 +8,12 @@
 
 #ifndef node_connections_checker_hpp
 #define node_connections_checker_hpp
-/*
-TODO :
- cleaner synatx
 
- */
+//TODO : cleaner synatx
+
 /*
 namespace BSTNS
-{
-namespace NodeConnectionsChecker
-{
-}
-}
+{   namespace NodeConnectionsChecker{}}
 */
 #include "node.hpp"
 namespace BSTNS {

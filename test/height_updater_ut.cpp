@@ -11,10 +11,12 @@
 #include "bst.hpp"
 #include "gtest/gtest.h"
 #include "height_updater.hpp"
+#include "rotator.hpp"
 
 using namespace BSTNS;
 using namespace BSTNS::HeightUpdater;
 using namespace BSTNS::HeightUpdater::PrivateHelper;
+using namespace BSTNS::Rotator;
 
 class TreeHeightUpdaterFunctionCollection : public ::testing::Test {
  public:
@@ -255,4 +257,156 @@ TEST_F(TreeHeightUpdaterFunctionCollection, NodeParentHeightUpdating) {
   */
   ASSERT_EQ(tree.Find(2)->height, 57);
   ASSERT_EQ(tree.Find(4)->height, 58);
+}
+
+TEST_F(TreeHeightUpdaterFunctionCollection, UpdateHeightTheInterfaceFunction) {
+  entries = {4, 2, 1, 3, 7, 5, 6};
+  Tree tree(entries);
+
+  /*        ____[4(3)]____
+   //       /              \
+   //     _[2(1)]_      _[7(2)]
+   //    /        \    /
+   //  [1(0)]  [3(0)][5(1)]
+   //                  \
+   //                 [6(0)]
+   */
+
+  tree.Find(1)->height = 77;
+  /*        ____[4(3)]_____
+  //       /               \
+  //     _[2(1)]_        _[7(2)]
+  //    /         \     /
+  //  [1(77)]  [3(0)][5(1)]
+  //                  \
+  //                 [6(0)]
+  */
+  UpdateHeight(tree.Find(2));
+  /*        ____[4(79)]____
+  //       /               \
+  //     _[2(78)]_       _[7(2)]
+  //    /         \     /
+  //  [1(77)]  [3(0)][5(1)]
+  //                  \
+  //                 [6(0)]
+  */
+  ASSERT_EQ(tree.Find(2)->height, 78);
+  ASSERT_EQ(tree.Find(4)->height, 79);
+
+  tree.Find(6)->height = 55;
+  /*        ____[4(79)]____
+  //       /               \
+  //     _[2(78)]_       _[7(2)]
+  //    /         \     /
+  //  [1(77)]  [3(0)][5(1)]
+  //                  \
+  //                 [6(55)]
+  */
+  ASSERT_EQ(tree.Find(5)->height, 1);
+  UpdateHeight(tree.Find(5));
+  /*        ____[4(79)]____
+  //       /               \
+  //     _[2(78)]_       _[7(57)]
+  //    /         \     /
+  //  [1(77)]  [3(0)][5(56)]
+  //                  \
+  //                 [6(55)]
+  */
+  ASSERT_EQ(tree.Find(5)->height, 56);
+  ASSERT_EQ(tree.Find(7)->height, 57);
+  ASSERT_EQ(tree.Find(4)->height, 79);
+
+  tree.Find(1)->height = 56;
+  tree.Find(3)->height = 56;
+  /*        ____[4(79)]____
+  //       /               \
+  //     _[2(78)]_       _[7(57)]
+  //    /         \     /
+  //  [1(56)]  [3(56)][5(56)]
+  //                  \
+  //                 [6(55)]
+  */
+  UpdateHeight(tree.Find(2));
+  /*        ____[4(58)]____
+  //       /               \
+  //     _[2(57)]_       _[7(57)]
+  //    /         \     /
+  //  [1(56)]  [3(56)][5(56)]
+  //                  \
+  //                 [6(55)]
+  */
+  ASSERT_EQ(tree.Find(2)->height, 57);
+  ASSERT_EQ(tree.Find(4)->height, 58);
+}
+
+TEST_F(TreeHeightUpdaterFunctionCollection, UpdateHeightAfterRotation) {
+  entries = {1, 2, 3, 4, 5};
+  Tree tree(entries);
+
+  /* [1(4))]_
+  //         \
+  //       [2(3)]_
+  //               \
+  //              [3(2)]_
+  //                     \
+  //                    [4(1)]_
+  //                           \
+  //                         [5(0)]
+  */
+  auto latest_updated_node = RotateLeftAround(tree.root);
+  /*      _[2(3)]_
+  //     /        \
+  //  [1(4)]      [3(2)]_
+  //                     \
+  //                    [4(1)]_
+  //                           \
+  //                         [5(0)]
+  */
+  ASSERT_EQ(tree.root->height, 3);
+  ASSERT_EQ(tree.Find(1)->height, 4);
+  ASSERT_EQ(tree.Find(3)->height, 2);
+  ASSERT_EQ(tree.Find(4)->height, 1);
+  ASSERT_EQ(tree.Find(5)->height, 0);
+
+  UpdateHeight(latest_updated_node);
+  /*      _[2(3)]_
+  //     /        \
+  //  [1(0)]      [3(2)]_
+  //                     \
+  //                    [4(1)]_
+  //                           \
+  //                         [5(0)]
+  */
+  ASSERT_EQ(tree.Find(1)->height, 0);
+  ASSERT_EQ(tree.Find(2)->height, 3);
+  ASSERT_EQ(tree.Find(3)->height, 2);
+  ASSERT_EQ(tree.Find(4)->height, 1);
+  ASSERT_EQ(tree.Find(5)->height, 0);
+
+  latest_updated_node = Rotator::RotateLeftAround(tree.root->right);
+  /*      _[2(3)]_
+  //     /        \
+  //  [1(0)]     _[4(1)]_
+  //            /         \
+  //         [3(2)]       [5(0)]
+  */
+
+  ASSERT_EQ(tree.Find(1)->height, 0);
+  ASSERT_EQ(tree.Find(2)->height, 3);
+  ASSERT_EQ(tree.Find(3)->height, 2);
+  ASSERT_EQ(tree.Find(4)->height, 1);
+  ASSERT_EQ(tree.Find(5)->height, 0);
+
+  UpdateHeight(latest_updated_node);
+  /*      _[2(2)]_
+  //     /        \
+  //  [1(0)]     _[4(1)]_
+  //            /         \
+  //         [3(0)]       [5(0)]
+  */
+  ASSERT_EQ(tree.Find(1)->height, 0);
+  ASSERT_EQ(tree.Find(2)->height, 2);
+  ASSERT_EQ(tree.Find(3)->height, 0);
+  ASSERT_EQ(tree.Find(4)->height, 1);
+  ASSERT_EQ(tree.Find(5)->height, 0);
 }

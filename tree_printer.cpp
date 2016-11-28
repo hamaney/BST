@@ -11,12 +11,12 @@
 namespace BSTNS {
 namespace TreePrinter {
 bool print_hights_instead_of_data;  // Why givs an erorr in put in header
-void Print(const Node *const root, int level, int indentSpace,
+void PrintTree(const Node *const root, int level, int indentSpace,
            std::ostream &out) {
   print_hights_instead_of_data = false;
   PrivateHelper::printPretty_(root, level, indentSpace, out);
 }
-void PrintHeights(const Node *const root, int level, int indentSpace,
+void PrintTreeHeights(const Node *const root, int level, int indentSpace,
                   std::ostream &out) {
   print_hights_instead_of_data = true;
   PrivateHelper::printPretty_(root, level, indentSpace, out);

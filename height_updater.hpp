@@ -27,6 +27,7 @@ void UpdateHeight(Node *node_parent);              // O(log(n))
 Height UpdateHeightOfNodeRecursively(Node *node);  // O(nlog(n))
 
 namespace PrivateHelper {
+
 void UpdateHeightOfNodeNonRecursively_(Node *node);  // O(1)
 void UpdateTheParentsStartingFromParent_(
     Node *unupdated_parent_to_start_with);  // O(log(n))

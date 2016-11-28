@@ -22,18 +22,19 @@
 #define bst_hpp
 
 #include <algorithm>
+#include <iostream>
 #include <memory>
 #include <vector>
 
-#include <iostream>
 #include "height_updater.hpp"
 #include "node.hpp"
+#include "node_balance_checker.hpp"
 #include "node_connections_checker.hpp"
 #include "node_finder.hpp"
-#include "tree_printer.hpp"
-//#include "rotator.hpp"
 #include "node_inserter.hpp"
 #include "node_remover.hpp"
+#include "rotator.hpp"
+#include "tree_printer.hpp"
 
 namespace BSTNS {
 class Tree {
@@ -53,8 +54,8 @@ class Tree {
   bool Remove(const std::vector<Data> &entries_container);
   bool EmptyTheTree();
 
-  bool IsBalace();
   bool Balance();
+  bool IsBalanced();
 
   Node *Find(const Data &target) const;
   Data Min(void) const;
@@ -62,6 +63,9 @@ class Tree {
 
   void Print();
   void PrintHeights();  // rendring heightd for testing
+
+ private:
+  void BalanceNodes_(NodeUPtr &current_root);
 };
 }  // of BSTNamespace
 #endif /* BST_hpp */
