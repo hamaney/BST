@@ -93,61 +93,34 @@ void Tree::BalanceNodes_(NodeUPtr &current_root) {
     return;
   }
   BalanceNodes_(current_root->left);
-  BalanceNodes_(current_root->right);
-//  std::cout << "Checking if Node " << current_root->data << " is balanced "
-//            << std::endl;
+
+  //  std::cout << "Checking if Node " << current_root->data << " is balanced "
+  //            << std::endl;
 
   if (!IsBalancedNode(current_root.get())) {
     Node *node_with_most_updated_height = nullptr;
-//    std::cout << "Node " << current_root->data << " BF = "
-//              << NodeBalanceChecker::PrivateHelper::BalanceFactorOfNode_(
-//                     current_root.get())
-//              << std::endl;
 
     if (IsLeftLeft(current_root.get())) {
-//      std::cout << "Node " << current_root->data << " is LL ->>> rot aruond "
-//                << current_root->data << std::endl;
-//      Print();
-//      PrintHeights();
-      node_with_most_updated_height = RotateRightAround(current_root);
+        node_with_most_updated_height = RotateRightAround(current_root);
+    
+        
     } else if (IsLeftRight(current_root.get())) {
-//      std::cout << "Node " << current_root->data << " is LR ->>> rot aruond "
-//                << current_root->left->data << std::endl;
-//      Print();
-//      PrintHeights();
       node_with_most_updated_height = RotateLeftAround(current_root->left);
-//      UpdateHeight(node_with_most_updated_height);
-//      std::cout << "+ rot aruond " << current_root->data << std::endl;
-//      Print();
-//      PrintHeights();
-//
+      UpdateHeight(node_with_most_updated_height);
       node_with_most_updated_height = RotateRightAround(current_root);
 
+        
     } else if (IsRightLeft(current_root.get())) {
-//      std::cout << "Node " << current_root->data << " is RL ->>> rot aruond "
-//                << current_root->right->data << std::endl;
-//      Print();
-//      PrintHeights();
       node_with_most_updated_height = RotateRightAround(current_root->right);
-//      UpdateHeight(node_with_most_updated_height);
-//      Print();
-//      PrintHeights();
-//      std::cout << "+ rot aruond " << current_root->data << std::endl;
-
+      UpdateHeight(node_with_most_updated_height);
       node_with_most_updated_height = RotateLeftAround(current_root);
 
+        
     } else if (IsRightRight(current_root.get())) {
-        std::cout << "Node " << current_root->data << " is RR ->>> rot aruond "
-        << current_root->data << std::endl;
-        Print();
-      PrintHeights();
-        std::cout << " Rotating Left .... " << current_root->data << std::endl;
-
       node_with_most_updated_height = RotateLeftAround(current_root);
-        PrintHeights();
-        std::cout << " Udating height .... " << current_root->data << std::endl;
-        UpdateHeight(node_with_most_updated_height);
-    PrintHeights();
+      UpdateHeight(node_with_most_updated_height);
+      
+    
     } else {
       std::cout << "Node " << current_root->data
                 << " needs to be Balanced But nothing is Implimented "
@@ -156,13 +129,8 @@ void Tree::BalanceNodes_(NodeUPtr &current_root) {
     }
 
     UpdateHeight(node_with_most_updated_height);
-    Print();
-    PrintHeights();
-      std::cout << "Done with Node " << current_root->data
-      << " Balancing for now  "
-      "*******************"
-      << std::endl;
-  
+    
+    BalanceNodes_(current_root->right);
   }
 }
 

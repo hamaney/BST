@@ -11,33 +11,8 @@
 
 int main(int argc, const char *argv[]) {
     BSTNS::Tree tree;
-    //while(1){
     
-    
-    std::cout << "===============================insert ========================" << std::endl;
-    tree.Insert(3);
-    tree.Print();tree.Balance();tree.Print();
-    std::cout << "===============================insert ========================" << std::endl;
-    tree.Insert(4);
-    tree.Print();tree.Balance();tree.Print();
-    std::cout << "===============================insert ========================" << std::endl;
-    tree.Insert(8);
-    tree.Print();tree.Balance();tree.Print();
-    std::cout << "===============================insert ========================" << std::endl;
-  tree.Insert(6);
-  tree.Print();tree.Balance();tree.Print();
-    std::cout << "===============================insert ========================" << std::endl;
-  tree.Insert(7);
-  tree.Print();tree.Balance();tree.Print();
-    std::cout << "===============================insert ========================" << std::endl;
-  tree.Insert(5);
-  tree.Print();tree.Balance();tree.Print();
-    std::cout << "===============================insert ========================" << std::endl;
-  tree.Insert(2);
-  tree.Print();tree.Balance();tree.Print();
-    std::cout << "===============================insert ========================" << std::endl;
-  tree.Insert(1);
-    tree.Print();tree.Balance();tree.Print();tree.PrintHeights();
-        //tree.EmptyTheTree();}
+    tree.Insert({1,2,3,4,5});
+    tree.Balance();
   return 0;
 }

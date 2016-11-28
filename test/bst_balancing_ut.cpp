@@ -109,7 +109,7 @@ TEST_F(BSTBalancing, RightRightBalancingTwiceInTheSameBranch) {
   ASSERT_EQ(tree.root->right->right->height, 0);
 }
 
-//TEST_F(BSTBalancing, BalancingATreeWithASenario) {
+// TEST_F(BSTBalancing, BalancingATreeWithASenario) {
 //  Tree tree({7, 3, 11, 9, 13, 12});
 //  /*            _[7]_
 //   //          /     \

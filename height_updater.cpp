@@ -57,15 +57,27 @@ void UpdateHeightOfNodeNonRecursively_(Node *node) {
 }
 void UpdateTheParentsStartingFromParent_(Node *unupdated_parent_to_start_with) {
   auto node = unupdated_parent_to_start_with;  // for clearity
+
   if (node) {
     Height correct_height =
         CalculateNodeHeightNonRecursivelyAndWithoutUpdatingTheNode_(node);
-    //      std::cout << "[ " << node->data << "] (" << node->height <<") -> ("
-    //      << correct_height <<")" << std::endl;
+
     if (node->height != correct_height) {
       node->height = correct_height;
       UpdateTheParentsStartingFromParent_(
           unupdated_parent_to_start_with->parent);
+    }
+    // speacial chech for updating height after rotation
+    else {
+      if (node->parent) {
+        Height parent_correct_height =
+            CalculateNodeHeightNonRecursivelyAndWithoutUpdatingTheNode_(
+                node->parent);
+
+        if (node->parent->height != parent_correct_height) {
+          UpdateTheParentsStartingFromParent_(node->parent);
+        }
+      }
     }
   }
 }
