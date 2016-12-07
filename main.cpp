@@ -10,9 +10,9 @@
 #include "bst.hpp"
 
 int main(int argc, const char *argv[]) {
-    BSTNS::Tree tree;
-    
-    tree.Insert({1,2,3,4,5});
-    tree.Balance();
+  BSTNS::Tree tree;
+
+  tree.Insert({1, 2, 3, 4, 5});
+  tree.Balance();
   return 0;
 }

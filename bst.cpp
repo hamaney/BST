@@ -10,10 +10,10 @@
 
 // using std::cout;
 // using std::endl;
-using namespace BSTNS::HeightUpdater;
-using namespace BSTNS::NodeConnectionsChecker;
+// using namespace BSTNS::HeightUpdater;
+//using namespace BSTNS::NodeConnectionsChecker;
 using namespace BSTNS::TreePrinter;
-using namespace BSTNS::NodeInserter;
+// using namespace BSTNS::NodeInserter;
 using namespace BSTNS::NodeRemover;
 using namespace BSTNS::NodeBalanceChecker;
 using namespace BSTNS::Rotator;
@@ -28,8 +28,8 @@ Tree::Tree(const std::vector<Data> &entries_container) {
 Tree::~Tree() {}
 
 bool Tree::Insert(const Data &entry) {
-  auto parent_of_insrted_node = InsertValue(root, entry);
-  UpdateHeight(parent_of_insrted_node);
+  auto parent_of_insrted_node = Insert_(root, entry);
+  UpdateHeight_(parent_of_insrted_node);
   return parent_of_insrted_node;  // if value exist this will return
                                   // nullptr and convert it to a bool
 }
@@ -45,7 +45,7 @@ bool Tree::Remove(const Data &target) {
   Node *node_found = FindNode(root.get(), target);
   if (node_found) {
     auto removed_node_parent = RemoveNode(root, node_found);
-    UpdateHeight(removed_node_parent);
+    UpdateHeight_(removed_node_parent);
     return true;
   }
   // non-existing target will return false
@@ -65,10 +65,10 @@ bool Tree::EmptyTheTree() {
   root.reset();
   return !root.get();
 }
-bool Tree::IsBalanced() { return IsBalancedTree(root.get()); }
+bool Tree::IsBalanced() { return NodeBalanceChecker::IsBalancedTree(root.get()); }
 
 bool Tree::Balance() {
-  while (!IsBalancedTree(root.get())) {
+  while (!NodeBalanceChecker::IsBalancedTree(root.get())) {
     BalanceNodes_(root);
   }
   return true;
@@ -76,11 +76,11 @@ bool Tree::Balance() {
 Node *Tree::Find(const Data &target) const {
   return FindNode(root.get(), target);
 }
-Data Tree::Min(void) const {
+Data Tree::GetMin(void) const {
   Node *min_node = FindMinNode(root.get());
   return min_node->data;
 }
-Data Tree::Max(void) const {
+Data Tree::GetMax(void) const {
   Node *max_node = FindMaxNode(root.get());
   return max_node->data;
 }
@@ -97,30 +97,26 @@ void Tree::BalanceNodes_(NodeUPtr &current_root) {
   //  std::cout << "Checking if Node " << current_root->data << " is balanced "
   //            << std::endl;
 
-  if (!IsBalancedNode(current_root.get())) {
+  if (!NodeBalanceChecker::IsBalancedNode(current_root.get())) {
     Node *node_with_most_updated_height = nullptr;
 
     if (IsLeftLeft(current_root.get())) {
-        node_with_most_updated_height = RotateRightAround(current_root);
-    
-        
-    } else if (IsLeftRight(current_root.get())) {
-      node_with_most_updated_height = RotateLeftAround(current_root->left);
-      UpdateHeight(node_with_most_updated_height);
       node_with_most_updated_height = RotateRightAround(current_root);
 
-        
+    } else if (IsLeftRight(current_root.get())) {
+      node_with_most_updated_height = RotateLeftAround(current_root->left);
+      UpdateHeight_(node_with_most_updated_height);
+      node_with_most_updated_height = RotateRightAround(current_root);
+
     } else if (IsRightLeft(current_root.get())) {
       node_with_most_updated_height = RotateRightAround(current_root->right);
-      UpdateHeight(node_with_most_updated_height);
+      UpdateHeight_(node_with_most_updated_height);
       node_with_most_updated_height = RotateLeftAround(current_root);
 
-        
     } else if (IsRightRight(current_root.get())) {
       node_with_most_updated_height = RotateLeftAround(current_root);
-      UpdateHeight(node_with_most_updated_height);
-      
-    
+      UpdateHeight_(node_with_most_updated_height);
+
     } else {
       std::cout << "Node " << current_root->data
                 << " needs to be Balanced But nothing is Implimented "
@@ -128,10 +124,158 @@ void Tree::BalanceNodes_(NodeUPtr &current_root) {
                 << std::endl;
     }
 
-    UpdateHeight(node_with_most_updated_height);
-    
+    UpdateHeight_(node_with_most_updated_height);
+
     BalanceNodes_(current_root->right);
   }
 }
+
+Node *Tree::Insert_(NodeUPtr &current_root, const Data &entry) {
+  if (!current_root) {
+    current_root = NodeFactory_(entry);
+    return current_root->parent;
+    // OR return nullptr;
+  }
+
+  else if (entry > current_root->data) {
+    if (!current_root->right) {
+      current_root->right = NodeFactory_(entry);
+      current_root->right->parent = current_root.get();
+      return current_root.get();
+    } else {
+      return Insert_(current_root->right, entry);
+    }
+
+  } else if (entry < current_root->data) {
+    if (!current_root->left) {
+      current_root->left = NodeFactory_(entry);
+      current_root->left->parent = current_root.get();
+      current_root->left->is_left_node = true;
+      return current_root.get();
+    } else {
+      return Insert_(current_root->left, entry);
+    }
+
+  } else {
+    return nullptr;
+  }
+}
+
+NodeUPtr Tree::NodeFactory_(const Data &entry) {
+  return std::make_unique<Node>(entry);
+}
+
+void Tree::UpdateHeight_(Node *node_parent) {
+  Node *node = node_parent;  // jsut for clearfication
+
+  if (node) {
+    // read the update from down up
+    UpdateHeightOfNodeNonRecursively_(node);
+    // push updates upwared to parents
+    UpdateTheParentsStartingFromParent_(node->parent);
+  }
+}
+
+// TODO : change name to updateHeightOfNodeAndItsChildernRecursiveCall
+// OR Update ChildTreesHeights
+// OR UpdateNodeAndChildrenHieghtsRecussive
+Height Tree::UpdateHeightOfNodeRecursively_(Node *node) {
+  if (!node) {
+    return -1;
+  } else {
+    Height left_child_node_height =
+        UpdateHeightOfNodeRecursively_(node->left.get());
+    Height right_child_node_height =
+        UpdateHeightOfNodeRecursively_(node->right.get());
+    node->height =
+        std::max(left_child_node_height, right_child_node_height) + 1;
+    return node->height;
+  }
+}
+
+void Tree::UpdateHeightOfNodeNonRecursively_(Node *node) {
+  if (node) {
+    Height left_child_node_height(-1), right_child_node_height(-1);
+    if (node->left) {
+      left_child_node_height = node->left->height;
+    }
+    if (node->right) {
+      right_child_node_height = node->right->height;
+    }
+    node->height =
+        std::max(left_child_node_height, right_child_node_height) + 1;
+  }
+}
+void Tree::UpdateTheParentsStartingFromParent_(
+    Node *unupdated_parent_to_start_with) {
+  auto node = unupdated_parent_to_start_with;  // for clearity
+
+  if (node) {
+    Height correct_height =
+        CalculateNodeHeightNonRecursivelyAndWithoutUpdatingTheNode_(node);
+
+    if (node->height != correct_height) {
+      node->height = correct_height;
+      UpdateTheParentsStartingFromParent_(
+          unupdated_parent_to_start_with->parent);
+    }
+    // speacial chech for updating height after rotation
+    else {
+      if (node->parent) {
+        Height parent_correct_height =
+            CalculateNodeHeightNonRecursivelyAndWithoutUpdatingTheNode_(
+                node->parent);
+
+        if (node->parent->height != parent_correct_height) {
+          UpdateTheParentsStartingFromParent_(node->parent);
+        }
+      }
+    }
+  }
+}
+
+Height Tree::CalculateNodeHeightNonRecursivelyAndWithoutUpdatingTheNode_(
+    const Node *const node) {
+  if (!node) {
+    assert(0);
+  } else {
+    Height left_child_node_height = -1, right_child_node_height = -1;
+    if (node->left) {
+      left_child_node_height = node->left->height;
+    }
+    if (node->right) {
+      right_child_node_height = node->right->height;
+    }
+    return std::max(left_child_node_height, right_child_node_height) + 1;
+  }
+}
+    bool Tree::HasNoChildren_(const Node *const node) {
+        if (node) {
+            return (!node->left and !node->right);
+        } else {
+            return false;
+        }
+    }
+    bool Tree::HasTwoChildren_(const Node *const node) {
+        if (node) {
+            return (node->left and node->right);
+        } else {
+            return false;
+        }
+    }
+    bool Tree::HasOnlyLeftChild_(const Node *const node) {
+        if (node) {
+            return (node->left and !node->right);
+        } else {
+            return false;
+        }
+    }
+    bool Tree::HasOnlyRightChild_(const Node *const node) {
+        if (node) {
+            return (!node->left and node->right);
+        } else {
+            return false;
+        }
+    }
 
 }  // End BSTNS::

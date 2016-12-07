@@ -19,7 +19,7 @@ namespace BSTNS {
     namespace NodeInserter {
         namespace PrivateHelper{}}}
 */
-
+/*
 namespace BSTNS {
 namespace NodeInserter {
 Node* InsertValue(NodeUPtr& root, const Data& entry);
@@ -29,5 +29,5 @@ NodeUPtr NodeFactory_(const Data& entry);
 }
 }
 }
-
+*/
 #endif /* node_inserter_hpp */

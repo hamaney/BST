@@ -7,7 +7,7 @@
 //
 
 #include "node_inserter.hpp"
-
+/*
 using namespace BSTNS::NodeInserter::PrivateHelper;
 namespace BSTNS {
 namespace NodeInserter {
@@ -50,3 +50,4 @@ NodeUPtr NodeFactory_(const Data& entry) {
 }  // End PrivateHelper::
 }  // End NodeInserter::
 }  // End BSTNS::
+*/

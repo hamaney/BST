@@ -49,25 +49,25 @@ TEST_F(BSTSearching, CheckingIfValueExistsInTree) {
 }
 
 TEST_F(BSTSearching, FindingTheMinValueInTree) {
-  ASSERT_EQ(tree.Min(), 1);
+  ASSERT_EQ(tree.GetMin(), 1);
   ASSERT_TRUE(tree.Remove(1));
-  ASSERT_EQ(tree.Min(), 2);
+  ASSERT_EQ(tree.GetMin(), 2);
   ASSERT_TRUE(tree.Remove(3));
-  ASSERT_EQ(tree.Min(), 2);
+  ASSERT_EQ(tree.GetMin(), 2);
   ASSERT_TRUE(tree.Remove(2));
-  ASSERT_EQ(tree.Min(), 4);
+  ASSERT_EQ(tree.GetMin(), 4);
   ASSERT_TRUE(tree.Insert(0));
-  ASSERT_EQ(tree.Min(), 0);
+  ASSERT_EQ(tree.GetMin(), 0);
 }
 
 TEST_F(BSTSearching, FindingTheMaxValueInTree) {
-  ASSERT_EQ(tree.Max(), 7);
+  ASSERT_EQ(tree.GetMax(), 7);
   ASSERT_TRUE(tree.Remove(7));
-  ASSERT_EQ(tree.Max(), 6);
+  ASSERT_EQ(tree.GetMax(), 6);
   ASSERT_TRUE(tree.Remove(6));
-  ASSERT_EQ(tree.Max(), 5);
+  ASSERT_EQ(tree.GetMax(), 5);
   ASSERT_TRUE(tree.Remove(5));
-  ASSERT_EQ(tree.Max(), 4);
+  ASSERT_EQ(tree.GetMax(), 4);
   ASSERT_TRUE(tree.Insert(99));
-  ASSERT_EQ(tree.Max(), 99);
+  ASSERT_EQ(tree.GetMax(), 99);
 }
