@@ -10,9 +10,9 @@
 #include <vector>
 
 
-#include "bst.hpp"
+
 #include "gtest/gtest.h"
-#include "rotator.hpp"
+#include "bst.hpp"
 namespace BSTNS {
     
 
@@ -351,7 +351,7 @@ TEST_F(TreeHeightUpdaterFunctionCollection, UpdateHeightAfterRotation) {
   //                           \
   //                         [5(0)]
   */
-  auto latest_updated_node = Rotator::RotateLeftAround(tree.root);
+  auto latest_updated_node = tree.RotateLeftAround(tree.root);
   /*      _[2(3)]_
   //     /        \
   //  [1(4)]      [3(2)]_
@@ -381,7 +381,7 @@ TEST_F(TreeHeightUpdaterFunctionCollection, UpdateHeightAfterRotation) {
   ASSERT_EQ(tree.Find(4)->height, 1);
   ASSERT_EQ(tree.Find(5)->height, 0);
 
-  latest_updated_node = Rotator::RotateLeftAround(tree.root->right);
+  latest_updated_node = tree.RotateLeftAround(tree.root->right);
   /*      _[2(3)]_
   //     /        \
   //  [1(0)]     _[4(1)]_

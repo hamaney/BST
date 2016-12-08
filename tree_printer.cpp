@@ -8,7 +8,7 @@
 
 #include "tree_printer.hpp"
 
-namespace BSTNS {
+
 namespace TreePrinter {
 bool print_hights_instead_of_data;  // Why givs an erorr in put in header
 void PrintTree(const Node *const root, int level, int indentSpace,
@@ -156,4 +156,3 @@ void printPretty_(const Node *const root, int level, int indentSpace,
 }
 }  // End of PrivateHelper::
 }  // End of TreePrinter::
-}  // End of BSTNS::

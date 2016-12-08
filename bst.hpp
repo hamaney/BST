@@ -21,16 +21,11 @@
 #include <iostream>
 #include <memory>
 #include <vector>
+#include <cassert>
 
 #include "gtest/gtest_prod.h"  // defines FRIEND_TEST for testing private funstions
 
 #include "node.hpp"
-#include "tree_printer.hpp"
-#include "node_balance_checker.hpp"
-#include "rotator.hpp"
-
-
-
 
 
 namespace BSTNS {
@@ -58,9 +53,7 @@ class Tree {
   Data GetMin(void) const;
   Data GetMax(void) const;
 
-  void Print();
-  void PrintHeights();  // rendring heightd for testing
-
+  
  private:
   // -- Insertion
   Node *Insert_(NodeUPtr &root, const Data &entry);
@@ -87,11 +80,53 @@ class Tree {
   Node *RemoveNodeWithOnlyRightChild_(NodeUPtr &tree_root,
                                       Node *node_to_remove);
   // -- Finding a node
-  Node *FindNode(Node *const current_root, const Data &target)const;
-  Node *FindMinNode(Node *const current_root)const;
-  Node *FindMaxNode(Node *const current_root)const ;
+  Node *FindNode(Node *const current_root, const Data &target) const;
+  Node *FindMinNode(Node *const current_root) const;
+  Node *FindMaxNode(Node *const current_root) const;
+  // -- Rotator
+  Node *RotateLeftAround(NodeUPtr &pivot_node);
+  Node *RotateRightAround(NodeUPtr &pivot_node);
 
   void BalanceNodes_(NodeUPtr &current_root);
+
+  bool IsBalancedNode(const Node *const node);
+  bool IsBalancedTree(const Node *const current_root);
+  /*
+   To chrck for
+   []
+   /L BF=2
+   []
+   /L BF=1
+   []
+   */
+  bool IsLeftLeft(const Node *const node);
+  /*To chrck for
+   []
+   /L BF=2
+   []
+   \R BF=-1
+   []
+   */
+  bool IsLeftRight(const Node *const node);
+  /*To chrck for
+   []
+   \R BF=-2
+   []
+   \R BF=-1
+   []
+   */
+  bool IsRightRight(const Node *const node);
+  /*To chrck for
+   []
+   \R BF=-2
+   []
+   /L BF=1
+   []
+   */
+  bool IsRightLeft(const Node *const node);
+  bool IsLeftHeavy_(const Node *const node);
+  bool IsRightHeavy_(const Node *const node);
+  int BalanceFactorOfNode_(const Node *const node);
 
   /*
    The following is the name of the googletest classes that test some private
@@ -156,12 +191,40 @@ class Tree {
   FRIEND_TEST(
       NodeRemoverFunctionsCollection,
       RemoveNodeWithTwoChildrenHasRecursaiveCallToOtherRemoveFunctionsUsingRemoveNode);
+
+  // Node finding UT
+  FRIEND_TEST(NodeFinderFunctionCollections, FindAValueInTree);
+  FRIEND_TEST(NodeFinderFunctionCollections, FindMinValue);
+  FRIEND_TEST(NodeFinderFunctionCollections, FindMaxValue);
+  FRIEND_TEST(NodeFinderFunctionCollections, WhenMaxValueIsTheSameAsMinValue);
+  // Rotator funcitions UT
+  FRIEND_TEST(RotatorFunctionsCollections, RotateLeftAboutTheTreeRoot);
+  FRIEND_TEST(RotatorFunctionsCollections, RotateLeftAboutLeftChild);
+  FRIEND_TEST(RotatorFunctionsCollections, RotateLeftAboutTheRightChild);
+  FRIEND_TEST(RotatorFunctionsCollections,
+              RotateLeftAboutTheRootWithTreeHasTwoNodesOnly);
+  FRIEND_TEST(RotatorFunctionsCollections, RotateRightAboutTheTreeRoot);
+  FRIEND_TEST(RotatorFunctionsCollections, RotateRightAboutLeftChild);
+  FRIEND_TEST(RotatorFunctionsCollections, RotateRightAboutTheRightChild);
+  FRIEND_TEST(RotatorFunctionsCollections,
+              RotateRightAboutTheRootWithTreeHasTwoNodesOnly);
+    // Balance UT
+    FRIEND_TEST(TreeBalancingFunctionsCollection, IsBalancedNodeFunction);
+    FRIEND_TEST(TreeBalancingFunctionsCollection,
+           CheckIfNodeIsLeftHeavyWithLeftChildHasBalancingFactorEqualToOne);
+    FRIEND_TEST(
+           TreeBalancingFunctionsCollection,
+           CheckIfNodeIsLeftHeavyWithRightChildHasBalancingFactorEqualToNegativeOne);
+    FRIEND_TEST(TreeBalancingFunctionsCollection,
+           CheckIfNodeIsRightHeavyWithLeftChildHasBalancingFactorEqualToOne);
+    FRIEND_TEST(
+           TreeBalancingFunctionsCollection,
+           CheckIfNodeIsRightHeavyWithRightChildHasBalancingFactorEqualToNegativeOne);
+    FRIEND_TEST(TreeBalancingFunctionsCollection, BalancingFactorFunction) ;
+    FRIEND_TEST(TreeBalancingFunctionsCollection, isLeftHeavyFunction);
+    FRIEND_TEST(TreeBalancingFunctionsCollection, isRightHeavyFunction);
+    FRIEND_TEST(TreeBalancingFunctionsCollection, CheckIfTreeIsBalanced);
     
-    // Node finding UT
-    FRIEND_TEST(NodeFinderFunctionCollections, FindAValueInTree);
-    FRIEND_TEST(NodeFinderFunctionCollections, FindMinValue);
-    FRIEND_TEST(NodeFinderFunctionCollections, FindMaxValue);
-    FRIEND_TEST(NodeFinderFunctionCollections, WhenMaxValueIsTheSameAsMinValue);
     
 };
 }  // of BSTNamespace

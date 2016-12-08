@@ -8,7 +8,6 @@
 
 #include "bst.hpp"
 #include "gtest/gtest.h"
-//#include "bst.cpp"
 
 using namespace BSTNS;
 

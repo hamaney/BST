@@ -9,14 +9,11 @@
 #include "gtest/gtest.h"
 
 #include "bst.hpp"
-#include "rotator.hpp"
-
 
 //TODO : test a one node tree and a node with only two nodes 
 
 
-using namespace BSTNS;
-using namespace BSTNS::Rotator;
+namespace BSTNS{
 
 class RotatorFunctionsCollections : public ::testing::Test {
 public:
@@ -28,6 +25,7 @@ public:
     Data x_right;
     Data y_left;
     Data y_right;
+    Tree dummy_tree;
 };
 
 TEST_F(RotatorFunctionsCollections, RotateLeftAboutTheTreeRoot) {
@@ -43,7 +41,7 @@ TEST_F(RotatorFunctionsCollections, RotateLeftAboutTheTreeRoot) {
     //             /       \
     //       [yLeft=3]  [yRight=5]
     */
-    auto latest_updated_node =RotateLeftAround(tree.root);
+    auto latest_updated_node =dummy_tree.RotateLeftAround(tree.root);
     ASSERT_EQ(latest_updated_node , tree.root->left.get());
     
     /*             __[y=4]__
@@ -90,7 +88,7 @@ TEST_F(RotatorFunctionsCollections, RotateLeftAboutLeftChild) {
      //             /       \
      //       [yLeft=3]  [yRight=5]
      */
-    auto pointer_to_highest_node_with_updated_height = RotateLeftAround(tree.root->left);
+    auto pointer_to_highest_node_with_updated_height = dummy_tree.RotateLeftAround(tree.root->left);
     /*
      //                  __[6]__
      //                 /       \
@@ -146,7 +144,7 @@ TEST_F(RotatorFunctionsCollections, RotateLeftAboutTheRightChild) {
      //             /       \
      //       [yLeft=3]  [yRight=5]
      */
-    auto latest_updated_node =RotateLeftAround(tree.root->right);
+    auto latest_updated_node =dummy_tree.RotateLeftAround(tree.root->right);
     ASSERT_EQ(latest_updated_node , tree.root->right->left.get());
     /*
      //      ____[-1]__
@@ -191,7 +189,7 @@ TEST_F(RotatorFunctionsCollections, RotateLeftAboutTheRootWithTreeHasTwoNodesOnl
     //           \
     //           [y]
     */
-    auto latest_updated_node = RotateLeftAround(tree.root);
+    auto latest_updated_node = dummy_tree.RotateLeftAround(tree.root);
     /*
     //      __[y]
     //     /
@@ -225,7 +223,7 @@ TEST_F(RotatorFunctionsCollections, RotateRightAboutTheTreeRoot) {
     //       /         \
     //   [xLeft=1]  [xRight=3]
     */
-    auto latest_updated_node = RotateRightAround(tree.root);
+    auto latest_updated_node = dummy_tree.RotateRightAround(tree.root);
     /*        __[x=2]__
     //       /         \
     //   [xLeft=1]   _[y=4]_
@@ -273,7 +271,7 @@ TEST_F(RotatorFunctionsCollections, RotateRightAboutLeftChild)
     //       /         \
     //   [xLeft=1]  [xRight=3]
     */
-    auto latest_updated_node = RotateRightAround(tree.root->left);
+    auto latest_updated_node = dummy_tree.RotateRightAround(tree.root->left);
     /*
     //              __[6]__
     //             /       \
@@ -327,7 +325,7 @@ TEST_F(RotatorFunctionsCollections, RotateRightAboutTheRightChild){
     //     /         \
     // [xLeft=1]  [xRight=3]
     */
-    auto latest_updated_node = RotateRightAround(tree.root->right);
+    auto latest_updated_node = dummy_tree.RotateRightAround(tree.root->right);
     /*
     //       __[-1]__
     //      /        \
@@ -374,9 +372,7 @@ TEST_F(RotatorFunctionsCollections, RotateRightAboutTheRootWithTreeHasTwoNodesOn
     //     /
     //   [x]
     */
-    tree.Print();tree.PrintHeights();
-    auto latest_updated_node = RotateRightAround(tree.root);
-    tree.Print();tree.PrintHeights();
+    auto latest_updated_node = dummy_tree.RotateRightAround(tree.root);
     /*
     //      [x]__
     //           \
@@ -393,4 +389,5 @@ TEST_F(RotatorFunctionsCollections, RotateRightAboutTheRootWithTreeHasTwoNodesOn
     // |-Left flag testing
     ASSERT_FALSE(tree.Find(x)->is_left_node);
     ASSERT_FALSE(tree.Find(y)->is_left_node);
+}
 }

@@ -18,7 +18,7 @@ class BSTBalancing : public ::testing::Test {
   Tree tree;
 };
 
-/*TEST_F(BSTBalancing, AlreadyBalancedTreeWillNotBeModified) {
+TEST_F(BSTBalancing, AlreadyBalancedTreeWillNotBeModified) {
   Tree tree({2, 1, 3});
   tree.Balance();
 
@@ -70,7 +70,7 @@ TEST_F(BSTBalancing, RightRightBalancingBasicCase) {
   ASSERT_EQ(tree.root->left->height, 0);
   ASSERT_EQ(tree.root->right->data, 3);
   ASSERT_EQ(tree.root->right->height, 0);
-}*/
+}
 TEST_F(BSTBalancing, RightRightBalancingTwiceInTheSameBranch) {
   Tree tree({1, 2, 3, 4, 5});
   /*      [1]_
@@ -83,20 +83,8 @@ TEST_F(BSTBalancing, RightRightBalancingTwiceInTheSameBranch) {
    //                     \
    //                     [5]
    */
-  std::cout << "ORIGIANL TREE +++++++++++++++++++++++++++++++++++++++++++"
-            << std::endl;
-  tree.Print();
-  tree.PrintHeights();
-  std::cout << "Balancing steps ++++++++++++++++++++++++++++++++++++++++++++++"
-            << std::endl;
   tree.Balance();
-  std::cout
-      << "AFTER BALANCING INFO +++++++++++++++++++++++++++++++++++++++++++"
-      << std::endl;
-  tree.Print();
-  tree.PrintHeights();
-  std::cout << "+++++++++++++++++++++++++++++++++++++++++++" << std::endl;
-
+ 
   ASSERT_EQ(tree.root->data, 2);
   ASSERT_EQ(tree.root->height, 2);
   ASSERT_EQ(tree.root->left->data, 1);
@@ -109,33 +97,33 @@ TEST_F(BSTBalancing, RightRightBalancingTwiceInTheSameBranch) {
   ASSERT_EQ(tree.root->right->right->height, 0);
 }
 
-// TEST_F(BSTBalancing, BalancingATreeWithASenario) {
-//  Tree tree({7, 3, 11, 9, 13, 12});
-//  /*            _[7]_
-//   //          /     \
-//   //        [3]     [11]_
-//   //               /     \
-//   //              [9]   [13]
-//   //                   /
-//   //                 [12]
-//   */
-//  tree.Balance();
-//  /*             _[11]_
-//   //           /      \
-//   //        _[7]      [13]
-//   //       /    \     /
-//   //    _[3]    [9] [12]
-//   */
-//  ASSERT_EQ(tree.root->data, 11);
-//  ASSERT_EQ(tree.root->height, 2);
-//  ASSERT_EQ(tree.root->left->data, 7);
-//  ASSERT_EQ(tree.root->left->height, 1);
-//  ASSERT_EQ(tree.root->right->data, 13);
-//  ASSERT_EQ(tree.root->right->height, 1);
-//  ASSERT_EQ(tree.root->right->left->data, 12);
-//  ASSERT_EQ(tree.root->right->left->height, 0);
-//  ASSERT_EQ(tree.root->left->left->data, 3);
-//  ASSERT_EQ(tree.root->left->left->height, 0);
-//  ASSERT_EQ(tree.root->left->right->data, 9);
-//  ASSERT_EQ(tree.root->left->right->height, 0);
-//}
+ TEST_F(BSTBalancing, BalancingATreeWithASenario) {
+  Tree tree({7, 3, 11, 9, 13, 12});
+  /*            _[7]_
+   //          /     \
+   //        [3]     [11]_
+   //               /     \
+   //              [9]   [13]
+   //                   /
+   //                 [12]
+   */
+  tree.Balance();
+  /*             _[11]_
+   //           /      \
+   //        _[7]      [13]
+   //       /    \     /
+   //    _[3]    [9] [12]
+   */
+  ASSERT_EQ(tree.root->data, 11);
+  ASSERT_EQ(tree.root->height, 2);
+  ASSERT_EQ(tree.root->left->data, 7);
+  ASSERT_EQ(tree.root->left->height, 1);
+  ASSERT_EQ(tree.root->right->data, 13);
+  ASSERT_EQ(tree.root->right->height, 1);
+  ASSERT_EQ(tree.root->right->left->data, 12);
+  ASSERT_EQ(tree.root->right->left->height, 0);
+  ASSERT_EQ(tree.root->left->left->data, 3);
+  ASSERT_EQ(tree.root->left->left->height, 0);
+  ASSERT_EQ(tree.root->left->right->data, 9);
+  ASSERT_EQ(tree.root->left->right->height, 0);
+}

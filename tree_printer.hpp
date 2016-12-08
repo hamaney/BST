@@ -21,17 +21,10 @@
 #include "node.hpp"
 
 /*
-namespace BSTNS
-{
 namespace TreePrinter
-{
-namespace PrivateHelper
-{
-}
-}
-}
+{namespace PrivateHelper{}}
 */
-namespace BSTNS {
+
 namespace TreePrinter {
 
 void PrintTree(const Node *const root, int level = 1, int indentSpace = 0,
@@ -57,6 +50,5 @@ void printPretty_(const Node *const root, int level, int indentSpace,
                   std::ostream &out);
 }  // End of PrivateHelper::
 }  // End of TreePrinter::
-}  // End of BSTNS::
 
 #endif /* tree_printer_hpp */
