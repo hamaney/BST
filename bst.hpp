@@ -9,13 +9,9 @@
 /*
 
  ////TODO
-- prevent acceing root members when root is deleted
 - Functions to be Added
-  // Balance()
-  // Balance_(root)
   // IsBalanced()
-  // Leftheavey or right heavy
-  //Rotation functions
+-
  */
 
 #ifndef bst_hpp
@@ -28,15 +24,14 @@
 
 #include "gtest/gtest_prod.h"  // defines FRIEND_TEST for testing private funstions
 
-//#include "height_updater.hpp"
 #include "node.hpp"
-#include "node_balance_checker.hpp"
-//#include "node_connections_checker.hpp"
-#include "node_finder.hpp"
-//#include "node_inserter.hpp"
-#include "node_remover.hpp"
-#include "rotator.hpp"
 #include "tree_printer.hpp"
+#include "node_balance_checker.hpp"
+#include "rotator.hpp"
+
+
+
+
 
 namespace BSTNS {
 class Tree {
@@ -80,11 +75,22 @@ class Tree {
   Height CalculateNodeHeightNonRecursivelyAndWithoutUpdatingTheNode_(
       const Node *const node);
   // -- Node Connections chekes
-    bool HasNoChildren_(const Node *const);
-    bool HasTwoChildren_(const Node *const);
-    bool HasOnlyLeftChild_(const Node *const);
-    bool HasOnlyRightChild_(const Node *const);
-    
+  bool HasNoChildren_(const Node *const);
+  bool HasTwoChildren_(const Node *const);
+  bool HasOnlyLeftChild_(const Node *const);
+  bool HasOnlyRightChild_(const Node *const);
+  // -- Node removers
+  Node *RemoveNode(NodeUPtr &tree_root, Node *node_to_remove);
+  Node *RemoveNodeWithNoChildren_(NodeUPtr &tree_root, Node *node_to_remove);
+  Node *RemoveNodeWithTwoChildren_(NodeUPtr &tree_root, Node *node_to_remove);
+  Node *RemoveNodeWithOnlyLeftChild_(NodeUPtr &tree_root, Node *node_to_remove);
+  Node *RemoveNodeWithOnlyRightChild_(NodeUPtr &tree_root,
+                                      Node *node_to_remove);
+  // -- Finding a node
+  Node *FindNode(Node *const current_root, const Data &target)const;
+  Node *FindMinNode(Node *const current_root)const;
+  Node *FindMaxNode(Node *const current_root)const ;
+
   void BalanceNodes_(NodeUPtr &current_root);
 
   /*
@@ -111,10 +117,53 @@ class Tree {
               UpdateHeightTheInterfaceFunction);
   FRIEND_TEST(TreeHeightUpdaterFunctionCollection, UpdateHeightAfterRotation);
   // Node Connection Checking UT
-    FRIEND_TEST(NodeConnectionsCheckerFunctionCollection, CheckIfNodeHasNoChildren);
-    FRIEND_TEST(NodeConnectionsCheckerFunctionCollection, CheckIfNodeHasTwoChildren);
-    FRIEND_TEST(NodeConnectionsCheckerFunctionCollection, CheckIfNodeHasOnlyLeftChild);
-    FRIEND_TEST(NodeConnectionsCheckerFunctionCollection, CheckIfNodeHasOnlyRightChild);
+  FRIEND_TEST(NodeConnectionsCheckerFunctionCollection,
+              CheckIfNodeHasNoChildren);
+  FRIEND_TEST(NodeConnectionsCheckerFunctionCollection,
+              CheckIfNodeHasTwoChildren);
+  FRIEND_TEST(NodeConnectionsCheckerFunctionCollection,
+              CheckIfNodeHasOnlyLeftChild);
+  FRIEND_TEST(NodeConnectionsCheckerFunctionCollection,
+              CheckIfNodeHasOnlyRightChild);
+  // Node removing
+  FRIEND_TEST(NodeRemoverFunctionsCollection,
+              RemoveNodeWithNoChildrenUsingPrivateHelper);
+  FRIEND_TEST(NodeRemoverFunctionsCollection,
+              RemoveNodeWithNoChildrenUsingRemoveNode);
+  FRIEND_TEST(NodeRemoverFunctionsCollection,
+              RemoveNodeWithOnlyRightChildUsingPrivateHelper);
+  FRIEND_TEST(NodeRemoverFunctionsCollection,
+              RemoveNodeWithOnlyRightChildUsingRemoveNode);
+  FRIEND_TEST(NodeRemoverFunctionsCollection,
+              RemoveNodeWithOnlyLeftChildUsingPrivateHelper);
+  FRIEND_TEST(NodeRemoverFunctionsCollection,
+              RemoveNodeWithOnlyLeftChildUsingRemoveNode);
+  FRIEND_TEST(NodeRemoverFunctionsCollection,
+              RemoveNodeWithTwoChildrenNodeIsALeftChildUsingPrivateHelper);
+  FRIEND_TEST(NodeRemoverFunctionsCollection,
+              RemoveNodeWithTwoChildrenNodeIsALeftChildUsingRemoveNode);
+  FRIEND_TEST(NodeRemoverFunctionsCollection,
+              RemoveNodeWithTwoChildrenNodeIsARightChildUsingPrivateHelper);
+  FRIEND_TEST(NodeRemoverFunctionsCollection,
+              RemoveNodeWithTwoChildrenNodeIsARightChildUsingRemoveNode);
+  FRIEND_TEST(NodeRemoverFunctionsCollection,
+              RemoveNodeWithTwoChildrenNodeIsTheRootUsingPrivateHelper);
+  FRIEND_TEST(NodeRemoverFunctionsCollection,
+              RemoveNodeWithTwoChildrenNodeIsTheRootUsingRemoveNode);
+  FRIEND_TEST(
+      NodeRemoverFunctionsCollection,
+      RemoveNodeWithTwoChildrenHasRecursaiveCallToOtherRemoveFunctionsUsingPrivateHelper);
+  FRIEND_TEST(
+      NodeRemoverFunctionsCollection,
+      RemoveNodeWithTwoChildrenHasRecursaiveCallToOtherRemoveFunctionsUsingRemoveNode);
+    
+    // Node finding UT
+    FRIEND_TEST(NodeFinderFunctionCollections, FindAValueInTree);
+    FRIEND_TEST(NodeFinderFunctionCollections, FindMinValue);
+    FRIEND_TEST(NodeFinderFunctionCollections, FindMaxValue);
+    FRIEND_TEST(NodeFinderFunctionCollections, WhenMaxValueIsTheSameAsMinValue);
+    
 };
 }  // of BSTNamespace
+
 #endif /* BST_hpp */
