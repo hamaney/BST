@@ -8,7 +8,6 @@
 
 #include "bst.hpp"
 
-
 namespace BSTNS {
 Tree::Tree(void) {}
 Tree::Tree(const Data &entry) { Insert(entry); }
@@ -55,9 +54,7 @@ bool Tree::EmptyTheTree() {
   root.reset();
   return !root.get();
 }
-bool Tree::IsBalanced() {
-  return IsBalancedTree(root.get());
-}
+bool Tree::IsBalanced() { return IsBalancedTree(root.get()); }
 
 bool Tree::Balance() {
   while (!IsBalancedTree(root.get())) {
@@ -107,10 +104,8 @@ void Tree::BalanceNodes_(NodeUPtr &current_root) {
       UpdateHeight_(node_with_most_updated_height);
 
     } else {
-      std::cout << "Node " << current_root->data
-                << " needs to be Balanced But nothing is Implimented "
-                   "*******************"
-                << std::endl;
+      // TODO : should here be an error or an implementation ??
+      assert(0);
     }
 
     UpdateHeight_(node_with_most_updated_height);

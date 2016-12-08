@@ -17,18 +17,39 @@
 #ifndef bst_hpp
 #define bst_hpp
 
-#include <algorithm>
-#include <iostream>
-#include <memory>
+#include <algorithm>  //max(), move()
+#include <cassert>    //asser
+#include <memory>     //Uniqe_ptr<>
 #include <vector>
-#include <cassert>
 
-#include "gtest/gtest_prod.h"  // defines FRIEND_TEST for testing private funstions
+//#include "gtest/gtest_prod.h"  // defines FRIEND_TEST for testing private funstions
 
 #include "node.hpp"
 
-
 namespace BSTNS {
+
+class Node;
+typedef std::unique_ptr<Node> NodeUPtr;
+typedef int Data;
+typedef int Height;
+
+class Node {
+ public:
+  Node(Data entry = 0)
+      : data(entry),
+        left(nullptr),
+        right(nullptr),
+        parent(nullptr),
+        is_left_node(false),
+        height(0){};
+  ~Node(){};
+  Data data;
+  NodeUPtr left, right;
+  Node *parent;
+  bool is_left_node;
+  Height height;
+};
+
 class Tree {
  public:
   // Creation
@@ -53,7 +74,6 @@ class Tree {
   Data GetMin(void) const;
   Data GetMax(void) const;
 
-  
  private:
   // -- Insertion
   Node *Insert_(NodeUPtr &root, const Data &entry);
@@ -132,7 +152,7 @@ class Tree {
    The following is the name of the googletest classes that test some private
    funtions. The test cases declared here as freind class are uncomented when
    you run the unit test only
-   */
+   *//*
   // Insertion UT
   FRIEND_TEST(NodeInserterFunctionsCollection, InsertUniqueEntriesToTheTree);
   FRIEND_TEST(NodeInserterFunctionsCollection, InsertAnExistingEntryToTheTree);
@@ -208,24 +228,25 @@ class Tree {
   FRIEND_TEST(RotatorFunctionsCollections, RotateRightAboutTheRightChild);
   FRIEND_TEST(RotatorFunctionsCollections,
               RotateRightAboutTheRootWithTreeHasTwoNodesOnly);
-    // Balance UT
-    FRIEND_TEST(TreeBalancingFunctionsCollection, IsBalancedNodeFunction);
-    FRIEND_TEST(TreeBalancingFunctionsCollection,
-           CheckIfNodeIsLeftHeavyWithLeftChildHasBalancingFactorEqualToOne);
-    FRIEND_TEST(
-           TreeBalancingFunctionsCollection,
-           CheckIfNodeIsLeftHeavyWithRightChildHasBalancingFactorEqualToNegativeOne);
-    FRIEND_TEST(TreeBalancingFunctionsCollection,
-           CheckIfNodeIsRightHeavyWithLeftChildHasBalancingFactorEqualToOne);
-    FRIEND_TEST(
-           TreeBalancingFunctionsCollection,
-           CheckIfNodeIsRightHeavyWithRightChildHasBalancingFactorEqualToNegativeOne);
-    FRIEND_TEST(TreeBalancingFunctionsCollection, BalancingFactorFunction) ;
-    FRIEND_TEST(TreeBalancingFunctionsCollection, isLeftHeavyFunction);
-    FRIEND_TEST(TreeBalancingFunctionsCollection, isRightHeavyFunction);
-    FRIEND_TEST(TreeBalancingFunctionsCollection, CheckIfTreeIsBalanced);
-    
-    
+  // Balance UT
+  FRIEND_TEST(TreeBalancingFunctionsCollection, IsBalancedNodeFunction);
+  FRIEND_TEST(TreeBalancingFunctionsCollection,
+              CheckIfNodeIsLeftHeavyWithLeftChildHasBalancingFactorEqualToOne);
+  FRIEND_TEST(
+      TreeBalancingFunctionsCollection,
+      CheckIfNodeIsLeftHeavyWithRightChildHasBalancingFactorEqualToNegativeOne);
+  FRIEND_TEST(TreeBalancingFunctionsCollection,
+              CheckIfNodeIsRightHeavyWithLeftChildHasBalancingFactorEqualToOne);
+  FRIEND_TEST(
+      TreeBalancingFunctionsCollection,
+      CheckIfNodeIsRightHeavyWithRightChildHasBalancingFactorEqualToNegativeOne);
+  FRIEND_TEST(TreeBalancingFunctionsCollection, BalancingFactorFunction);
+  FRIEND_TEST(TreeBalancingFunctionsCollection, isLeftHeavyFunction);
+  FRIEND_TEST(TreeBalancingFunctionsCollection, isRightHeavyFunction);
+  FRIEND_TEST(TreeBalancingFunctionsCollection, CheckIfTreeIsBalanced);
+  // -- Node UT
+  FRIEND_TEST(NodeClass, NodeConstructionDefaultValue);
+      */
 };
 }  // of BSTNamespace
 

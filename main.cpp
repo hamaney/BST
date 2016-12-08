@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include "bst.hpp"
+#include "tree_printer.hpp"
 
 int main(int argc, const char *argv[]) {
   BSTNS::Tree tree;

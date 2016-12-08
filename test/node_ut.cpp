@@ -6,10 +6,11 @@
 //  Copyright © 2016 Abdulrhman Mohamed. All rights reserved.
 //
 
-#include <memory>
 #include "gtest/gtest.h"
-#include "node.hpp"
+#include "bst.hpp"
 
+namespace BSTNS {
+    
 
 
 class NodeClass : public ::testing::Test {
@@ -28,4 +29,5 @@ TEST_F(NodeClass, NodeConstructionDefaultValue) {
   ASSERT_EQ(node.height, 0);
   Node node_with_initial_value(1);
   ASSERT_EQ(node_with_initial_value.data, 1);
+}
 }

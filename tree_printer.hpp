@@ -18,8 +18,9 @@
 #include <sstream>
 #include <string>
 
-#include "node.hpp"
 
+#include "bst.hpp" //tree to be used with
+using BSTNS::Node;
 /*
 namespace TreePrinter
 {namespace PrivateHelper{}}

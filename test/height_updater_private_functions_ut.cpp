@@ -6,11 +6,7 @@
 //  Copyright © 2016 Abdulrhman Mohamed. All rights reserved.
 //
 
-#include <memory>
 #include <vector>
-
-
-
 #include "gtest/gtest.h"
 #include "bst.hpp"
 namespace BSTNS {
