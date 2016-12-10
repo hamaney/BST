@@ -16,20 +16,22 @@ class NodeConnectionsCheckerFunctionCollection : public ::testing::Test {
   virtual void SetUp() {
       
       
-    node_with_no_children = std::make_unique<Node>();
+    node_with_no_children = Node::CreateNode();
+      
+      node_with_no_children = Node::CreateNode();
 
-    node_with_two_children = std::make_unique<Node>();
-    node_with_two_children->left = std::make_unique<Node>();
-    node_with_two_children->right = std::make_unique<Node>();
+    node_with_two_children = Node::CreateNode();
+    node_with_two_children->left = Node::CreateNode();
+    node_with_two_children->right = Node::CreateNode();
 
-    node_with_only_left_child = std::make_unique<Node>();
-    node_with_only_left_child->left = std::make_unique<Node>();
+    node_with_only_left_child = Node::CreateNode();
+    node_with_only_left_child->left = Node::CreateNode();
 
-    node_with_only_right_child = std::make_unique<Node>();
-    node_with_only_right_child->right = std::make_unique<Node>();
+    node_with_only_right_child = Node::CreateNode();
+    node_with_only_right_child->right = Node::CreateNode();
   }
   virtual void TearDown(){};
-    Tree dummy_tree;
+    BST dummy_tree;
   NodeUPtr node_with_no_children;
   NodeUPtr node_with_two_children;
   NodeUPtr node_with_only_left_child;

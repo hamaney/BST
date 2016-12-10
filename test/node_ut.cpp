@@ -20,14 +20,14 @@ class NodeClass : public ::testing::Test {
 };
 
 TEST_F(NodeClass, NodeConstructionDefaultValue) {
-  Node node;
-  ASSERT_EQ(node.data, 0);
-  ASSERT_FALSE(node.parent);
-  ASSERT_FALSE(node.left);
-  ASSERT_FALSE(node.right);
-  ASSERT_FALSE(node.is_left_node);
-  ASSERT_EQ(node.height, 0);
-  Node node_with_initial_value(1);
-  ASSERT_EQ(node_with_initial_value.data, 1);
+  auto node = Node::CreateNode();
+  ASSERT_EQ(node->data, 0);
+  ASSERT_FALSE(node->parent);
+  ASSERT_FALSE(node->left);
+  ASSERT_FALSE(node->right);
+  ASSERT_FALSE(node->is_left_node);
+  ASSERT_EQ(node->height, 0);
+  auto node_with_initial_value = Node::CreateNode(1);;
+  ASSERT_EQ(node_with_initial_value->data, 1);
 }
 }

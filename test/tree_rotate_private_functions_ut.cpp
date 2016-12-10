@@ -25,7 +25,7 @@ public:
     Data x_right;
     Data y_left;
     Data y_right;
-    Tree dummy_tree;
+    BST dummy_tree;
 };
 
 TEST_F(RotatorFunctionsCollections, RotateLeftAboutTheTreeRoot) {
@@ -34,14 +34,14 @@ TEST_F(RotatorFunctionsCollections, RotateLeftAboutTheTreeRoot) {
     y = 4;
     y_left = 3;
     y_right = 5;
-    Tree tree({x,x_left,y,y_left,y_right});
+    BST tree({x,x_left,y,y_left,y_right});
     /*        __[x=2]__
     //       /         \
     //   [xLeft=1]  _[y=4]_
     //             /       \
     //       [yLeft=3]  [yRight=5]
     */
-    auto latest_updated_node =dummy_tree.RotateLeftAround(tree.root);
+    auto latest_updated_node =dummy_tree.RotateLeftAround_(tree.root);
     ASSERT_EQ(latest_updated_node , tree.root->left.get());
     
     /*             __[y=4]__
@@ -78,7 +78,7 @@ TEST_F(RotatorFunctionsCollections, RotateLeftAboutLeftChild) {
     y = 4;
     y_left = 3;
     y_right = 5;
-    Tree tree({6,7,x,x_left,y,y_left,y_right});
+    BST tree({6,7,x,x_left,y,y_left,y_right});
     /*
      //             __[6]__
      //            /       \
@@ -88,7 +88,7 @@ TEST_F(RotatorFunctionsCollections, RotateLeftAboutLeftChild) {
      //             /       \
      //       [yLeft=3]  [yRight=5]
      */
-    auto pointer_to_highest_node_with_updated_height = dummy_tree.RotateLeftAround(tree.root->left);
+    auto pointer_to_highest_node_with_updated_height = dummy_tree.RotateLeftAround_(tree.root->left);
     /*
      //                  __[6]__
      //                 /       \
@@ -134,7 +134,7 @@ TEST_F(RotatorFunctionsCollections, RotateLeftAboutTheRightChild) {
     y = 4;
     y_left = 3;
     y_right = 5;
-    Tree tree({-1,-2,x,x_left,y,y_left,y_right});
+    BST tree({-1,-2,x,x_left,y,y_left,y_right});
     /*
      //     _[-1]__
      //    /       \
@@ -144,7 +144,7 @@ TEST_F(RotatorFunctionsCollections, RotateLeftAboutTheRightChild) {
      //             /       \
      //       [yLeft=3]  [yRight=5]
      */
-    auto latest_updated_node =dummy_tree.RotateLeftAround(tree.root->right);
+    auto latest_updated_node =dummy_tree.RotateLeftAround_(tree.root->right);
     ASSERT_EQ(latest_updated_node , tree.root->right->left.get());
     /*
      //      ____[-1]__
@@ -183,13 +183,13 @@ TEST_F(RotatorFunctionsCollections, RotateLeftAboutTheRightChild) {
 TEST_F(RotatorFunctionsCollections, RotateLeftAboutTheRootWithTreeHasTwoNodesOnly) {
     x = 2;
     y = 4;
-    Tree tree({x,y});
+    BST tree({x,y});
     /*
     //      [x]__
     //           \
     //           [y]
     */
-    auto latest_updated_node = dummy_tree.RotateLeftAround(tree.root);
+    auto latest_updated_node = dummy_tree.RotateLeftAround_(tree.root);
     /*
     //      __[y]
     //     /
@@ -215,7 +215,7 @@ TEST_F(RotatorFunctionsCollections, RotateRightAboutTheTreeRoot) {
     x = 2;
     x_left = 1;
     x_right = 3;
-    Tree tree({y,y_right,x,x_left,x_right});
+    BST tree({y,y_right,x,x_left,x_right});
     
     /*             __[y=4]__
     //            /         \
@@ -223,7 +223,7 @@ TEST_F(RotatorFunctionsCollections, RotateRightAboutTheTreeRoot) {
     //       /         \
     //   [xLeft=1]  [xRight=3]
     */
-    auto latest_updated_node = dummy_tree.RotateRightAround(tree.root);
+    auto latest_updated_node = dummy_tree.RotateRightAround_(tree.root);
     /*        __[x=2]__
     //       /         \
     //   [xLeft=1]   _[y=4]_
@@ -260,7 +260,7 @@ TEST_F(RotatorFunctionsCollections, RotateRightAboutLeftChild)
     x = 2;
     x_left = 1;
     x_right = 3;
-    Tree tree({6,7,y,y_right,x,x_left,x_right});
+    BST tree({6,7,y,y_right,x,x_left,x_right});
     
     /* 
     //                   __[6]__
@@ -271,7 +271,7 @@ TEST_F(RotatorFunctionsCollections, RotateRightAboutLeftChild)
     //       /         \
     //   [xLeft=1]  [xRight=3]
     */
-    auto latest_updated_node = dummy_tree.RotateRightAround(tree.root->left);
+    auto latest_updated_node = dummy_tree.RotateRightAround_(tree.root->left);
     /*
     //              __[6]__
     //             /       \
@@ -315,7 +315,7 @@ TEST_F(RotatorFunctionsCollections, RotateRightAboutTheRightChild){
     x = 2;
     x_left = 1;
     x_right = 3;
-    Tree tree({-1,-2,y,y_right,x,x_left,x_right});
+    BST tree({-1,-2,y,y_right,x,x_left,x_right});
     /*
     //       __[-1]__
     //      /        \
@@ -325,7 +325,7 @@ TEST_F(RotatorFunctionsCollections, RotateRightAboutTheRightChild){
     //     /         \
     // [xLeft=1]  [xRight=3]
     */
-    auto latest_updated_node = dummy_tree.RotateRightAround(tree.root->right);
+    auto latest_updated_node = dummy_tree.RotateRightAround_(tree.root->right);
     /*
     //       __[-1]__
     //      /        \
@@ -366,13 +366,13 @@ TEST_F(RotatorFunctionsCollections, RotateRightAboutTheRootWithTreeHasTwoNodesOn
     
     y = 4;
     x = 2;
-    Tree tree({y,x});
+    BST tree({y,x});
     /*
     //      __[y]
     //     /
     //   [x]
     */
-    auto latest_updated_node = dummy_tree.RotateRightAround(tree.root);
+    auto latest_updated_node = dummy_tree.RotateRightAround_(tree.root);
     /*
     //      [x]__
     //           \

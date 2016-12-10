@@ -25,7 +25,7 @@ TEST_F(NodeInserterFunctionsCollection, InsertUniqueEntriesToTheTree) {
   //    /      \          /      \
   //  [1]      [3]      [5]      [7]
   */
-  Tree tree;
+  BST tree;
 
   ASSERT_FALSE(tree.Insert_(tree.root, 4));  // return the parent wich is null
 
@@ -197,7 +197,7 @@ TEST_F(NodeInserterFunctionsCollection, InsertUniqueEntriesToTheTree) {
 }
 
 TEST_F(NodeInserterFunctionsCollection, InsertAnExistingEntryToTheTree) {
-  Tree tree({4, 2, 6, 1, 3, 5, 7});
+  BST tree({4, 2, 6, 1, 3, 5, 7});
 
   ASSERT_FALSE(tree.Insert_(tree.root, 4));
   ASSERT_FALSE(tree.Insert_(tree.root, 2));
@@ -206,7 +206,7 @@ TEST_F(NodeInserterFunctionsCollection, InsertAnExistingEntryToTheTree) {
 }
 
 TEST_F(NodeInserterFunctionsCollection, InsertingNewRootNodeAfterEmptyingTheTree) {
-  Tree tree({4, 2, 6});
+  BST tree({4, 2, 6});
   ASSERT_TRUE(tree.Remove(2));
   ASSERT_TRUE(tree.Remove(6));
   ASSERT_TRUE(tree.Remove(4));
@@ -216,7 +216,7 @@ TEST_F(NodeInserterFunctionsCollection, InsertingNewRootNodeAfterEmptyingTheTree
 }
 
 TEST_F(NodeInserterFunctionsCollection, InsertSquenceOfNewValuesToTheTree) {
-    Tree tree;
+    BST tree;
     tree.Insert({4,2,6,1,3,5,7});
     
     ASSERT_EQ(tree.root->data, 4);  //------------- 4

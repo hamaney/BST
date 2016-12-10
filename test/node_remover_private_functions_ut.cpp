@@ -24,7 +24,7 @@ class NodeRemoverFunctionsCollection : public ::testing::Test {
   }
   virtual void TearDown(){};
   std::vector<Data> entries;
-  Tree tree;
+  BST tree;
 };
 
 TEST_F(NodeRemoverFunctionsCollection,
@@ -77,7 +77,7 @@ TEST_F(NodeRemoverFunctionsCollection,
   //       /                  \
   //
   */
-  Tree tree_with_root_node_only(7);
+  BST tree_with_root_node_only(7);
   ASSERT_FALSE(tree.RemoveNodeWithNoChildren_(tree_with_root_node_only.root,
                                          tree_with_root_node_only.Find(7)));
   ASSERT_FALSE(tree_with_root_node_only.Find(7));
@@ -91,7 +91,7 @@ TEST_F(NodeRemoverFunctionsCollection,
   //    /      \          /       \
   //  [1]X     [5]      [9]        [13]
   */
-  ASSERT_EQ(tree.RemoveNode(tree.root, tree.Find(1)), tree.Find(3));
+  ASSERT_EQ(tree.Remove_(tree.root, tree.Find(1)), tree.Find(3));
   /*        ________[7]_______
   //       /                  \
   //      [3]_             __[11]_
@@ -113,7 +113,7 @@ TEST_F(NodeRemoverFunctionsCollection,
   //           \          /       \
   //          [5]      [9]       [13]X
   */
-  ASSERT_EQ(tree.RemoveNode(tree.root, tree.Find(13)), tree.Find(11));
+  ASSERT_EQ(tree.Remove_(tree.root, tree.Find(13)), tree.Find(11));
   /*        ________[7]_______
   //       /                  \
   //      [3]__            __[11]
@@ -132,8 +132,8 @@ TEST_F(NodeRemoverFunctionsCollection,
   /*        ________[7]_______
   //       /                  \
   */
-  Tree tree_with_root_node_only(7);
-  ASSERT_FALSE(tree.RemoveNode(tree_with_root_node_only.root,
+  BST tree_with_root_node_only(7);
+  ASSERT_FALSE(tree.Remove_(tree_with_root_node_only.root,
                           tree_with_root_node_only.Find(7)));
   ASSERT_FALSE(tree_with_root_node_only.Find(7));
   ASSERT_FALSE(tree_with_root_node_only.root);
@@ -180,7 +180,7 @@ TEST_F(NodeRemoverFunctionsCollection,
   //       /                 \
   //                        [11]
   */
-  Tree tree_with_root_that_has_only_right_child({7, 11});
+  BST tree_with_root_that_has_only_right_child({7, 11});
   ASSERT_FALSE(tree.RemoveNodeWithOnlyRightChild_(
       tree_with_root_that_has_only_right_child.root, tree.Find(7)));
   ASSERT_FALSE(tree_with_root_that_has_only_right_child.Find(7));
@@ -208,7 +208,7 @@ TEST_F(NodeRemoverFunctionsCollection,
   //         [5]       [9]       [13]
   */
   // remove a node with only left child
-  ASSERT_EQ(tree.RemoveNode(tree.root, tree.Find(3)), tree.Find(7));
+  ASSERT_EQ(tree.Remove_(tree.root, tree.Find(3)), tree.Find(7));
   /*        ________[7]______
   //       /                 \
   //      [5]             __[11]_
@@ -231,8 +231,8 @@ TEST_F(NodeRemoverFunctionsCollection,
   //       /                 \
   //                        [11]
   */
-  Tree tree_with_root_that_has_only_right_child({7, 11});
-  ASSERT_FALSE(tree.RemoveNode(tree_with_root_that_has_only_right_child.root,
+  BST tree_with_root_that_has_only_right_child({7, 11});
+  ASSERT_FALSE(tree.Remove_(tree_with_root_that_has_only_right_child.root,
                           tree_with_root_that_has_only_right_child.Find(7)));
   ASSERT_FALSE(tree_with_root_that_has_only_right_child.Find(7));
   /*        ________[11]
@@ -285,7 +285,7 @@ TEST_F(NodeRemoverFunctionsCollection,
   //       /
   //      [1]
   */
-  Tree tree_with_root_that_has_only_left_child({7, 1});
+  BST tree_with_root_that_has_only_left_child({7, 1});
   ASSERT_FALSE(tree.RemoveNodeWithOnlyLeftChild_(
       tree_with_root_that_has_only_left_child.root,
       tree_with_root_that_has_only_left_child.Find(7)));
@@ -314,7 +314,7 @@ TEST_F(NodeRemoverFunctionsCollection,
   //  [1]               [9]       [13]
   */
   // remove a node with onlu left child
-  ASSERT_EQ(tree.RemoveNode(tree.root, tree.Find(3)), tree.Find(7));
+  ASSERT_EQ(tree.Remove_(tree.root, tree.Find(3)), tree.Find(7));
   /*        ________[7]______
   //       /                 \
   //      [1]             __[11]_
@@ -338,8 +338,8 @@ TEST_F(NodeRemoverFunctionsCollection,
   //       /
   //      [1]
   */
-  Tree tree_with_root_that_has_only_left_child({7, 1});
-  ASSERT_FALSE(tree.RemoveNode(tree_with_root_that_has_only_left_child.root,
+  BST tree_with_root_that_has_only_left_child({7, 1});
+  ASSERT_FALSE(tree.Remove_(tree_with_root_that_has_only_left_child.root,
                           tree_with_root_that_has_only_left_child.Find(7)));
   /*        ________[1]
   //       /
@@ -386,7 +386,7 @@ TEST_F(NodeRemoverFunctionsCollection,
   //    /      \          /       \
   //  [1]      [5]      [9]       [13]
   */
-  ASSERT_EQ(tree.RemoveNode(tree.root, tree.Find(3)), tree.Find(7));
+  ASSERT_EQ(tree.Remove_(tree.root, tree.Find(3)), tree.Find(7));
   /*        ________[7]_______
   //       /                  \
   //     _[5]              __[11]_
@@ -444,7 +444,7 @@ TEST_F(NodeRemoverFunctionsCollection,
     //     _[3]__            __[11]X_
   //    /      \          /       \
     //  [1]      [5]      [9]       [13]
-  ASSERT_EQ(tree.RemoveNode(tree.root, tree.Find(11)), tree.Find(7));
+  ASSERT_EQ(tree.Remove_(tree.root, tree.Find(11)), tree.Find(7));
   ASSERT_FALSE(tree.Find(11));
   //        ________[7]_______
   //       /                  \
@@ -508,7 +508,7 @@ TEST_F(NodeRemoverFunctionsCollection,
   //    /      \          /       \
     //  [1]      [5]      [9]       [13]
 
-  ASSERT_FALSE(tree.RemoveNode(tree.root, tree.Find(7)));
+  ASSERT_FALSE(tree.Remove_(tree.root, tree.Find(7)));
   ASSERT_FALSE(tree.Find(7));
   //        ________[9]_______
   //       /                  \
@@ -632,7 +632,7 @@ TEST_F(
   //    [2] [4]   [6]  [8] [10]     [14]
   */
 
-  ASSERT_EQ(tree.RemoveNode(tree.root, tree.Find(3)), tree.Find(7));
+  ASSERT_EQ(tree.Remove_(tree.root, tree.Find(3)), tree.Find(7));
   ASSERT_FALSE(tree.Find(3));
   /*        ________[7]_______
   //       /                  \
@@ -665,7 +665,7 @@ TEST_F(
   //    \          \    /  \         \
   //    [2]       [6]  [8] [10]     [14]
   */
-  ASSERT_EQ(tree.RemoveNode(tree.root, tree.Find(11)), tree.Find(7));
+  ASSERT_EQ(tree.Remove_(tree.root, tree.Find(11)), tree.Find(7));
   ASSERT_FALSE(tree.Find(11));
   /*        ________[7]______
   //       /                 \

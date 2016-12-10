@@ -19,7 +19,7 @@ class TreeHeightUpdaterFunctionCollection : public ::testing::Test {
     tree.Insert(entries);
   }
   virtual void TearDown(){};
-  Tree tree;
+  BST tree;
   std::vector<Data> entries;
 };
 
@@ -173,7 +173,7 @@ TEST_F(TreeHeightUpdaterFunctionCollection,
 }
 TEST_F(TreeHeightUpdaterFunctionCollection, NodeParentHeightUpdating) {
   entries = {4, 2, 1, 3, 7, 5, 6};
-  Tree tree(entries);
+  BST tree(entries);
 
   /*        ____[4(3)]____
   //       /              \
@@ -255,7 +255,7 @@ TEST_F(TreeHeightUpdaterFunctionCollection, NodeParentHeightUpdating) {
 
 TEST_F(TreeHeightUpdaterFunctionCollection, UpdateHeightTheInterfaceFunction) {
   entries = {4, 2, 1, 3, 7, 5, 6};
-  Tree tree(entries);
+  BST tree(entries);
 
   /*        ____[4(3)]____
    //       /              \
@@ -335,7 +335,7 @@ TEST_F(TreeHeightUpdaterFunctionCollection, UpdateHeightTheInterfaceFunction) {
 
 TEST_F(TreeHeightUpdaterFunctionCollection, UpdateHeightAfterRotation) {
   entries = {1, 2, 3, 4, 5};
-  Tree tree(entries);
+  BST tree(entries);
 
   /* [1(4))]_
   //         \
@@ -347,7 +347,7 @@ TEST_F(TreeHeightUpdaterFunctionCollection, UpdateHeightAfterRotation) {
   //                           \
   //                         [5(0)]
   */
-  auto latest_updated_node = tree.RotateLeftAround(tree.root);
+  auto latest_updated_node = tree.RotateLeftAround_(tree.root);
   /*      _[2(3)]_
   //     /        \
   //  [1(4)]      [3(2)]_
@@ -377,7 +377,7 @@ TEST_F(TreeHeightUpdaterFunctionCollection, UpdateHeightAfterRotation) {
   ASSERT_EQ(tree.Find(4)->height, 1);
   ASSERT_EQ(tree.Find(5)->height, 0);
 
-  latest_updated_node = tree.RotateLeftAround(tree.root->right);
+  latest_updated_node = tree.RotateLeftAround_(tree.root->right);
   /*      _[2(3)]_
   //     /        \
   //  [1(0)]     _[4(1)]_

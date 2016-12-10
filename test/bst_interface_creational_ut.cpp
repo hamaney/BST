@@ -18,11 +18,11 @@ class BSTCreation : public ::testing::Test {
 };
 
 TEST_F(BSTCreation, TreeInitilization) {
-  Tree tree(0);
+  BST tree(0);
   ASSERT_EQ(tree.root->data, 0);
   ASSERT_EQ(tree.root->height, 0);
 
-  Tree tree_with_initial_value(1);
+  BST tree_with_initial_value(1);
   ASSERT_EQ(tree_with_initial_value.root->data, 1);
 }
 
@@ -34,7 +34,7 @@ TEST_F(BSTCreation, AddingUniqueEntriesToTheTree) {
   //    /      \          /      \
   //  [1]      [3]      [5]      [7]
   */
-  Tree tree(4);
+  BST tree(4);
     
   ASSERT_TRUE(tree.Insert(2));
 
@@ -225,7 +225,7 @@ TEST_F(BSTCreation, AddingUniqueEntriesToTheTree) {
 }
 
 TEST_F(BSTCreation, AddingExistingEntryToTheTree) {
-    Tree tree({4,2,6,1,3,5,7});
+    BST tree({4,2,6,1,3,5,7});
 
   ASSERT_FALSE(tree.Insert(4));
   ASSERT_FALSE(tree.Insert(6));
@@ -234,7 +234,7 @@ TEST_F(BSTCreation, AddingExistingEntryToTheTree) {
 }
 
 TEST_F(BSTCreation, AddingNewRootNodeAfterEmptyingTheTree) {
-  Tree tree({4,2,6});
+  BST tree({4,2,6});
   ASSERT_TRUE(tree.Remove(2));
   ASSERT_TRUE(tree.Remove(6));
   ASSERT_TRUE(tree.Remove(4));
@@ -246,7 +246,7 @@ TEST_F(BSTCreation, AddingNewRootNodeAfterEmptyingTheTree) {
 }
 
 TEST_F(BSTCreation, AddingSquenceOfNewValuesToTheTree) {
-    Tree tree({4,2,6,1,3,5,7});
+    BST tree({4,2,6,1,3,5,7});
     
     ASSERT_EQ(tree.root->data, 4);  //------------- 4
     ASSERT_FALSE(tree.root->parent);

@@ -25,7 +25,7 @@ class BSTSearching : public ::testing::Test {
     */
   }
   virtual void TearDown(){};
-  Tree tree;
+  BST tree;
 };
 
 TEST_F(BSTSearching, FindingAValueInTree) {

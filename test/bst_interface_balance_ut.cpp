@@ -15,11 +15,11 @@ class BSTBalancing : public ::testing::Test {
  public:
   virtual void SetUp() {}
   virtual void TearDown(){};
-  Tree tree;
+  BST tree;
 };
 
 TEST_F(BSTBalancing, AlreadyBalancedTreeWillNotBeModified) {
-  Tree tree({2, 1, 3});
+  BST tree({2, 1, 3});
   tree.Balance();
 
   ASSERT_EQ(tree.root->data, 2);
@@ -30,7 +30,7 @@ TEST_F(BSTBalancing, AlreadyBalancedTreeWillNotBeModified) {
   ASSERT_EQ(tree.root->right->height, 0);
 }
 TEST_F(BSTBalancing, LeftLeftbalancingBasicCase) {
-  Tree tree({3, 2, 1});
+  BST tree({3, 2, 1});
   tree.Balance();
 
   ASSERT_EQ(tree.root->data, 2);
@@ -41,7 +41,7 @@ TEST_F(BSTBalancing, LeftLeftbalancingBasicCase) {
   ASSERT_EQ(tree.root->right->height, 0);
 }
 TEST_F(BSTBalancing, LeftRightBalancingBasicCase) {
-  Tree tree({3, 1, 2});
+  BST tree({3, 1, 2});
   tree.Balance();
 
   ASSERT_EQ(tree.root->data, 2);
@@ -52,7 +52,7 @@ TEST_F(BSTBalancing, LeftRightBalancingBasicCase) {
   ASSERT_EQ(tree.root->right->height, 0);
 }
 TEST_F(BSTBalancing, RightLeftBalancingBasicCase) {
-  Tree tree({1, 3, 2});
+  BST tree({1, 3, 2});
   tree.Balance();
   ASSERT_EQ(tree.root->data, 2);
   ASSERT_EQ(tree.root->height, 1);
@@ -62,7 +62,7 @@ TEST_F(BSTBalancing, RightLeftBalancingBasicCase) {
   ASSERT_EQ(tree.root->right->height, 0);
 }
 TEST_F(BSTBalancing, RightRightBalancingBasicCase) {
-  Tree tree({1, 2, 3});
+  BST tree({1, 2, 3});
   tree.Balance();
   ASSERT_EQ(tree.root->data, 2);
   ASSERT_EQ(tree.root->height, 1);
@@ -72,7 +72,7 @@ TEST_F(BSTBalancing, RightRightBalancingBasicCase) {
   ASSERT_EQ(tree.root->right->height, 0);
 }
 TEST_F(BSTBalancing, RightRightBalancingTwiceInTheSameBranch) {
-  Tree tree({1, 2, 3, 4, 5});
+  BST tree({1, 2, 3, 4, 5});
   /*      [1]_
    //         \
    //         [2]_
@@ -98,7 +98,7 @@ TEST_F(BSTBalancing, RightRightBalancingTwiceInTheSameBranch) {
 }
 
  TEST_F(BSTBalancing, BalancingATreeWithASenario) {
-  Tree tree({7, 3, 11, 9, 13, 12});
+  BST tree({7, 3, 11, 9, 13, 12});
   /*            _[7]_
    //          /     \
    //        [3]     [11]_
@@ -127,3 +127,17 @@ TEST_F(BSTBalancing, RightRightBalancingTwiceInTheSameBranch) {
   ASSERT_EQ(tree.root->left->right->data, 9);
   ASSERT_EQ(tree.root->left->right->height, 0);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

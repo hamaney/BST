@@ -25,7 +25,7 @@ class BSTNodeRemoval : public ::testing::Test {
   }
   virtual void TearDown(){};
   std::vector<Data> entries;
-  Tree tree;
+  BST tree;
 };
 
 TEST_F(BSTNodeRemoval, RemoveNodeWithNoChildren) {
@@ -76,7 +76,7 @@ TEST_F(BSTNodeRemoval, RemoveNodeWithNoChildren) {
   /*        ________[7]_______
   //       /                  \
   */
-  Tree tree_with_root_node_only(7);
+  BST tree_with_root_node_only(7);
   tree_with_root_node_only.Remove(7);
   ASSERT_FALSE(tree_with_root_node_only.Find(7));
   ASSERT_FALSE(tree_with_root_node_only.root);
@@ -286,7 +286,7 @@ TEST_F(BSTNodeRemoval, RemoveNodeWithOnlyLeftChild) {
   //       /
   //      [1]
   */
-  Tree tree_with_root_that_has_only_left_child(7);
+  BST tree_with_root_that_has_only_left_child(7);
   ASSERT_TRUE(tree_with_root_that_has_only_left_child.Insert(1));
   ASSERT_TRUE(tree_with_root_that_has_only_left_child.Remove(7));
   ASSERT_FALSE(tree_with_root_that_has_only_left_child.Find(7));
@@ -383,7 +383,7 @@ TEST_F(BSTNodeRemoval, CheckNodeHightAfterRemovingANodeWithOnlyLeftChild) {
   //        ________[7]X
   //       /
   //      [1]
-  Tree tree_with_root_that_has_only_left_child(7);
+  BST tree_with_root_that_has_only_left_child(7);
   tree_with_root_that_has_only_left_child.Insert(1);
   tree_with_root_that_has_only_left_child.Remove(7);
   //        ________[1]
@@ -432,7 +432,7 @@ TEST_F(BSTNodeRemoval, RemoveNodeWithOnlyRightChild) {
   //       /                 \
   //                        [11]
   */
-  Tree tree_with_root_that_has_only_right_child(7);
+  BST tree_with_root_that_has_only_right_child(7);
   ASSERT_TRUE(tree_with_root_that_has_only_right_child.Insert(11));
   ASSERT_TRUE(tree_with_root_that_has_only_right_child.Remove(7));
   ASSERT_FALSE(tree_with_root_that_has_only_right_child.Find(7));
@@ -477,7 +477,7 @@ TEST_F(BSTNodeRemoval, CheckNodeHightAfterRemovingANodeWithOnlyRightChild) {
   //       /                 \
   //                        [11]
   */
-  Tree tree_with_root_that_has_only_right_child(7);
+  BST tree_with_root_that_has_only_right_child(7);
   tree_with_root_that_has_only_right_child.Insert(11);
   tree_with_root_that_has_only_right_child.Remove(7);
   /*        ________[11]
