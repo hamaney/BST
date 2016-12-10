@@ -6,14 +6,6 @@
 //  Copyright © 2016 Abdulrhman Mohamed. All rights reserved.
 //
 
-/*
-
- ////TODO
-- Functions to be Added
-  // IsBalanced()
--
- */
-
 #ifndef bst_hpp
 #define bst_hpp
 
@@ -22,7 +14,7 @@
 #include <memory>    //Uniqe_ptr<> ,make_unique<>
 #include <vector>
 
-#include "gtest/gtest_prod.h" // defines FRIEND_TEST for testing private funstions
+//#include "gtest/gtest_prod.h" // defines FRIEND_TEST for testing private funstions
 
 namespace BSTNS
 {
@@ -35,7 +27,7 @@ typedef int Height;
 class Node
 {
   public:
-    ~Node(){}; //TODO : Ask weather it is ok to leave desc pulic while having private constructor
+    ~Node(){}; //TODO : Ask weather it is ok to leave desc public while having a private constructor
     Data data;
     NodeUPtr left, right;
     Node *parent;
@@ -155,6 +147,7 @@ class BST
     //you run the unit test only
     */
     // Insertion UT
+    /*
     FRIEND_TEST(NodeInserterFunctionsCollection, InsertUniqueEntriesToTheTree);
     FRIEND_TEST(NodeInserterFunctionsCollection, InsertAnExistingEntryToTheTree);
     FRIEND_TEST(NodeInserterFunctionsCollection,
@@ -246,7 +239,7 @@ class BST
     FRIEND_TEST(TreeBalancingFunctionsCollection, CheckIfTreeIsBalanced);
     FRIEND_TEST(TreeBalancingFunctionsCollection, TreeBalancePrivateFunction);
     // -- Node UT
-    FRIEND_TEST(NodeClass, NodeConstructionDefaultValue);
+    FRIEND_TEST(NodeClass, NodeConstructionDefaultValue);*/
 };
 } // of BSTNamespace
 
