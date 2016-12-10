@@ -18,28 +18,18 @@
 #include <sstream>
 #include <string>
 
-#include "node.hpp"
-
-/*
-namespace BSTNS
-{
-namespace TreePrinter
-{
-namespace PrivateHelper
-{
-}
-}
-}
-*/
-namespace BSTNS {
-namespace TreePrinter {
-
+//The tree to be printed
+#include "bst.hpp"
+using namespace BSTNS;
+//
+class TreePrinter{
+public:
 void PrintTree(const Node *const root, int level = 1, int indentSpace = 0,
            std::ostream &out = std::cout);
 void PrintTreeHeights(const Node *const root, int level = 1, int indentSpace = 0,
                   std::ostream &out = std::cout);
-namespace PrivateHelper {
-
+private:
+    bool print_heights_instead_of_data_;
 int maxHeight_(const Node *const p);
 std::string intToString_(int val);
 void printBranches_(int branchLen, int nodeSpaceLen, int startLen,
@@ -55,8 +45,5 @@ void printLeaves_(int indentSpace, int level, int nodesInThisLevel,
                   std::ostream &out);
 void printPretty_(const Node *const root, int level, int indentSpace,
                   std::ostream &out);
-}  // End of PrivateHelper::
-}  // End of TreePrinter::
-}  // End of BSTNS::
-
+};
 #endif /* tree_printer_hpp */

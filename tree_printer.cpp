@@ -8,23 +8,21 @@
 
 #include "tree_printer.hpp"
 
-namespace BSTNS {
-namespace TreePrinter {
-bool print_hights_instead_of_data;  // Why givs an erorr in put in header
-void PrintTree(const Node *const root, int level, int indentSpace,
+
+
+void TreePrinter::PrintTree(const Node *const root, int level, int indentSpace,
            std::ostream &out) {
-  print_hights_instead_of_data = false;
-  PrivateHelper::printPretty_(root, level, indentSpace, out);
+  print_heights_instead_of_data_ = false;
+  printPretty_(root, level, indentSpace, out);
 }
-void PrintTreeHeights(const Node *const root, int level, int indentSpace,
+void TreePrinter::PrintTreeHeights(const Node *const root, int level, int indentSpace,
                   std::ostream &out) {
-  print_hights_instead_of_data = true;
-  PrivateHelper::printPretty_(root, level, indentSpace, out);
+  print_heights_instead_of_data_ = true;
+  printPretty_(root, level, indentSpace, out);
 }
-namespace PrivateHelper {
 
 // Find the maximum height of the binary tree
-int maxHeight_(const Node *const p) {
+int TreePrinter::maxHeight_(const Node *const p) {
   if (!p) return 0;
   int leftHeight = maxHeight_(p->left.get());
   int rightHeight = maxHeight_(p->right.get());
@@ -32,14 +30,14 @@ int maxHeight_(const Node *const p) {
 }
 
 // Convert an integer value to string
-std::string intToString_(int val) {
+std::string TreePrinter::intToString_(int val) {
   std::ostringstream ss;
   ss << val;
   return ss.str();
 }
 
 // Print the arm branches (eg, /    \ ) on a line
-void printBranches_(int branchLen, int nodeSpaceLen, int startLen,
+void TreePrinter::printBranches_(int branchLen, int nodeSpaceLen, int startLen,
                     int nodesInThisLevel,
                     const std::deque<const Node *const> &nodesQueue,
                     std::ostream &out) {
@@ -53,7 +51,7 @@ void printBranches_(int branchLen, int nodeSpaceLen, int startLen,
 }
 
 // Print the branches and node (eg, ___10___ )
-void printNodes_(int branchLen, int nodeSpaceLen, int startLen,
+void TreePrinter::printNodes_(int branchLen, int nodeSpaceLen, int startLen,
                  int nodesInThisLevel,
                  const std::deque<const Node *const> &nodesQueue,
                  std::ostream &out) {
@@ -62,7 +60,7 @@ void printNodes_(int branchLen, int nodeSpaceLen, int startLen,
     out << ((i == 0) ? std::setw(startLen) : std::setw(nodeSpaceLen)) << ""
         << ((*iter && (*iter)->left) ? std::setfill('_') : std::setfill(' '));
     // -------------------------- TEST -----------------------------------------
-    if (print_hights_instead_of_data)
+    if (print_heights_instead_of_data_)
     //    if ((1))
     {
       out << std::setw(branchLen + 2)
@@ -79,13 +77,13 @@ void printNodes_(int branchLen, int nodeSpaceLen, int startLen,
 }
 
 // Print the leaves only (just for the bottom row)
-void printLeaves_(int indentSpace, int level, int nodesInThisLevel,
+void TreePrinter::printLeaves_(int indentSpace, int level, int nodesInThisLevel,
                   const std::deque<const Node *const> &nodesQueue,
                   std::ostream &out) {
   std::deque<const Node *const>::const_iterator iter = nodesQueue.begin();
   for (int i = 0; i < nodesInThisLevel; i++, iter++) {
     // ------------------------- TEST ------------------------------------------
-    if (print_hights_instead_of_data)
+    if (print_heights_instead_of_data_)
     //    if (1)
     {
       out << ((i == 0) ? std::setw(indentSpace + 2) : std::setw(2 * level + 2))
@@ -106,7 +104,7 @@ void printLeaves_(int indentSpace, int level, int nodesInThisLevel,
 // indentSpace of 0 means the lowest level of the left node will stick to the
 // left margin)
 
-void printPretty_(const Node *const root, int level, int indentSpace,
+void TreePrinter::printPretty_(const Node *const root, int level, int indentSpace,
                   std::ostream &out) {
   int h = maxHeight_(root);
   int nodesInThisLevel = 1;
@@ -154,6 +152,3 @@ void printPretty_(const Node *const root, int level, int indentSpace,
                  nodesQueue, out);
   printLeaves_(indentSpace, level, nodesInThisLevel, nodesQueue, out);
 }
-}  // End of PrivateHelper::
-}  // End of TreePrinter::
-}  // End of BSTNS::

@@ -8,11 +8,16 @@
 
 #include <iostream>
 #include "bst.hpp"
+#include "tree_printer.hpp"
 
 int main(int argc, const char *argv[]) {
-    BSTNS::Tree tree;
+  BSTNS::BST tree;
+
+  tree.Insert({1, 2, 3, 4, 5});
+    TreePrinter tp;
+    tp.PrintTree(tree.root.get());
     
-    tree.Insert({1,2,3,4,5});
     tree.Balance();
-  return 0;
+  tp.PrintTree(tree.root.get());
+    return 0;
 }
