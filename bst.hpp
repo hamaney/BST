@@ -58,7 +58,7 @@ class BST
     // ==== INSERT =============================================================
     bool Insert(const Data &entry);
     bool Insert(const std::vector<Data> &entries_container);
-    // ==== REMOVEyy ===========================================================
+    // ==== REMOVE =============================================================
     bool Remove(const Data &target);
     bool Remove(const std::vector<Data> &entries_container);
     bool EmptyTheTree();
@@ -97,7 +97,7 @@ class BST
     Node *Find_(Node *const current_root, const Data &target) const;
     Node *GetMin_(Node *const current_root) const;
     Node *GetMax_(Node *const current_root) const;
-    // ==== ROTATE =============================================================
+    // ==== ROTATE_ ============================================================
     Node *RotateLeftAround_(NodeUPtr &pivot_node);
     Node *RotateRightAround_(NodeUPtr &pivot_node);
     // ==== BALANCE_ ===========================================================
