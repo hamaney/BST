@@ -68,7 +68,7 @@ class BST
     Data GetMax(void) const;
     // ==== BALANCE ============================================================
     bool Balance();
-    bool IsBalanced();
+    bool IsBalanced()const;
 
   private:
     // ==== INSERT_ ============================================================
@@ -80,12 +80,12 @@ class BST
     void UpdateTheParentsStartingFromParent_(
         Node *unupdated_parent_to_start_with); // O(log(n))
     Height CalculateNodeHeightNonRecursivelyAndWithoutUpdatingTheNode_(
-        const Node *const node);
+        const Node *const node)const;
     // ==== NODE CONNECTIONS CHECKERS_ =========================================
-    bool HasNoChildren_(const Node *const);
-    bool HasTwoChildren_(const Node *const);
-    bool HasOnlyLeftChild_(const Node *const);
-    bool HasOnlyRightChild_(const Node *const);
+    bool HasNoChildren_(const Node *const)const;
+    bool HasTwoChildren_(const Node *const)const;
+    bool HasOnlyLeftChild_(const Node *const)const;
+    bool HasOnlyRightChild_(const Node *const)const;
     // ==== REMOVE_ ============================================================
     Node *Remove_(NodeUPtr &tree_root, Node *node_to_remove);
     Node *RemoveNodeWithNoChildren_(NodeUPtr &tree_root, Node *node_to_remove);
@@ -102,9 +102,9 @@ class BST
     Node *RotateRightAround_(NodeUPtr &pivot_node);
     // ==== BALANCE_ ===========================================================
     void Balance_(NodeUPtr &current_root);
-    bool IsBalancedNode_(const Node *const node);
-    bool IsBalanced_(const Node *const current_root);
-    int BalanceFactorOfNode_(const Node *const node);
+    bool IsBalancedNode_(const Node *const node)const;
+    bool IsBalanced_(const Node *const current_root)const;
+    int BalanceFactorOfNode_(const Node *const node)const;
     /*
     //To check for
     //       []
@@ -113,7 +113,7 @@ class BST
     //   /L BF=1
     // []
     */
-    bool IsLeftLeft_(const Node *const node);
+    bool IsLeftLeft_(const Node *const node)const;
     /*To chrck for
     //   []
     //   /L BF=2
@@ -121,7 +121,7 @@ class BST
     //   \R BF=-1
     //   []
     */
-    bool IsLeftRight_(const Node *const node);
+    bool IsLeftRight_(const Node *const node)const;
     /*To check for
     // []
     //   \R BF=-2
@@ -129,7 +129,7 @@ class BST
     //      \R BF=-1
     //       []
     */
-    bool IsRightRight_(const Node *const node);
+    bool IsRightRight_(const Node *const node)const;
     /*To chrck for
     // []
     //   \R BF=-2
@@ -137,9 +137,9 @@ class BST
     //   /L BF=1
     // []
     */
-    bool IsRightLeft_(const Node *const node);
-    bool IsLeftHeavy_(const Node *const node);
-    bool IsRightHeavy_(const Node *const node);
+    bool IsRightLeft_(const Node *const node)const;
+    bool IsLeftHeavy_(const Node *const node)const;
+    bool IsRightHeavy_(const Node *const node)const;
     // ==== GTEST UT ===========================================================
     /*
     //The following is the name of the googletest classes that test some private

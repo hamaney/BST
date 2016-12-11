@@ -375,7 +375,7 @@ void BST::UpdateTheParentsStartingFromParent_(
   }
 }
 Height BST::CalculateNodeHeightNonRecursivelyAndWithoutUpdatingTheNode_(
-    const Node *const node)
+    const Node *const node)const
 {
   if (!node)
   {
@@ -396,7 +396,7 @@ Height BST::CalculateNodeHeightNonRecursivelyAndWithoutUpdatingTheNode_(
   }
 }
 // ==== NODE CONNECTION CHECKERS_ ==============================================
-bool BST::HasNoChildren_(const Node *const node)
+bool BST::HasNoChildren_(const Node *const node)const
 {
   if (node)
   {
@@ -407,7 +407,7 @@ bool BST::HasNoChildren_(const Node *const node)
     return false;
   }
 }
-bool BST::HasTwoChildren_(const Node *const node)
+bool BST::HasTwoChildren_(const Node *const node)const
 {
   if (node)
   {
@@ -418,7 +418,7 @@ bool BST::HasTwoChildren_(const Node *const node)
     return false;
   }
 }
-bool BST::HasOnlyLeftChild_(const Node *const node)
+bool BST::HasOnlyLeftChild_(const Node *const node)const
 {
   if (node)
   {
@@ -429,7 +429,7 @@ bool BST::HasOnlyLeftChild_(const Node *const node)
     return false;
   }
 }
-bool BST::HasOnlyRightChild_(const Node *const node)
+bool BST::HasOnlyRightChild_(const Node *const node)const
 {
   if (node)
   {
@@ -581,7 +581,7 @@ bool BST::Balance()
   }
   return true;
 }
-bool BST::IsBalanced() { return IsBalanced_(root.get()); }
+bool BST::IsBalanced()const { return IsBalanced_(root.get()); }
 // ==== BALANCING_ =============================================================
 void BST::Balance_(NodeUPtr &current_root)
 {
@@ -626,7 +626,7 @@ void BST::Balance_(NodeUPtr &current_root)
   Balance_(current_root->left);
   Balance_(current_root->right);
 }
-bool BST::IsBalanced_(const Node *const current_root) // +
+bool BST::IsBalanced_(const Node *const current_root) const
 {
   if (!current_root)
   {
@@ -643,12 +643,12 @@ bool BST::IsBalanced_(const Node *const current_root) // +
     return false;
   }
 }
-bool BST::IsBalancedNode_(const Node *const node) //O(1) //+
+bool BST::IsBalancedNode_(const Node *const node) const//O(1)
 {
   auto bf = BalanceFactorOfNode_(node);
   return (bf < 2) and (bf > -2);
 }
-int BST::BalanceFactorOfNode_(const Node *const node) //O(1) //+
+int BST::BalanceFactorOfNode_(const Node *const node) const//O(1) //+
 {
   if (!node)
   {
@@ -676,35 +676,35 @@ int BST::BalanceFactorOfNode_(const Node *const node) //O(1) //+
     return left_child_balance_factor - right_child_balance_factor;
   }
 }
-bool BST::IsLeftLeft_(const Node *const node)
+bool BST::IsLeftLeft_(const Node *const node)const
 {
   return (IsLeftHeavy_(node)) ? (BalanceFactorOfNode_(node->left.get()) >= 1)
                               : false;
   // return IsLeftHeavy_(node) and IsLeftHeavy_(node->left.get()) ;
 }
-bool BST::IsLeftRight_(const Node *const node)
+bool BST::IsLeftRight_(const Node *const node)const
 {
   return (IsLeftHeavy_(node)) ? (BalanceFactorOfNode_(node->left.get()) <= -1)
                               : false;
   // return IsLeftHeavy_(node) and IsRightHeavy_(node->left.get()) ;
 }
-bool BST::IsRightLeft_(const Node *const node)
+bool BST::IsRightLeft_(const Node *const node)const
 {
   return (IsRightHeavy_(node)) ? (BalanceFactorOfNode_(node->right.get()) >= 1)
                                : false;
   // return IsRightHeavy_(node) and IsLeftHeavy_(node->right.get()) ;
 }
-bool BST::IsRightRight_(const Node *const node)
+bool BST::IsRightRight_(const Node *const node)const
 {
   return (IsRightHeavy_(node)) ? (BalanceFactorOfNode_(node->right.get()) <= -1)
                                : false;
   // return IsRightHeavy_(node) and IsRightHeavy_(node->right.get()) ;
 }
-bool BST::IsLeftHeavy_(const Node *const node)
+bool BST::IsLeftHeavy_(const Node *const node)const
 {
   return BalanceFactorOfNode_(node) >= 2;
 }
-bool BST::IsRightHeavy_(const Node *const node)
+bool BST::IsRightHeavy_(const Node *const node)const
 {
   return BalanceFactorOfNode_(node) <= -2;
 }
